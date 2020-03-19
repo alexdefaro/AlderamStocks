@@ -1,0 +1,28 @@
+﻿# Credenciais do servidor de banco de dados do Azure
+	Servidor - alderamdatabaseserver.database.windows.net
+	Usuario  - alderam
+	Senha    - adminUser!
+
+# System basic credentials 
+	Servidor - https://alderamfinance.azurewebsites.net
+	Usuario  - AdministradorTI
+	Senha    - admin
+
+# Visual Studio Protal 
+    http://alderam.visualstudio.com
+
+# AZURE Admnistrator Portal 
+	https://portal.azure.com/#home
+
+# Restart database migrations 
+	 1) Resetar o arquivo de migrations do banco de dados 
+		Update-Database 0 -StartupProject Alderam.Financeiro
+	 
+	 2) Executar pra quantas migrations existirem 
+		Remove-Migration -StartupProject Alderam.Financeiro 
+
+	 3) Adicionar a migration de inicializacao do banco de dados 
+		Add-Migration InicializacaodoBandoDeDados -StartupProject Alderam.Financeiro   
+
+	 4) Update the database with the initial migration 
+		Update-Database
