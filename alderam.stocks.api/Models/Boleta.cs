@@ -1,27 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace alderam.stocks.api.Models
 {
-    public class Operacao
+    public class Boleta
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public Boleta Boleta { get; set; }
-
-        [Required]
-        public Ativo Ativo { get; set; }
-
+        [MaxLength(30)]
+        public string Numero { get; set; }
+        
         [Required]
         public DateTime DataDaOperacao { get; set; }
-
-        [Required]
-        public int Quantitidade { get; set; }
-
-        [Required]
-        public double PrecoDeCompra { get; set; }
 
         public double TaxaDeLiquidacao { get; set; }
 
@@ -34,7 +27,9 @@ namespace alderam.stocks.api.Models
         [Required]
         public DateTime DataDeCriacao { get; set; }
 
-        [Required]
-        public double ValorDaOperacao { get; set; }
+        [MaxLength(500)]
+        public string Observacoes { get; set; }
+
+        public IList<Operacao> Operacoes { get; set; }
     }
 }

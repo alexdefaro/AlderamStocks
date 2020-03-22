@@ -41,7 +41,46 @@ namespace alderam.stocks.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ativo");
+                    b.ToTable("Ativos");
+                });
+
+            modelBuilder.Entity("alderam.stocks.api.Models.Boleta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Corretagem")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("DataDaOperacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataDeCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Emolumentos")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ISS")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Observacoes")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<double>("TaxaDeLiquidacao")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Boletas");
                 });
 
             modelBuilder.Entity("alderam.stocks.api.Models.Operacao", b =>
@@ -54,13 +93,16 @@ namespace alderam.stocks.api.Migrations
                     b.Property<int>("AtivoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BoletaId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Corretagem")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("DataDeCriacao")
+                    b.Property<DateTime>("DataDaOperacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateDaOperacao")
+                    b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("Emolumentos")
@@ -78,9 +120,14 @@ namespace alderam.stocks.api.Migrations
                     b.Property<double>("TaxaDeLiquidacao")
                         .HasColumnType("float");
 
+                    b.Property<double>("ValorDaOperacao")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AtivoId");
+
+                    b.HasIndex("BoletaId");
 
                     b.ToTable("Operacoes");
                 });
@@ -90,6 +137,12 @@ namespace alderam.stocks.api.Migrations
                     b.HasOne("alderam.stocks.api.Models.Ativo", "Ativo")
                         .WithMany()
                         .HasForeignKey("AtivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("alderam.stocks.api.Models.Boleta", "Boleta")
+                        .WithMany("Operacoes")
+                        .HasForeignKey("BoletaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -16,13 +16,13 @@
 
 # Restart database migrations 
 	 1) Resetar o arquivo de migrations do banco de dados 
-		Update-Database 0 -StartupProject Alderam.Financeiro
+		Update-Database 0 
 	 
 	 2) Executar pra quantas migrations existirem 
-		Remove-Migration -StartupProject Alderam.Financeiro 
+		Remove-Migration 
 
 	 3) Adicionar a migration de inicializacao do banco de dados 
-		Add-Migration InicializacaodoBandoDeDados -StartupProject Alderam.Financeiro   
+		Add-Migration InicializacaodoBandoDeDados
 
 	 4) Update the database with the initial migration 
 		Update-Database

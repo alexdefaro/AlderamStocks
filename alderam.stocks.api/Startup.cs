@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using alderam.stocks.api.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
+using AutoMapper;
+
+using alderam.stocks.api.Database;
+using alderam.stocks.api.Services;
 
 namespace alderam.stocks.api
 {
@@ -29,9 +26,27 @@ namespace alderam.stocks.api
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                options.EnableSensitiveDataLogging();
             });
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IStockService, StockService>();
+
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressMapClientErrors = true;
+                    //options.SuppressConsumesConstraintForFormFileParameters = true;
+                    //options.SuppressInferBindingSourcesForParameters = true;
+                    //options.SuppressModelStateInvalidFilter = true;
+                    //options.ClientErrorMapping[404].Link = "https://httpstatuses.com/404";
+                });
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

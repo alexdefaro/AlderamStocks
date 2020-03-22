@@ -11,12 +11,29 @@
     <Compile Remove="Migrations\20200319142221_DatabaseInitialization.Designer.cs" />
     <Compile Remove="Migrations\20200319142516_DatabaseInitialization.cs" />
     <Compile Remove="Migrations\20200319142516_DatabaseInitialization.Designer.cs" />
+    <Compile Remove="Migrations\20200319142606_DatabaseInitialization.cs" />
+    <Compile Remove="Migrations\20200319142606_DatabaseInitialization.Designer.cs" />
+    <Compile Remove="Migrations\20200320131409_update.cs" />
+    <Compile Remove="Migrations\20200320131409_update.Designer.cs" />
+    <Compile Remove="Migrations\20200320144025_InicializacaodoBandoDeDados.cs" />
+    <Compile Remove="Migrations\20200320144025_InicializacaodoBandoDeDados.Designer.cs" />
+    <Compile Remove="Migrations\20200320144229_update.cs" />
+    <Compile Remove="Migrations\20200320144229_update.Designer.cs" />
+    <Compile Remove="Migrations\20200320144256_update.cs" />
+    <Compile Remove="Migrations\20200320144256_update.Designer.cs" />
+    <Compile Remove="Migrations\20200322134912_Update1.cs" />
+    <Compile Remove="Migrations\20200322134912_Update1.Designer.cs" />
+    <Compile Remove="Migrations\20200322135115_Update2.cs" />
+    <Compile Remove="Migrations\20200322135115_Update2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>

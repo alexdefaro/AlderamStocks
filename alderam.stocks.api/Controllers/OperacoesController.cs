@@ -8,6 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using alderam.stocks.api.Database;
 using alderam.stocks.api.Models;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
+using AutoMapper;
+using alderam.stocks.api.Services;
+using System.Runtime.Serialization;
+using alderam.stocks.api.Models.DTOs;
 
 namespace alderam.stocks.api.Controllers
 {
@@ -15,11 +20,19 @@ namespace alderam.stocks.api.Controllers
     [Route("api/[controller]")]
     public class OperacoesController : ControllerBase
     {
+        private readonly IStockService _stockService;
         private readonly ILogger<OperacoesController> _logger;
         private readonly DatabaseContext _databaseContext;
 
-        public OperacoesController(ILogger<OperacoesController> logger, DatabaseContext databaseContext)
+        public IMapper _mapper { get; }
+
+        public OperacoesController(IMapper mapper,
+                                   IStockService stockService, 
+                                   ILogger<OperacoesController> logger,
+                                   DatabaseContext databaseContext)
         {
+            _mapper = mapper;
+            _stockService = stockService;
             _logger = logger;
             _databaseContext = databaseContext;
         }
@@ -27,7 +40,9 @@ namespace alderam.stocks.api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Operacao>>> Get()
         {
-            return await _databaseContext.Operacoes.ToListAsync();
+            return await _databaseContext.Operacoes
+                .Include(i => i.Ativo)
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -73,12 +88,31 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Operacao>> Post(Operacao operacao)
+        public async Task<ActionResult<Operacao>> Post(OperacaoDTO operacaoRequest)
         {
+            var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacaoRequest.codigoDoAtivo);
+
+            if (ativo == null)
+            {
+                ativo = new Ativo()
+                {
+                    Codigo = operacaoRequest.codigoDoAtivo,
+                    Nome = operacaoRequest.codigoDoAtivo,
+                    DataDeCriacao = DateTime.Now
+                };
+            }
+
+            var operacao = new Operacao();
+
+            operacao = _mapper.Map<Operacao>(operacaoRequest);
+            operacao.Ativo = ativo;
+            operacao.DataDeCriacao = DateTime.Now;
+            operacao.ValorDaOperacao = (operacaoRequest.quantitidade * operacaoRequest.precoDeCompra); 
+
             _databaseContext.Operacoes.Add(operacao);
             await _databaseContext.SaveChangesAsync();
 
-            return CreatedAtAction("GetOperacao", new { id = operacao.Id }, operacao);
+            return CreatedAtAction("Get", new { id = operacao.Id }, operacao);
         }
 
         [HttpDelete("{id}")]
