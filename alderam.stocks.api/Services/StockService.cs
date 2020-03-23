@@ -13,6 +13,7 @@ namespace alderam.stocks.api.Services
     public interface IStockService
     {
         Task<Boleta> IncluirBoleta(BoletaDTO boletaRequest);
+        Task<Boleta> AtualizarBoleta(BoletaDTO boletaRequest);
         double CalculateCorretagem(IEnumerable<Operacao> operacoes);
         double CalculateTaxaDeLiquidacao(IEnumerable<Operacao> operacoes);
         double CalculateEmolumentos(IEnumerable<Operacao> operacoes);
@@ -35,19 +36,57 @@ namespace alderam.stocks.api.Services
         {
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacao.codigoDoAtivo);
+                var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacao.CodigoDoAtivo);
 
                 if (ativo == null)
                 {
                     ativo = new Ativo()
                     {
-                        Codigo = operacao.codigoDoAtivo,
-                        Nome = operacao.codigoDoAtivo,
+                        Codigo = operacao.CodigoDoAtivo,
+                        Nome = operacao.CodigoDoAtivo,
                         DataDeCriacao = DateTime.Now
                     };
                 }
 
-                operacao.ativo = ativo;
+                operacao.Ativo = ativo;
+                operacao.DataDaOperacao = boletaRequest.dataDaOperacao;
+                operacao.DataDeCriacao = DateTime.Now;
+            }
+
+            var boleta = new Boleta();
+
+            boleta = _mapper.Map<Boleta>(boletaRequest);
+            boleta.Emolumentos = this.CalculateEmolumentos(boleta.Operacoes);
+            boleta.Corretagem = this.CalculateCorretagem(boleta.Operacoes);
+            boleta.ISS = this.CalculateISS(boleta.Corretagem);
+            boleta.TaxaDeLiquidacao = this.CalculateTaxaDeLiquidacao(boleta.Operacoes);
+
+            boleta.DataDaOperacao = boletaRequest.dataDaOperacao;
+            boleta.DataDeCriacao = DateTime.Now;
+
+            _databaseContext.Boletas.Add(boleta);
+            await _databaseContext.SaveChangesAsync();
+
+            return boleta;
+        }
+
+        public async Task<Boleta> AtualizarBoleta(BoletaDTO boletaRequest)
+        {
+            foreach (var operacao in boletaRequest.Operacoes)
+            {
+                var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacao.CodigoDoAtivo);
+
+                if (ativo == null)
+                {
+                    ativo = new Ativo()
+                    {
+                        Codigo = operacao.CodigoDoAtivo,
+                        Nome = operacao.CodigoDoAtivo,
+                        DataDeCriacao = DateTime.Now
+                    };
+                }
+
+                operacao.Ativo = ativo;
             }
 
             var boleta = new Boleta();

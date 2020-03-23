@@ -10,27 +10,28 @@ namespace alderam.stocks.api.Models.DTOs
     public class OperacaoDTO
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Codigo do ativo é obrigatório.")]
-        public string codigoDoAtivo { get; set; }
-
+        public string CodigoDoAtivo { get; set; }
 
         [IgnoreDataMember]
-        public Ativo ativo { get; set; }
+        public Ativo Ativo { get; set; }
         
         [Required(ErrorMessage = "Data da operacao é obrigatória.")]
         [DataType(DataType.DateTime, ErrorMessage = "Formato da Data da operacao deve ser <ANO>-<MÊS>-<DIA>T<HORA>:<MINUTO>:<SEGUNDO>.")]
         [DataDaOperacaoValidation]
-        public DateTime dataDaOperacao { get; set; }
+        public DateTime DataDaOperacao { get; set; }
 
         [Required(ErrorMessage = "Quantitidade é obrigatória")]
         [Range(1, 10000, ErrorMessage = "Quantitidade deve estar entre 1 e 1000.")]
-        public int quantitidade { get; set; }
+        public int Quantitidade { get; set; }
 
         [Required(ErrorMessage = "Preco de compra é obrigatório")]
         [Range(1, 10000, ErrorMessage = "Preco de compra deve estar entre 1.00 e 100000.00.")]
-        public double precoDeCompra { get; set; }
+        public double PrecoDeCompra { get; set; }
+        
+        public DateTime DataDeCriacao { get; set; }
     }
 
     public class DataDaOperacaoValidationAttribute : ValidationAttribute

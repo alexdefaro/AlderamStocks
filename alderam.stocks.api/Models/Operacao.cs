@@ -23,14 +23,6 @@ namespace alderam.stocks.api.Models
         [Required]
         public double PrecoDeCompra { get; set; }
 
-        public double TaxaDeLiquidacao { get; set; }
-
-        public double Emolumentos { get; set; }
-
-        public double Corretagem { get; set; }
-
-        public double ISS { get; set; }
-
         [Required]
         public DateTime DataDeCriacao { get; set; }
 

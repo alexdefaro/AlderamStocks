@@ -52,14 +52,14 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Boleta boleta)
+        public async Task<IActionResult> Put(int id, BoletaDTO boletaRequest)
         {
-            if (id != boleta.Id)
+            if (id != boletaRequest.Id)
             {
                 return BadRequest();
             }
 
-            _databaseContext.Entry(boleta).State = EntityState.Modified;
+            _databaseContext.Entry(boletaRequest).State = EntityState.Modified;
 
             try
             {
@@ -84,7 +84,8 @@ namespace alderam.stocks.api.Controllers
         public async Task<ActionResult<Boleta>> Post(BoletaDTO boletaRequest)
         {
             var boleta = await _stockService.IncluirBoleta(boletaRequest);
-            return CreatedAtAction("Get", new { id = boleta.Id }, new { id = boleta.Id, statusCode = StatusCodes.Status201Created });
+            return CreatedAtAction("Get", new { id = boleta.Id }, boleta);
+            //return CreatedAtAction("Get", new { id = boleta.Id }, new { id = boleta.Id, statusCode = StatusCodes.Status201Created });
         }
 
         [HttpDelete("{id}")]

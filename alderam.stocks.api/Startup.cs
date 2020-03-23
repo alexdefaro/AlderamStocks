@@ -9,6 +9,7 @@ using AutoMapper;
 
 using alderam.stocks.api.Database;
 using alderam.stocks.api.Services;
+using Newtonsoft.Json.Serialization;
 
 namespace alderam.stocks.api
 {
@@ -37,16 +38,15 @@ namespace alderam.stocks.api
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressMapClientErrors = true;
-                    //options.SuppressConsumesConstraintForFormFileParameters = true;
-                    //options.SuppressInferBindingSourcesForParameters = true;
-                    //options.SuppressModelStateInvalidFilter = true;
-                    //options.ClientErrorMapping[404].Link = "https://httpstatuses.com/404";
                 });
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.PropertyNamingPolicy = null
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

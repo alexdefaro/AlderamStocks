@@ -9,7 +9,7 @@ namespace alderam.stocks.api.Models.DTOs
     public class BoletaDTO
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Número da boleta é obrigatório.")]
         public string Numero { get; set; }

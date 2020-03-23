@@ -90,14 +90,14 @@ namespace alderam.stocks.api.Controllers
         [HttpPost]
         public async Task<ActionResult<Operacao>> Post(OperacaoDTO operacaoRequest)
         {
-            var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacaoRequest.codigoDoAtivo);
+            var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == operacaoRequest.CodigoDoAtivo);
 
             if (ativo == null)
             {
                 ativo = new Ativo()
                 {
-                    Codigo = operacaoRequest.codigoDoAtivo,
-                    Nome = operacaoRequest.codigoDoAtivo,
+                    Codigo = operacaoRequest.CodigoDoAtivo,
+                    Nome = operacaoRequest.CodigoDoAtivo,
                     DataDeCriacao = DateTime.Now
                 };
             }
@@ -107,7 +107,7 @@ namespace alderam.stocks.api.Controllers
             operacao = _mapper.Map<Operacao>(operacaoRequest);
             operacao.Ativo = ativo;
             operacao.DataDeCriacao = DateTime.Now;
-            operacao.ValorDaOperacao = (operacaoRequest.quantitidade * operacaoRequest.precoDeCompra); 
+            operacao.ValorDaOperacao = (operacaoRequest.Quantitidade * operacaoRequest.PrecoDeCompra); 
 
             _databaseContext.Operacoes.Add(operacao);
             await _databaseContext.SaveChangesAsync();
