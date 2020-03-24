@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using alderam.stocks.api.Services;
 using alderam.stocks.api.Models.DTOs;
+using System.Diagnostics;
 
 namespace alderam.stocks.api.Controllers
 {
@@ -35,20 +36,34 @@ namespace alderam.stocks.api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Boleta>>> Get()
         {
-            return await _databaseContext.Boletas.ToListAsync();
+            var boletas = await _stockService.RecuperarBoletas();
+
+            return boletas.ToList();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Boleta>> Get(int id)
-        {
-             var boleta = await _databaseContext.Boletas.FindAsync(id);
-
-            if (boleta == null)
+        {                
+            try
             {
-                return NotFound();
-            }
+                var boleta = await _stockService.RecuperarBoleta(id);
 
-            return boleta;
+                return boleta;
+            }
+            catch  
+            {
+                if (!_databaseContext.Boletas.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+
+                if (Debugger.IsAttached)
+                {
+                    throw;
+                }                
+
+                return  StatusCode(StatusCodes.Status500InternalServerError);
+            }            
         }
 
         [HttpPut("{id}")]
@@ -59,22 +74,23 @@ namespace alderam.stocks.api.Controllers
                 return BadRequest();
             }
 
-            _databaseContext.Entry(boletaRequest).State = EntityState.Modified;
-
             try
             {
-                await _databaseContext.SaveChangesAsync();
+                await _stockService.AtualizarBoleta(boletaRequest);
             }
-            catch (DbUpdateConcurrencyException)
+            catch  
             {
                 if (!_databaseContext.Boletas.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
-                else
+
+                if (Debugger.IsAttached)
                 {
                     throw;
-                }
+                }                
+
+                return  StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return NoContent();
@@ -84,23 +100,32 @@ namespace alderam.stocks.api.Controllers
         public async Task<ActionResult<Boleta>> Post(BoletaDTO boletaRequest)
         {
             var boleta = await _stockService.IncluirBoleta(boletaRequest);
-            return CreatedAtAction("Get", new { id = boleta.Id }, boleta);
-            //return CreatedAtAction("Get", new { id = boleta.Id }, new { id = boleta.Id, statusCode = StatusCodes.Status201Created });
+            return CreatedAtAction("Get", new { id = boleta.Id }, new { id = boleta.Id, statusCode = StatusCodes.Status201Created });
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Boleta>> Delete(int id)
         {
-            var boleta = await _databaseContext.Boletas.FindAsync(id);
-            if (boleta == null)
+            try
             {
-                return NotFound();
+                await _stockService.ExcluirBoleta(id);
+            }
+            catch  
+            {
+                if (!_databaseContext.Boletas.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+
+                if (Debugger.IsAttached)
+                {
+                    throw;
+                }                
+
+                return  StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            _databaseContext.Boletas.Remove(boleta);
-            await _databaseContext.SaveChangesAsync();
-
-            return boleta;
+            return NoContent();
         }
     }
 }

@@ -53,10 +53,6 @@ namespace alderam.stocks.api.Migrations
                     DataDaOperacao = table.Column<DateTime>(nullable: false),
                     Quantitidade = table.Column<int>(nullable: false),
                     PrecoDeCompra = table.Column<double>(nullable: false),
-                    TaxaDeLiquidacao = table.Column<double>(nullable: false),
-                    Emolumentos = table.Column<double>(nullable: false),
-                    Corretagem = table.Column<double>(nullable: false),
-                    ISS = table.Column<double>(nullable: false),
                     DataDeCriacao = table.Column<DateTime>(nullable: false),
                     ValorDaOperacao = table.Column<double>(nullable: false)
                 },
@@ -68,14 +64,20 @@ namespace alderam.stocks.api.Migrations
                         column: x => x.AtivoId,
                         principalTable: "Ativos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Operacoes_Boletas_BoletaId",
                         column: x => x.BoletaId,
                         principalTable: "Boletas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ativos_Codigo",
+                table: "Ativos",
+                column: "Codigo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Operacoes_AtivoId",

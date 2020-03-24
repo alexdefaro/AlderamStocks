@@ -41,6 +41,9 @@ namespace alderam.stocks.api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
                     b.ToTable("Ativos");
                 });
 

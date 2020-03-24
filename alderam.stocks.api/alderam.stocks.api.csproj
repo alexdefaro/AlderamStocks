@@ -25,6 +25,12 @@
     <Compile Remove="Migrations\20200322134912_Update1.Designer.cs" />
     <Compile Remove="Migrations\20200322135115_Update2.cs" />
     <Compile Remove="Migrations\20200322135115_Update2.Designer.cs" />
+    <Compile Remove="Migrations\20200322161459_InicializacaodoBandoDeDados.cs" />
+    <Compile Remove="Migrations\20200322161459_InicializacaodoBandoDeDados.Designer.cs" />
+    <Compile Remove="Migrations\20200323145059_bla.cs" />
+    <Compile Remove="Migrations\20200323145059_bla.Designer.cs" />
+    <Compile Remove="Migrations\20200325001049_index.cs" />
+    <Compile Remove="Migrations\20200325001049_index.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

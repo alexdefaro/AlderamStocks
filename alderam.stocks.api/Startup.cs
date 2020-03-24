@@ -10,24 +10,39 @@ using AutoMapper;
 using alderam.stocks.api.Database;
 using alderam.stocks.api.Services;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace alderam.stocks.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public static readonly ILoggerFactory _loggerFactory
+            = LoggerFactory.Create(builder =>
+                {
+                    builder
+                        .AddFilter((category, level) =>
+                            category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
+                        .AddConsole();
+                });
 
         public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        {
+            Configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
-                options.EnableSensitiveDataLogging();
+                options.UseLoggerFactory(_loggerFactory);
+                options.EnableSensitiveDataLogging(_webHostEnvironment.IsDevelopment());
             });
 
             services.AddAutoMapper(typeof(Startup));
@@ -49,9 +64,9 @@ namespace alderam.stocks.api
             );
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (_webHostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -69,3 +84,5 @@ namespace alderam.stocks.api
         }
     }
 }
+
+

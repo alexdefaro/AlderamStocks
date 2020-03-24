@@ -14,8 +14,8 @@ namespace alderam.stocks.api.Models.Mappers
             CreateMap<Operacao, OperacaoDTO>(); 
             CreateMap<OperacaoDTO, Operacao>(); 
 
-            //CreateMap<Ativo, AtivoRequest>(); 
-            //CreateMap<AtivoRequest, Ativo>(); 
+            //CreateMap<Ativo, AtivoDTO>(); 
+            //CreateMap<AtivoDTO, Ativo>(); 
         }
     }
 }

@@ -10,8 +10,8 @@ using alderam.stocks.api.Database;
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200323145059_bla")]
-    partial class bla
+    [Migration("20200325123402_InicializacaodoBandoDeDados")]
+    partial class InicializacaodoBandoDeDados
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,9 @@ namespace alderam.stocks.api.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.ToTable("Ativos");
                 });

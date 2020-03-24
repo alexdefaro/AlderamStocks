@@ -17,7 +17,7 @@ namespace alderam.stocks.api.Models.DTOs
         [Required(ErrorMessage = "Data da operação é obrigatória.")]
         [DataType(DataType.DateTime, ErrorMessage = "Formato da Data da operação deve ser <ANO>-<MÊS>-<DIA>T<HORA>:<MINUTO>:<SEGUNDO>.")]
         [DataDaBoletaValidation]
-        public DateTime dataDaOperacao { get; set; }
+        public DateTime DataDaOperacao { get; set; }
 
         [MaxLength(500)]
         public string Observacoes { get; set; }

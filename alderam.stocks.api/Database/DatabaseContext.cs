@@ -8,8 +8,16 @@ namespace alderam.stocks.api.Database
         public DatabaseContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
+
         public DbSet<Ativo> Ativos { get; set; }
         public DbSet<Operacao> Operacoes { get; set; }
         public DbSet<Boleta> Boletas { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ativo>()
+                .HasIndex(b => b.Codigo)
+                .IsUnique();
+        }
     }
 }
