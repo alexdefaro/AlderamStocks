@@ -15,19 +15,22 @@ namespace alderam.stocks.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        {
+            Configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
-                options.EnableSensitiveDataLogging();
+                options.EnableSensitiveDataLogging(_webHostEnvironment.IsDevelopment());
             });
 
             services.AddAutoMapper(typeof(Startup));
@@ -49,9 +52,9 @@ namespace alderam.stocks.api
             );
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (_webHostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

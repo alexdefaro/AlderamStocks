@@ -59,13 +59,11 @@ namespace alderam.stocks.api.Controllers
                 return BadRequest();
             }
 
-            _databaseContext.Entry(boletaRequest).State = EntityState.Modified;
-
             try
             {
-                await _databaseContext.SaveChangesAsync();
+                await _stockService.AtualizarBoleta(boletaRequest);
             }
-            catch (DbUpdateConcurrencyException)
+            catch  
             {
                 if (!_databaseContext.Boletas.Any(e => e.Id == id))
                 {
