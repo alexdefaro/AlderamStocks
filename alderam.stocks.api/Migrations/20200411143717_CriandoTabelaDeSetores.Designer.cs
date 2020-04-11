@@ -3,44 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using alderam.stocks.api.Database;
 
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200411143717_CriandoTabelaDeSetores")]
+    partial class CriandoTabelaDeSetores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("alderam.stocks.api.Models.Acompanhamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AtivoId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("PrecoAtual")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PrecoDeCompra")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AtivoId");
-
-                    b.ToTable("Acompanhamentos");
-                });
 
             modelBuilder.Entity("alderam.stocks.api.Models.Ativo", b =>
                 {
@@ -62,15 +41,10 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int?>("SetorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Codigo")
                         .IsUnique();
-
-                    b.HasIndex("SetorId");
 
                     b.ToTable("Ativos");
                 });
@@ -160,8 +134,8 @@ namespace alderam.stocks.api.Migrations
 
                     b.Property<string>("Codigo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -171,22 +145,6 @@ namespace alderam.stocks.api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Setores");
-                });
-
-            modelBuilder.Entity("alderam.stocks.api.Models.Acompanhamento", b =>
-                {
-                    b.HasOne("alderam.stocks.api.Models.Ativo", "Ativo")
-                        .WithMany()
-                        .HasForeignKey("AtivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("alderam.stocks.api.Models.Ativo", b =>
-                {
-                    b.HasOne("alderam.stocks.api.Models.Setor", "Setor")
-                        .WithMany()
-                        .HasForeignKey("SetorId");
                 });
 
             modelBuilder.Entity("alderam.stocks.api.Models.Operacao", b =>

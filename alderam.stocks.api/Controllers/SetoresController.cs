@@ -18,13 +18,13 @@ namespace alderam.stocks.api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AtivosController : ControllerBase
+    public class SetoresController : ControllerBase
     {
         private readonly IStockService _stockService;
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public AtivosController(IMapper mapper,
+        public SetoresController(IMapper mapper,
                                  IStockService stockService, 
                                  DatabaseContext databaseContext)
         {
@@ -34,25 +34,25 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ativo>>> Get()
+        public async Task<ActionResult<IEnumerable<Setor>>> Get()
         {
-            var Ativos = await _stockService.RecuperarAtivos();
+            var Setores = await _stockService.RecuperarSetores();
 
-            return Ativos.ToList();
+            return Setores.ToList();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ativo>> Get(int id)
+        public async Task<ActionResult<Setor>> Get(int id)
         {                
             try
             {
-                var Ativo = await _stockService.RecuperarAtivo(id);
+                var Setor = await _stockService.RecuperarSetor(id);
 
-                return Ativo;
+                return Setor;
             }
             catch  
             {
-                if (!_databaseContext.Ativos.Any(e => e.Id == id))
+                if (!_databaseContext.Setores.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
@@ -64,6 +64,6 @@ namespace alderam.stocks.api.Controllers
 
                 return  StatusCode(StatusCodes.Status500InternalServerError);
             }            
-        } 
+        }
     }
 }

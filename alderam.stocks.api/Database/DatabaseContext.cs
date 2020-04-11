@@ -9,9 +9,11 @@ namespace alderam.stocks.api.Database
         {
         }
 
+        public DbSet<Setor> Setores { get; set; }
         public DbSet<Ativo> Ativos { get; set; }
         public DbSet<Operacao> Operacoes { get; set; }
         public DbSet<Boleta> Boletas { get; set; }
+        public DbSet<Acompanhamento> Acompanhamentos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
