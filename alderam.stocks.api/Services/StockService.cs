@@ -13,6 +13,8 @@ namespace alderam.stocks.api.Services
 {
     public interface IStockService
     {
+        Task<ResumoDTO> RecuperarResumoDaCarteira();        
+
         // Operacoes
         Task<IEnumerable<Operacao>> RecuperarOperacoes();
         
@@ -39,10 +41,10 @@ namespace alderam.stocks.api.Services
         Task<Boleta> IncluirBoleta(BoletaDTO boletaRequest);
         Task<Boleta> AtualizarBoleta(BoletaDTO boletaRequest);
 
-        double CalcularCorretagem(IEnumerable<Operacao> operacoes);
-        double CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes);
-        double CalcularEmolumentos(IEnumerable<Operacao> operacoes);
-        double CalcularISS(double valorDaCorretagem);
+        decimal CalcularCorretagem(IEnumerable<Operacao> operacoes);
+        decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes);
+        decimal CalcularEmolumentos(IEnumerable<Operacao> operacoes);
+        decimal CalcularISS(decimal valorDaCorretagem);
     }
 
     public class StockService : IStockService
@@ -55,6 +57,21 @@ namespace alderam.stocks.api.Services
         {
             _mapper = mapper;
             _databaseContext = databaseContext;
+        }
+
+        private decimal Truncate(decimal value)
+        {
+            var result =  Math.Truncate(100 * value) / 100;
+            return result;
+        }
+
+        public async Task<ResumoDTO> RecuperarResumoDaCarteira()        
+        {
+            var resumo = new ResumoDTO();
+
+            resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
+
+            return resumo;
         }
 
         public async Task<IEnumerable<Operacao>> RecuperarOperacoes()
@@ -133,7 +150,7 @@ namespace alderam.stocks.api.Services
 
         public async Task<Acompanhamento> IncluirAcompanhamento(AcompanhamentoDTO requestDTO)
         {
-            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo);
+            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
 
             var registro = _mapper.Map<Acompanhamento>(requestDTO);
             
@@ -160,7 +177,7 @@ namespace alderam.stocks.api.Services
                 .Include(i => i.Ativo)
                 .SingleAsync(r => r.Id == requestDTO.Id);
 
-            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo);
+            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
 
             _mapper.Map(requestDTO, registro);
 
@@ -174,7 +191,8 @@ namespace alderam.stocks.api.Services
         {
             var boletas = _databaseContext.Boletas
                 .Include(i => i.Operacoes)
-                    .ThenInclude(i => i.Ativo);
+                    .ThenInclude(i => i.Ativo)
+                .OrderBy(o => o.DataDaOperacao);
 
             if (id != null)
             {
@@ -193,11 +211,15 @@ namespace alderam.stocks.api.Services
 
         public async Task<Boleta> IncluirBoleta(BoletaDTO boletaRequest)
         {
+            decimal valorTotalDaOperacao = 0;
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo);
-                operacao.DataDaOperacao = operacao.DataDaOperacao;
+                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
                 operacao.DataDeCriacao = DateTime.Now;
+                operacao.DataDaOperacao = operacao.DataDaOperacao;
+                operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoDeCompra);
+
+                valorTotalDaOperacao += operacao.ValorDaOperacao;
             }
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
@@ -206,6 +228,9 @@ namespace alderam.stocks.api.Services
             boleta.Corretagem = CalcularCorretagem(boleta.Operacoes);
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
+
+            boleta.ValorDaCompra = valorTotalDaOperacao;
+            boleta.ValorDaOperacao = valorTotalDaOperacao + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao;
 
             boleta.DataDaOperacao = boletaRequest.DataDaOperacao;
             boleta.DataDeCriacao = DateTime.Now;
@@ -237,7 +262,7 @@ namespace alderam.stocks.api.Services
 
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo);
+                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
             }
 
@@ -255,16 +280,16 @@ namespace alderam.stocks.api.Services
             return boleta;
         }
 
-        public async Task<Ativo> CriarAtivo(string codigoDoAtivo)
+        public async Task<Ativo> CriarAtivo(string codigo, string nome)
         {
-            var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == codigoDoAtivo);
+            var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == codigo);
 
             if (ativo == null)
             {
                 ativo = new Ativo()
                 {
-                    Codigo = codigoDoAtivo,
-                    Nome = codigoDoAtivo,
+                    Codigo = codigo,
+                    Nome = nome,
                     DataDeCriacao = DateTime.Now
                 };
 
@@ -275,31 +300,31 @@ namespace alderam.stocks.api.Services
             return ativo;
         }
 
-        public double CalcularCorretagem(IEnumerable<Operacao> operacoes)
+        public decimal CalcularCorretagem(IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
-            var result = (10 + (valorDaOperacao * 0.003)) + 10;
-            return result;
+            var result = (10 + (valorDaOperacao * 0.003m)) + 10;
+            return Truncate((decimal)result);
         } // = (10+((F5)*0.003))+10
 
-        public double CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes)
+        public decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
-            var result = (valorDaOperacao * 0.0275) / 100;
-            return result;
+            var result = (valorDaOperacao * 0.0275m) / 100;
+            return Truncate((decimal)result);
         } // =(F5*0.0275)/100
 
-        public double CalcularEmolumentos(IEnumerable<Operacao> operacoes)
+        public decimal CalcularEmolumentos(IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
-            var result = ((valorDaOperacao * 0.003248) / 100);
-            return result;
+            var result = ((valorDaOperacao * 0.003248m) / 100);
+            return Truncate((decimal)result);
         } // = ((F5*0.003248)/100) 
 
-        public double CalcularISS(double valorDaCorretagem)
+        public decimal CalcularISS(decimal valorDaCorretagem)
         {
-            var result = ((valorDaCorretagem / 0.95) - valorDaCorretagem);
-            return result;
+            var result = ((valorDaCorretagem / (decimal)0.95) - valorDaCorretagem);
+            return Truncate(result);
         } // = ((J5/0.95)-J5) 
     }
 }

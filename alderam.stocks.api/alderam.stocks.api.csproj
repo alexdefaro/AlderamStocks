@@ -31,8 +31,20 @@
     <Compile Remove="Migrations\20200323145059_bla.Designer.cs" />
     <Compile Remove="Migrations\20200325001049_index.cs" />
     <Compile Remove="Migrations\20200325001049_index.Designer.cs" />
+    <Compile Remove="Migrations\20200325123402_InicializacaodoBandoDeDados.cs" />
+    <Compile Remove="Migrations\20200325123402_InicializacaodoBandoDeDados.Designer.cs" />
     <Compile Remove="Migrations\20200411143307_CriandoTabelaDeSetores.cs" />
     <Compile Remove="Migrations\20200411143307_CriandoTabelaDeSetores.Designer.cs" />
+    <Compile Remove="Migrations\20200411143717_CriandoTabelaDeSetores.cs" />
+    <Compile Remove="Migrations\20200411143717_CriandoTabelaDeSetores.Designer.cs" />
+    <Compile Remove="Migrations\20200411144503_AdicionandoSetorNaTabelaDeAtivo.cs" />
+    <Compile Remove="Migrations\20200411144503_AdicionandoSetorNaTabelaDeAtivo.Designer.cs" />
+    <Compile Remove="Migrations\20200411144921_CriandoTabelaDeAcompanhamento.cs" />
+    <Compile Remove="Migrations\20200411144921_CriandoTabelaDeAcompanhamento.Designer.cs" />
+    <Compile Remove="Migrations\20200414122244_blala.cs" />
+    <Compile Remove="Migrations\20200414122244_blala.Designer.cs" />
+    <Compile Remove="Migrations\20200414130514_InicializacaodoBandoDeDados.cs" />
+    <Compile Remove="Migrations\20200414130514_InicializacaodoBandoDeDados.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

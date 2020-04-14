@@ -21,12 +21,12 @@ namespace alderam.stocks.api.Models
         public int Quantitidade { get; set; }
 
         [Required]
-        public double PrecoDeCompra { get; set; }
+        public decimal PrecoDeCompra { get; set; }
 
         [Required]
         public DateTime DataDeCriacao { get; set; }
 
         [Required]
-        public double ValorDaOperacao { get; set; }
+        public decimal ValorDaOperacao { get; set; }
     }
 }

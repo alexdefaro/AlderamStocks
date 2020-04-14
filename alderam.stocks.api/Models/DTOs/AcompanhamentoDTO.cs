@@ -15,6 +15,9 @@ namespace alderam.stocks.api.Models.DTOs
         [Required(ErrorMessage = "Codigo do ativo é obrigatório.")]
         public string CodigoDoAtivo { get; set; }
         
+        [Required(ErrorMessage = "Nome do ativo é obrigatório.")]
+        public string nomeDoAtivo { get; set; }
+
         [IgnoreDataMember]
         public Ativo Ativo { get; set; }
         

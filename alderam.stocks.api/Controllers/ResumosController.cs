@@ -18,13 +18,13 @@ namespace alderam.stocks.api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OperacoesController : ControllerBase
+    public class ResumosController : ControllerBase
     {
         private readonly IStockService _stockService;
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public OperacoesController(IMapper mapper,
+        public ResumosController(IMapper mapper,
                                  IStockService stockService, 
                                  DatabaseContext databaseContext)
         {
@@ -34,24 +34,23 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            var operacoes = await _stockService.RecuperarOperacoes();
+        public async Task<ActionResult<ResumoDTO>> Get()
+        {                
+            try
+            {
+                var resumo = await _stockService.RecuperarResumoDaCarteira();
 
-            var result = operacoes
-                .Select(r => new
+                return resumo;
+            }
+            catch  
+            {
+                if (Debugger.IsAttached)
                 {
-                    r.Id,
-                    r.DataDaOperacao,
-                    codigoDoAtivo = r.Ativo.Codigo,
-                    nomeDoAtivo = r.Ativo.Nome,
-                    r.Quantitidade,
-                    r.PrecoDeCompra,
-                    r.ValorDaOperacao
-                })
-                .OrderBy(o => o.DataDaOperacao);
+                    throw;
+                }                
 
-            return Ok(result);
+                return  StatusCode(StatusCodes.Status500InternalServerError);
+            }            
         }
     }
 }

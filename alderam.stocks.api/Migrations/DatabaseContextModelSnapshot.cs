@@ -82,8 +82,8 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Corretagem")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Corretagem")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("DataDaOperacao")
                         .HasColumnType("datetime2");
@@ -91,11 +91,11 @@ namespace alderam.stocks.api.Migrations
                     b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Emolumentos")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Emolumentos")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("ISS")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ISS")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Numero")
                         .IsRequired()
@@ -106,8 +106,14 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<double>("TaxaDeLiquidacao")
-                        .HasColumnType("float");
+                    b.Property<decimal>("TaxaDeLiquidacao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValorDaCompra")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValorDaOperacao")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -133,14 +139,14 @@ namespace alderam.stocks.api.Migrations
                     b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("PrecoDeCompra")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PrecoDeCompra")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantitidade")
                         .HasColumnType("int");
 
-                    b.Property<double>("ValorDaOperacao")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorDaOperacao")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

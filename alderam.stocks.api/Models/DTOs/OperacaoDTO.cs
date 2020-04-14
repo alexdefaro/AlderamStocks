@@ -15,6 +15,9 @@ namespace alderam.stocks.api.Models.DTOs
         [Required(ErrorMessage = "Codigo do ativo é obrigatório.")]
         public string CodigoDoAtivo { get; set; }
 
+        [Required(ErrorMessage = "Nome do ativo é obrigatório.")]
+        public string nomeDoAtivo { get; set; }
+
         [IgnoreDataMember]
         public Ativo Ativo { get; set; }
         
@@ -29,8 +32,10 @@ namespace alderam.stocks.api.Models.DTOs
 
         [Required(ErrorMessage = "Preco de compra é obrigatório")]
         [Range(1, 10000, ErrorMessage = "Preco de compra deve estar entre 1.00 e 100000.00.")]
-        public double PrecoDeCompra { get; set; }
+        public decimal PrecoDeCompra { get; set; }
         
+        public decimal ValorDaOperacao { get; set; }
+
         public DateTime DataDeCriacao { get; set; }
     }
 

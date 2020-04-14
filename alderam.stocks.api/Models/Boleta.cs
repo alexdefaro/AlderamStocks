@@ -16,16 +16,20 @@ namespace alderam.stocks.api.Models
         [Required]
         public DateTime DataDaOperacao { get; set; }
 
-        public double TaxaDeLiquidacao { get; set; }
+        public decimal TaxaDeLiquidacao { get; set; }
 
-        public double Emolumentos { get; set; }
+        public decimal Emolumentos { get; set; }
 
-        public double Corretagem { get; set; }
+        public decimal Corretagem { get; set; }
 
-        public double ISS { get; set; }
+        public decimal ISS { get; set; }
 
         [Required]
         public DateTime DataDeCriacao { get; set; }
+
+        public decimal ValorDaOperacao { get; set; }
+
+        public decimal ValorDaCompra { get; set; }
 
         [MaxLength(500)]
         public string Observacoes { get; set; }
