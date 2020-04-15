@@ -74,6 +74,7 @@ namespace alderam.stocks.api.Services
             return resumo;
         }
 
+        // Operacoes
         public async Task<IEnumerable<Operacao>> RecuperarOperacoes()
         {
             var registros = await _databaseContext.Operacoes
@@ -86,6 +87,7 @@ namespace alderam.stocks.api.Services
         }
 
 
+        // Ativos 
         public async Task<IEnumerable<Ativo>> RecuperarAtivos(int? id = null)
         {
             var registros = _databaseContext.Ativos
@@ -106,6 +108,8 @@ namespace alderam.stocks.api.Services
             return registro.First();
         }
 
+
+        // Setores
         public async Task<IEnumerable<Setor>> RecuperarSetores(int? id = null)
         {
             var registros = _databaseContext.Setores
@@ -127,6 +131,7 @@ namespace alderam.stocks.api.Services
         }
 
 
+        // Acompanhamentos
         public async Task<IEnumerable<Acompanhamento>> RecuperarAcompanhamentos(int? id = null)
         {
             var registros = _databaseContext.Acompanhamentos
@@ -150,7 +155,7 @@ namespace alderam.stocks.api.Services
 
         public async Task<Acompanhamento> IncluirAcompanhamento(AcompanhamentoDTO requestDTO)
         {
-            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
+            requestDTO.Ativo = await SalvarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
 
             var registro = _mapper.Map<Acompanhamento>(requestDTO);
             
@@ -177,7 +182,7 @@ namespace alderam.stocks.api.Services
                 .Include(i => i.Ativo)
                 .SingleAsync(r => r.Id == requestDTO.Id);
 
-            requestDTO.Ativo = await CriarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
+            requestDTO.Ativo = await SalvarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
 
             _mapper.Map(requestDTO, registro);
 
@@ -187,6 +192,7 @@ namespace alderam.stocks.api.Services
         }
 
 
+        // Boletas
         public async Task<IEnumerable<Boleta>> RecuperarBoletas(int? id = null)
         {
             var boletas = _databaseContext.Boletas
@@ -214,7 +220,7 @@ namespace alderam.stocks.api.Services
             decimal valorTotalDaOperacao = 0;
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
+                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
                 operacao.DataDeCriacao = DateTime.Now;
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
                 operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoDeCompra);
@@ -262,7 +268,7 @@ namespace alderam.stocks.api.Services
 
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await CriarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
+                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
             }
 
@@ -280,7 +286,7 @@ namespace alderam.stocks.api.Services
             return boleta;
         }
 
-        public async Task<Ativo> CriarAtivo(string codigo, string nome)
+        public async Task<Ativo> SalvarAtivo(string codigo, string nome)
         {
             var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == codigo);
 
