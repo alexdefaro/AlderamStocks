@@ -25,7 +25,7 @@ namespace alderam.stocks.api.Controllers
         private readonly IMapper _mapper;
 
         public AcompanhamentosController(IMapper mapper,
-                                 IStockService stockService, 
+                                 IStockService stockService,
                                  DatabaseContext databaseContext)
         {
             _mapper = mapper;
@@ -34,23 +34,34 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Acompanhamento>>> Get()
+        public async Task<ActionResult> Get()
         {
             var Acompanhamentos = await _stockService.RecuperarAcompanhamentos();
+            var result = Acompanhamentos.Select(r => new
+            {
+                r.Id,
+                codigoDoAtivo = r.Ativo.Codigo,
+                nomeDoAtivo = r.Ativo.Nome,
+                r.Ativo.PrecoAtual,
+                r.Ativo.PrecoAnterior,
+                r.PrecoDeCompra,
+                comprar = r.Ativo.PrecoAtual.HasValue && (r.Ativo.PrecoAtual.Value <= (r.PrecoDeCompra + 0.5m ))
+            })
+            .OrderBy(o => o.codigoDoAtivo);
 
-            return Acompanhamentos.ToList();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Acompanhamento>> Get(int id)
-        {                
+        {
             try
             {
                 var Acompanhamento = await _stockService.RecuperarAcompanhamento(id);
 
                 return Acompanhamento;
             }
-            catch  
+            catch
             {
                 if (!_databaseContext.Acompanhamentos.Any(e => e.Id == id))
                 {
@@ -60,10 +71,10 @@ namespace alderam.stocks.api.Controllers
                 if (Debugger.IsAttached)
                 {
                     throw;
-                }                
+                }
 
-                return  StatusCode(StatusCodes.Status500InternalServerError);
-            }            
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPut("{id}")]
@@ -78,7 +89,7 @@ namespace alderam.stocks.api.Controllers
             {
                 await _stockService.AtualizarAcompanhamento(AcompanhamentoRequest);
             }
-            catch  
+            catch
             {
                 if (!_databaseContext.Acompanhamentos.Any(e => e.Id == id))
                 {
@@ -88,9 +99,9 @@ namespace alderam.stocks.api.Controllers
                 if (Debugger.IsAttached)
                 {
                     throw;
-                }                
+                }
 
-                return  StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return NoContent();
@@ -110,7 +121,7 @@ namespace alderam.stocks.api.Controllers
             {
                 await _stockService.ExcluirAcompanhamento(id);
             }
-            catch  
+            catch
             {
                 if (!_databaseContext.Acompanhamentos.Any(e => e.Id == id))
                 {
@@ -120,9 +131,9 @@ namespace alderam.stocks.api.Controllers
                 if (Debugger.IsAttached)
                 {
                     throw;
-                }                
+                }
 
-                return  StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return NoContent();

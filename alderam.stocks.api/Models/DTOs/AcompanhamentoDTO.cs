@@ -21,10 +21,6 @@ namespace alderam.stocks.api.Models.DTOs
         [IgnoreDataMember]
         public Ativo Ativo { get; set; }
         
-        [Required(ErrorMessage = "Preco atual é obrigatório")]
-        [Range(1, 100, ErrorMessage = "Preco atual deve estar entre 1.00 e 100.00.")]
-        public double PrecoAtual { get; set; }
-
         [Required(ErrorMessage = "Preco de compra é obrigatório")]
         [Range(1, 100, ErrorMessage = "Preco de compra deve estar entre 1.00 e 100.00.")]
         public double PrecoDeCompra { get; set; }

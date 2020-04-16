@@ -117,7 +117,7 @@ namespace alderam.stocks.api.Services
             int contador = 1;
             foreach (var ativo in ativos)
             {
-                if (ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-5))
+                if (!ativo.DataDaUltimaCotacao.HasValue || ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-5))
                 {
                     var url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ativo.Codigo}.SA&apikey=0GQ6IW3IL3BFJGTJl";
                     var response = await client.GetAsync(url);

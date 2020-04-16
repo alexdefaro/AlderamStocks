@@ -38,21 +38,20 @@ namespace alderam.stocks.api.Controllers
         {
             var operacoes = await _stockService.RecuperarOperacoes();
 
-            var result = operacoes
-                .Select(r => new
-                {
-                    r.Id,
-                    r.DataDaOperacao,
-                    codigoDoAtivo = r.Ativo.Codigo,
-                    nomeDoAtivo = r.Ativo.Nome,
-                    r.Quantitidade,
-                    r.PrecoDeCompra,
-                    r.ValorDaOperacao,
+            var result = operacoes.Select(r => new
+            {
+                r.Id,
+                r.DataDaOperacao,
+                codigoDoAtivo = r.Ativo.Codigo,
+                nomeDoAtivo = r.Ativo.Nome,
+                r.Quantitidade,
+                r.PrecoDeCompra,
+                r.ValorDaOperacao,
 
-                    PrecoAtual = r.Ativo.PrecoAtual,
-                    ValorAtual = (r.Quantitidade * r.Ativo.PrecoAtual),
-                    Rentabilidade = ((r.Quantitidade * r.Ativo.PrecoAtual) - r.ValorDaOperacao) 
-                })
+                PrecoAtual = r.Ativo.PrecoAtual,
+                ValorAtual = (r.Quantitidade * r.Ativo.PrecoAtual),
+                Rentabilidade = ((r.Quantitidade * r.Ativo.PrecoAtual) - r.ValorDaOperacao)
+            })
                 .OrderBy(o => o.DataDaOperacao);
 
             return Ok(result);

@@ -12,6 +12,6 @@ namespace alderam.stocks.api.Models
         public Ativo Ativo { get; set; }
 
         [Required]
-        public double PrecoDeCompra { get; set; }
+        public decimal PrecoDeCompra { get; set; }
     }
 }
