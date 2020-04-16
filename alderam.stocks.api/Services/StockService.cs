@@ -254,9 +254,19 @@ namespace alderam.stocks.api.Services
         public async Task<bool> ExcluirAcompanhamento(int id)
         {
             var registro = await _databaseContext.Acompanhamentos
+                .Include(i => i.Ativo)
                 .SingleAsync(r => r.Id == id);
-
+            
+            var ativo = registro.Ativo;
+            var ativoAindaEmUso = await _databaseContext.Operacoes.AnyAsync(r => r.Ativo.Id == ativo.Id);
+            
             _databaseContext.Acompanhamentos.Remove(registro);
+
+            if (ativoAindaEmUso == false)
+            {
+                _databaseContext.Ativos.Remove(ativo);
+            } 
+
             await _databaseContext.SaveChangesAsync();
 
             return true;
