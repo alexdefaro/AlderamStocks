@@ -25,7 +25,7 @@ namespace alderam.stocks.api.Controllers
         private readonly IMapper _mapper;
 
         public OperacoesController(IMapper mapper,
-                                 IStockService stockService, 
+                                 IStockService stockService,
                                  DatabaseContext databaseContext)
         {
             _mapper = mapper;
@@ -47,7 +47,11 @@ namespace alderam.stocks.api.Controllers
                     nomeDoAtivo = r.Ativo.Nome,
                     r.Quantitidade,
                     r.PrecoDeCompra,
-                    r.ValorDaOperacao
+                    r.ValorDaOperacao,
+
+                    PrecoAtual = r.Ativo.PrecoAtual,
+                    ValorAtual = (r.Quantitidade * r.Ativo.PrecoAtual),
+                    Rentabilidade = ((r.Quantitidade * r.Ativo.PrecoAtual) - r.ValorDaOperacao) 
                 })
                 .OrderBy(o => o.DataDaOperacao);
 

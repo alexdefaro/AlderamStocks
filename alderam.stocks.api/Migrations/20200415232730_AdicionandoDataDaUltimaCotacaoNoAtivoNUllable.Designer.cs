@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using alderam.stocks.api.Database;
 
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200415232730_AdicionandoDataDaUltimaCotacaoNoAtivoNUllable")]
+    partial class AdicionandoDataDaUltimaCotacaoNoAtivoNUllable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,9 +63,6 @@ namespace alderam.stocks.api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<decimal?>("PrecoAnterior")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("PrecoAtual")
                         .HasColumnType("decimal(18,2)");

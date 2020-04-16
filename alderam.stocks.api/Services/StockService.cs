@@ -8,16 +8,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace alderam.stocks.api.Services
 {
+    public class ResultadoDaAPI
+    {
+        [JsonProperty("Global Quote")]
+        public Cotacao Cotacao { get; set; }
+
+        public string Note { get; set; }
+    }
+
+    public class Cotacao
+    {
+        [JsonProperty("01. symbol")]
+        public string Symbol { get; set; }
+
+        [JsonProperty("02. open")]
+        public decimal Open { get; set; }
+
+        [JsonProperty("03. high")]
+        public decimal High { get; set; }
+
+        [JsonProperty("04. low")]
+        public decimal Low { get; set; }
+
+        [JsonProperty("05. price")]
+        public decimal Price { get; set; }
+
+        [JsonProperty("06. volume")]
+        public decimal Volume { get; set; }
+
+        [JsonProperty("07. latest trading day")]
+        public DateTime LastTradingDay { get; set; }
+
+        [JsonProperty("08. previous close")]
+        public decimal PreviousClose { get; set; }
+
+        [JsonProperty("09. change")]
+        public decimal Change { get; set; }
+
+        [JsonProperty("10. change percent")]
+        public string ChangePercent { get; set; }
+    }
+
     public interface IStockService
     {
-        Task<ResumoDTO> RecuperarResumoDaCarteira();        
+        Task CarregarCotacoes();
+        Task<ResumoDTO> RecuperarResumoDaCarteira();
 
         // Operacoes
         Task<IEnumerable<Operacao>> RecuperarOperacoes();
-        
+
 
         // Ativos 
         Task<IEnumerable<Ativo>> RecuperarAtivos(int? id = null);
@@ -61,15 +105,57 @@ namespace alderam.stocks.api.Services
 
         private decimal Truncate(decimal value)
         {
-            var result =  Math.Truncate(100 * value) / 100;
+            var result = Math.Truncate(100 * value) / 100;
             return result;
         }
 
-        public async Task<ResumoDTO> RecuperarResumoDaCarteira()        
+        public async Task CarregarCotacoes()
+        {
+            var ativos = await _databaseContext.Ativos.ToListAsync();
+            var client = new HttpClient();
+
+            int contador = 1;
+            foreach (var ativo in ativos)
+            {
+                if (ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-5))
+                {
+                    var url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ativo.Codigo}.SA&apikey=0GQ6IW3IL3BFJGTJl";
+                    var response = await client.GetAsync(url);
+                    var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPI>(await response.Content.ReadAsStringAsync());
+
+                    if (resultadoDaAPI.Cotacao != null)
+                    {
+                        ativo.PrecoAnterior = ativo.PrecoAtual;
+                        ativo.PrecoAtual = resultadoDaAPI.Cotacao.Price;
+                        ativo.DataDaUltimaCotacao = DateTime.Now;
+                    }
+
+                    contador++;
+                }
+
+                if (contador == 6)
+                {
+                    await Task.Delay(60000);
+                    contador = 0;
+                }
+            }
+
+            await _databaseContext.SaveChangesAsync();
+        }
+
+
+        public async Task<ResumoDTO> RecuperarResumoDaCarteira()
         {
             var resumo = new ResumoDTO();
 
             resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
+            resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
+            resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
+            resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
+                .Select(o => new { ValorAtual = o.Quantitidade * o.Ativo.PrecoAtual.Value, o.ValorDaOperacao })
+                .Select(r => r.ValorAtual - r.ValorDaOperacao )
+                .Where(r => r > 0)
+                .SumAsync();
 
             return resumo;
         }
@@ -158,7 +244,7 @@ namespace alderam.stocks.api.Services
             requestDTO.Ativo = await SalvarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
 
             var registro = _mapper.Map<Acompanhamento>(requestDTO);
-            
+
             _databaseContext.Acompanhamentos.Add(registro);
             await _databaseContext.SaveChangesAsync();
 

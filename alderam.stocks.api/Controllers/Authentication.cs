@@ -22,19 +22,23 @@ namespace alderam.stocks.api.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private readonly IStockService _stockService;
 
         public AuthenticationController(IMapper mapper,
-                                 DatabaseContext databaseContext)
+                                        IStockService stockService,
+                                        DatabaseContext databaseContext)
         {
             _mapper = mapper;
+            _stockService = stockService;
             _databaseContext = databaseContext;
         }
 
         [HttpPost]
-        public ActionResult Post(LoginViewModel loginViewModel)
+        public async Task<ActionResult> Post(LoginViewModel loginViewModel)
         {
             if (loginViewModel.UserKey == "Colt")
             {
+                await _stockService.CarregarCotacoes();
                 return Ok();
             }
 

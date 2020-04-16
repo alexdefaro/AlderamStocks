@@ -19,6 +19,12 @@ namespace alderam.stocks.api.Models
         [Required]
         public DateTime DataDeCriacao { get; set; }
 
+        public DateTime? DataDaUltimaCotacao { get; set; }
+
+        public decimal? PrecoAnterior { get; set; }
+
+        public decimal? PrecoAtual { get; set; }
+
         public Setor Setor { get; set; }
     }
 }

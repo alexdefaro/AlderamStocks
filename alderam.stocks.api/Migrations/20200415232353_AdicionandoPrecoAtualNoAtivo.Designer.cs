@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using alderam.stocks.api.Database;
 
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200415232353_AdicionandoPrecoAtualNoAtivo")]
+    partial class AdicionandoPrecoAtualNoAtivo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,6 +30,9 @@ namespace alderam.stocks.api.Migrations
 
                     b.Property<int>("AtivoId")
                         .HasColumnType("int");
+
+                    b.Property<double>("PrecoAtual")
+                        .HasColumnType("float");
 
                     b.Property<double>("PrecoDeCompra")
                         .HasColumnType("float");
@@ -51,9 +56,6 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
-                    b.Property<DateTime?>("DataDaUltimaCotacao")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
@@ -61,9 +63,6 @@ namespace alderam.stocks.api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<decimal?>("PrecoAnterior")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("PrecoAtual")
                         .HasColumnType("decimal(18,2)");
