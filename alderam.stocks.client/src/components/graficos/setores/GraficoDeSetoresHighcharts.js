@@ -84,7 +84,6 @@ function GraficoDeSetoresHighcharts() {
                     distance: '50%',
                     useHTML: true,
                     formatter: function () {
-                        console.log(this);
                         let point = this.point;
                         let value = formatCurrency(this.y);
                         return this.key

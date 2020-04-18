@@ -65,5 +65,12 @@ namespace alderam.stocks.api.Controllers
                 return  StatusCode(StatusCodes.Status500InternalServerError);
             }            
         } 
+
+        [HttpPost]
+        public async Task<ActionResult> Refresh()
+        {
+            await _stockService.CarregarCotacoes();
+            return Ok();
+        }
     }
 }

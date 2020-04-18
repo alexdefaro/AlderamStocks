@@ -421,6 +421,10 @@ namespace alderam.stocks.api.Services
                 _databaseContext.Ativos.Add(ativo);
                 await _databaseContext.SaveChangesAsync();
             }
+            else
+            {
+                ativo.Nome = nome;
+            }
 
             return ativo;
         }

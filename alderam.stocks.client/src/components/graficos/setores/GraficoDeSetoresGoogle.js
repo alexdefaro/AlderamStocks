@@ -17,8 +17,7 @@ function GraficoDeSetoresGoogle() {
             );
 
             dadosDoGraficoFormatados.unshift(['Setor', 'Total']);
-            console.log(dadosDoGraficoFormatados);
-
+            
             setDadosDoGrafico(
                 dadosDoGraficoFormatados
             );

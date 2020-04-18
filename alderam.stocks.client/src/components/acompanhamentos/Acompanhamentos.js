@@ -1,10 +1,33 @@
 ﻿import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 
 import Api from "../../services/Api";
 import Toast from "../../services/Toast";
 
+Modal.setAppElement('#root');
+
+const customStyles = {
+    overlay: {
+        backgroundcolor: 'rgba(255, 255, 255, 0.2)'
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
 function Acompanhamentos() {
     const [ativos, setAtivos] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [dadosDoAtivo, setDadosDoAtivo] = useState({
+        id: 0,
+        codigoDoAtivo: '',
+        nomeDoAtivo: '',
+        precoDeCompra: ''
+    });
 
     useEffect(() => {
         fetchData();
@@ -22,22 +45,11 @@ function Acompanhamentos() {
         return result;
     }
 
-    async function handleNewClick(e) {
-        e.preventDefault();
-        try {
-            const data = {
-                codigoDoAtivo: 'DELME',
-                nomeDoAtivo: 'DELME',
-                precoDeCompra: 9.00
-            }
-
-            await Api.post('/Acompanhamentos', data);
-            fetchData();
-
-            Toast.success('Ativo adicionado.')
-        } catch (e) {
-            Toast.error('Erro ao adicionar registro.')
-        }
+    function handleChangeDadosDoAtivo(e) {
+        setDadosDoAtivo({
+            ...dadosDoAtivo,
+            [e.target.name]: e.target.value
+        });
     }
 
     async function handleRemoveClick(e, id) {
@@ -54,20 +66,36 @@ function Acompanhamentos() {
 
     async function handleEditClick(e, ativo) {
         e.preventDefault();
+
+        setDadosDoAtivo(ativo);
+        setModalIsOpen(true);
+    }
+
+    async function handleSaveAcompanhamentoClick(e) {
+        e.preventDefault();
+
         try {
             const data = {
-                id: ativo.id,
-                codigoDoAtivo: ativo.codigoDoAtivo,
-                nomeDoAtivo: ativo.nomeDoAtivo,
-                precoDeCompra: ativo.precoDeCompra
+                id: dadosDoAtivo.id,
+                codigoDoAtivo: dadosDoAtivo.codigoDoAtivo,
+                nomeDoAtivo: dadosDoAtivo.nomeDoAtivo,
+                precoDeCompra: dadosDoAtivo.precoDeCompra
             }
 
-            await Api.put('/Acompanhamentos/' + ativo.id, data);
+            if (data.id > 0) {
+                await Api.put('/Acompanhamentos/' + data.id, data);
+            }
+            else {
+                await Api.post('/Acompanhamentos', data);
+            }
+
             fetchData();
 
-            Toast.success('Ativo alterado.')
+            Toast.success('Ativo adicionado.')
+
+            setModalIsOpen(false);
         } catch (e) {
-            Toast.error('Erro ao alterar registro.')
+            Toast.error('Erro ao adicionar registro.')
         }
     }
 
@@ -75,13 +103,38 @@ function Acompanhamentos() {
         <div className="xl:col-span-2">
             <div className="bg-gray-100 border border-gray-800 rounded shadow p-0">
                 <div className="flex flex-row items-center p-1">
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={() => setModalIsOpen(false)}
+                        style={customStyles}>
+
+                        <form onSubmit={handleSaveAcompanhamentoClick}>
+                            <h2 className="mb-10 text-2xl">Incluir ativo na lista de acompanhamento</h2>
+                            <label>Codigo do ativo</label>
+                            <input name="codigoDoAtivo" className="border border-gray-300 rounded-lg py-2 px-4 block w-full" type="text" value={dadosDoAtivo.codigoDoAtivo} onChange={handleChangeDadosDoAtivo} />
+
+                            <label>Nome do ativo</label>
+                            <input name="nomeDoAtivo" className="border border-gray-300 rounded-lg py-2 px-4 block w-full" type="text" value={dadosDoAtivo.nomeDoAtivo} onChange={handleChangeDadosDoAtivo} />
+
+                            <label>Preço de compra</label>
+                            <input name="precoDeCompra" className="border border-gray-300 rounded-lg py-2 px-4 block w-full" type="number" value={dadosDoAtivo.precoDeCompra} onChange={handleChangeDadosDoAtivo} />
+
+                            <div className="w-full mt-2 p-1 mt-5">
+                                <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-5 gap-2 pb-0 ">
+                                    <button className="rounded p-3 bg-green-600 w-20"><i className="fas fa-save fa-3x fa-fw fa-inverse"></i></button>
+                                    <button className="rounded p-3 bg-orange-600 w-20" onClick={() => setModalIsOpen(false)}><i className="far fa-window-close fa-3x fa-fw fa-inverse"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </Modal>
+
                     <table className="table-auto w-full">
                         <thead>
                             <tr>
                                 <th className="px-4 py-1 text-left">Ativo</th>
                                 <th className="px-4 py-1 text-right">Atual</th>
                                 <th className="px-4 py-1 text-right">Compra</th>
-                                <th className="px-1 py-1 text-center"><a href="#" onClick={handleNewClick} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
+                                <th className="px-1 py-1 text-center"><a href="#" onClick={() => setModalIsOpen(true)} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,7 +161,7 @@ function Acompanhamentos() {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
