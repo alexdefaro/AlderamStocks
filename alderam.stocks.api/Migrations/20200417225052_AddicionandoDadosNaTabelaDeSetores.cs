@@ -1,35 +1,11 @@
-﻿# Credenciais do servidor de banco de dados do Azure
-	Servidor - alderamdatabaseserver.database.windows.net
-	Usuario  - alderam
-	Senha    - adminUser!
+﻿ using Microsoft.EntityFrameworkCore.Migrations;
 
-# System basic credentials 
-	Servidor - https://alderamfinance.azurewebsites.net
-	Usuario  - AdministradorTI
-	Senha    - admin
-
-# Visual Studio Protal 
-    http://alderam.visualstudio.com
-
-# AZURE Admnistrator Portal 
-	https://portal.azure.com/#home
-
-# Restart database migrations 
-	 1) Resetar o arquivo de migrations do banco de dados 
-		Update-Database 0 
-	 
-	 2) Executar pra quantas migrations existirem 
-		Remove-Migration 
-
-	 3) Adicionar a migration de inicializacao do banco de dados 
-		Add-Migration InicializacaodoBandoDeDados
-
-	 4) Update the database with the initial migration 
-		Update-Database
-
-
-     5) Run database updates 
-
+namespace alderam.stocks.api.Migrations
+{
+    public partial class AddicionandoDadosNaTabelaDeSetores : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('COMERCIO', 'Serviços Comerciais');");
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('COMUNICACAO', 'Comunicações');"); 
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('DURAVEIS', 'Consumíveis Duráveis');"); 
@@ -51,3 +27,11 @@
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('SERV_TEC', 'Serviços de Tecnologia');");
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('TRANSP', 'Transportes');"); 
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('SERV_PUBL', 'Serviços Públicos');"); 
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+
+        }
+    }
+}

@@ -56,8 +56,11 @@ namespace alderam.stocks.api.Services
 
     public interface IStockService
     {
+
         Task CarregarCotacoes();
         Task<ResumoDTO> RecuperarResumoDaCarteira();
+        //Task<IEnumerable<GraficoDeSetoresDTO>> RecuperarDadosDoGraficoDeSetores();
+        Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
 
         // Operacoes
         Task<IEnumerable<Operacao>> RecuperarOperacoes();
@@ -153,11 +156,31 @@ namespace alderam.stocks.api.Services
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
             resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
                 .Select(o => new { ValorAtual = o.Quantitidade * o.Ativo.PrecoAtual.Value, o.ValorDaOperacao })
-                .Select(r => r.ValorAtual - r.ValorDaOperacao )
+                .Select(r => r.ValorAtual - r.ValorDaOperacao)
                 .Where(r => r > 0)
                 .SumAsync();
 
             return resumo;
+        }
+
+        //public async Task<IEnumerable<GraficoDeSetoresDTO>> RecuperarDadosDoGraficoDeSetores()
+        public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores()
+        {
+            var registros = await _databaseContext.Operacoes
+                .Include(i => i.Ativo.Setor)
+                .GroupBy(g => g.Ativo.Setor.Nome)
+                .Select(g => new { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao) })
+                //.Select(g => new GraficoDeSetoresDTO() { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao ) })
+                .OrderBy(o => o.Labels)
+                .ToListAsync();
+
+            var result = new GraficoDeSetoresDTO()
+            {
+                Labels = registros.Select(r => r.Labels).ToArray(),
+                Values = registros.Select(r => r.Values).ToArray()
+            };
+
+            return result;
         }
 
         // Operacoes
@@ -256,16 +279,16 @@ namespace alderam.stocks.api.Services
             var registro = await _databaseContext.Acompanhamentos
                 .Include(i => i.Ativo)
                 .SingleAsync(r => r.Id == id);
-            
+
             var ativo = registro.Ativo;
             var ativoAindaEmUso = await _databaseContext.Operacoes.AnyAsync(r => r.Ativo.Id == ativo.Id);
-            
+
             _databaseContext.Acompanhamentos.Remove(registro);
 
             if (ativoAindaEmUso == false)
             {
                 _databaseContext.Ativos.Remove(ativo);
-            } 
+            }
 
             await _databaseContext.SaveChangesAsync();
 
