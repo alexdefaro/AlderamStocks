@@ -48,7 +48,6 @@ function Dashboard() {
                     <h3 className="p-3 text-3xl">Graficos</h3>
                     <div className="">
                         <GraficoDeSetoresHighcharts />
-                        <GraficoDeSetoresGoogle />
                     </div>
                 </div>
             </div>
