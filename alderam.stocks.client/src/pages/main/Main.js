@@ -14,7 +14,7 @@ function Main() {
         e.preventDefault();
 
         try {
-            setbuttonText('Aguarde atualizando...'); 
+            setbuttonText(' Aguarde atualizando... '); 
 
             await Api.post('authentication', { userKey });
 
