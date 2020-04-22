@@ -18,11 +18,13 @@ function Main() {
 
             await Api.post('authentication', { userKey });
 
-            localStorage.setItem('userKey', userKey);
+            localStorage.setItem('authenticated', true);
             history.push('/dashboard');
 
         } catch (error) {
+            localStorage.setItem('authenticated', false);
             setbuttonText('Entrar'); 
+
             alert('Error ao efetuar login.');
         }
     }
