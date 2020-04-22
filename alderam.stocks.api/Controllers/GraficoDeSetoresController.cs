@@ -34,7 +34,7 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<GraficoDeSetoresDTO>>> Get()
+        [ResponseCache(Duration = 240)]
         public async Task<ActionResult<GraficoDeSetoresDTO>> Get()
         {
             var dadosDosSetores = await _stockService.RecuperarDadosDoGraficoDeSetores();

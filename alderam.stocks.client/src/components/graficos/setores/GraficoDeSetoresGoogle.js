@@ -8,7 +8,7 @@ function GraficoDeSetoresGoogle() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/GraficoDeSetores');
+            const response = await Api.get('/graficodesetores');
 
             let dadosDoGraficoFormatados = response.data.labels.map(
                 function (item, index) {

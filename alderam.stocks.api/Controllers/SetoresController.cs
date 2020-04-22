@@ -34,6 +34,7 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 240)]
         public async Task<ActionResult<IEnumerable<Setor>>> Get()
         {
             var Setores = await _stockService.RecuperarSetores();

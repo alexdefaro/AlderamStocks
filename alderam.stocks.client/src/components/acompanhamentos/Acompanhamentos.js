@@ -34,7 +34,7 @@ function Acompanhamentos() {
     }, []);
 
     const fetchData = async () => {
-        const response = await Api.get('/Acompanhamentos');
+        const response = await Api.get('/acompanhamentos');
         setAtivos(response.data);
     }
 
@@ -55,7 +55,7 @@ function Acompanhamentos() {
     async function handleRemoveClick(e, id) {
         e.preventDefault();
         try {
-            await Api.delete('/Acompanhamentos/' + id);
+            await Api.delete('/acompanhamentos/' + id);
             fetchData();
 
             Toast.success('Ativo removido.')
@@ -83,10 +83,10 @@ function Acompanhamentos() {
             }
 
             if (data.id > 0) {
-                await Api.put('/Acompanhamentos/' + data.id, data);
+                await Api.put('/acompanhamentos/' + data.id, data);
             }
             else {
-                await Api.post('/Acompanhamentos', data);
+                await Api.post('/acompanhamentos', data);
             }
 
             fetchData();

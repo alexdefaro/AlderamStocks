@@ -3,21 +3,10 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-    response.send("Hello World.");
-});
+const Setores = require('./setores');
+exports.getSetores = Setores.getSetores;
+exports.addSetores = Setores.addSetores;
 
+const Ativos = require('./ativos');
+exports.getAtivos = Ativos.getAtivos;
 
-exports.getSetores = functions.https.onRequest((request, response) => {
-    admin.firestore().collection('Setores').get()
-        .then(data => {
-            let setores = [];
-            data.forEach(doc => {
-                setores.push(doc.data());
-            });
-            return response.json(setores);
-        })
-        .catch(
-            (error) => console.log(error)
-        );
-}); 
