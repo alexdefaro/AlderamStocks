@@ -29,13 +29,13 @@ function Carteira() {
                         <table className="table-auto w-full">
                             <thead>
                                 <tr>
-                                    <th className="px-4 py-1">Codigo</th>
+                                    <th className="xl:px-4 py-1 text-left">Codigo</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-left">Nome</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Quantidade</th>
-                                    <th className="px-4 py-1 text-right">Preço Compra</th>
-                                    <th className="px-4 py-1 text-right">Valor Operação</th>
+                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Compra</th>
+                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Operação</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
-                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Atual</th>
+                                    <th className="px-4 py-1 text-right">Valor Atual</th>
                                     <th className="px-4 py-1 text-right">Rentabilidade</th>
                                 </tr>
                             </thead>
@@ -43,13 +43,13 @@ function Carteira() {
                                 {
                                     operacoes.map(operacao => (
                                         <tr key={operacao.id} >
-                                            <td className="border px-4 py-1">{operacao.codigoDoAtivo}</td>
-                                            <td className="border px-4 py-1 hidden xl:table-cell">{operacao.nomeDoAtivo}</td>
-                                            <td className="border px-4 py-1 text-right hidden  xl:table-cell">{operacao.quantitidade}</td>
-                                            <td className="border px-4 py-1 text-right">{formatCurrency(operacao.precoDeCompra)}</td>
-                                            <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorDaOperacao)}</td>
-                                            <td className="border px-4 py-1 text-right hidden  xl:table-cell">{formatCurrency(operacao.precoAtual)}</td>
-                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.valorAtual)}</td>
+                                            <td className="border xl:px-4 py-1 text-left">{operacao.codigoDoAtivo}</td>
+                                            <td className="border px-4 py-1 hidden xl:table-cell text-left">{operacao.nomeDoAtivo}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{operacao.quantitidade}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoDeCompra)}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.valorDaOperacao)}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoAtual)}</td>
+                                            <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorAtual)}</td>
                                             <td className={"border px-4 py-1 text-right " + (operacao.rentabilidade < 0 ? "text-red-500" : "text-green-500")}>{formatCurrency(operacao.rentabilidade)}</td>
                                         </tr>
                                     ))

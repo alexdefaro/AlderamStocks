@@ -33,7 +33,7 @@ function Resumo() {
                         </div>
                         <div className="flex-1 text-right md:text-center">
                             <h5 className="font-bold uppercase text-blue-800 text-right">Total Investido</h5>
-                            <h3 className="font-bold text-4xl text-gray-800 text-right">{formatCurrency(resumo.valorTotalInvestido)}</h3>
+                            <h3 className="font-bold text-2xl xl:text-4xl text-gray-800 text-right">{formatCurrency(resumo.valorTotalInvestido)}</h3>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@ function Resumo() {
                         </div>
                         <div className="flex-1 text-right md:text-center">
                             <h5 className="font-bold uppercase text-blue-800 text-right">Valor Atual</h5>
-                            <h3 className={"font-bold text-4xl text-right " + ((resumo.valorTotalInvestido > resumo.valorAtualDaCarteiral) ? "text-red-500" : "text-green-500")}>
+                            <h3 className={"font-bold text-2xl xl:text-4xl text-right " + ((resumo.valorTotalInvestido > resumo.valorAtualDaCarteiral) ? "text-red-500" : "text-green-500")}>
                                 {formatCurrency(resumo.valorAtualDaCarteiral)}
                             </h3>
                         </div>
@@ -59,7 +59,7 @@ function Resumo() {
                         </div>
                         <div className="flex-1 text-right md:text-center">
                             <h5 className="font-bold uppercase text-blue-800 text-right">Saldo</h5>
-                            <h3 className={"font-bold text-4xl text-right " + ((resumo.saldoAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
+                            <h3 className={"font-bold text-2xl xl:text-4xl text-right " + ((resumo.saldoAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
                                 {formatCurrency(resumo.saldoAtualDaCarteiral)}
                             </h3>
                         </div>
@@ -73,7 +73,7 @@ function Resumo() {
                         </div>
                         <div className="flex-1 text-right md:text-center">
                             <h5 className="font-bold uppercase text-blue-800 text-right">Saldo Liquido</h5>
-                            <h3 className={"font-bold text-4xl text-right " + ((resumo.liquidezAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
+                            <h3 className={"font-bold text-2xl xl:text-4xl text-right " + ((resumo.liquidezAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
                                 {formatCurrency(resumo.liquidezAtualDaCarteiral)}
                             </h3>
                         </div>

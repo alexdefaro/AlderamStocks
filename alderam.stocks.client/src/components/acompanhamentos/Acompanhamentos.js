@@ -131,25 +131,27 @@ function Acompanhamentos() {
                     <table className="table-auto w-full">
                         <thead>
                             <tr>
-                                <th className="px-4 py-1 text-left">Ativo</th>
-                                <th className="px-4 py-1 text-right">Atual</th>
-                                <th className="px-4 py-1 text-right">Compra</th>
-                                <th className="px-1 py-1 text-center"><a href="#" onClick={() => setModalIsOpen(true)} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
+                                <th className="px-2 py-1 text-left">Ativo</th>
+                                <th className="px-2 py-1 text-right">Atual</th>
+                                <th className="px-2 py-1 text-right">Compra</th>
+                                <th className="w-20 xl:w-auto px-1 py-1 text-center"><a href="#" onClick={() => setModalIsOpen(true)} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 ativos.map(ativo => (
                                     <tr key={ativo.id} >
-                                        <td className="border px-4 py-1 text-left">{ativo.codigoDoAtivo}</td>
-                                        <td className="border px-4 py-1 text-right">
+                                        <td className="border px-2 py-1 text-left">{ativo.codigoDoAtivo}</td>
+
+                                        <td className="border text-right">
                                             {formatCurrency(ativo.precoAtual)}
                                             <i className={"fas ml-2 " + ((ativo.precoAtual > ativo.precoAnterior) ? "fa-caret-down text-red-500" : "fa-caret-up text-green-500")}></i>
                                         </td>
-                                        <td className="border px-4 py-1 text-right">
+                                        <td className="border py-1 text-right">
                                             {formatCurrency(ativo.precoDeCompra)}
                                             {(ativo.comprar) && <i className="far fa-bell text-red-500 float-left" />}
                                         </td>
+
                                         <td className="border text-center">
                                             <a href="#" onClick={(e) => handleEditClick(e, ativo)}><i className=" far fa-edit mr-1" title="Alterar este ativo" /></a>
                                             <a href="#" onClick={(e) => handleRemoveClick(e, ativo.id)}><i className="far fa-trash-alt" title="Remover ativo da lista" /></a>

@@ -55,8 +55,7 @@ function GraficoDeSetoresHighcharts() {
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
-            height: 1000,
-            width: 1200
+
         },
         title: {
             text: 'Distribuíção de ativos por setores Highcharts'
@@ -73,15 +72,12 @@ function GraficoDeSetoresHighcharts() {
                 valueSuffix: '%'
             }
         },
-        //colors:
-        //    gradientColors,
         plotOptions: {
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
-                    distance: '50%',
                     useHTML: true,
                     formatter: function () {
                         let point = this.point;
