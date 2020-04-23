@@ -79,6 +79,7 @@ function GraficoDeSetoresHighcharts() {
                 dataLabels: {
                     enabled: true,
                     useHTML: true,
+                    distance: '50%',
                     formatter: function () {
                         let point = this.point;
                         let value = formatCurrency(this.y);
