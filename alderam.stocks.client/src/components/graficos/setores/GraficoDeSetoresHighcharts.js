@@ -57,8 +57,10 @@ function GraficoDeSetoresHighcharts() {
             type: 'pie',
 
         },
-        title: {
-            text: 'Distribuíção de ativos por setores Highcharts'
+        credits: {
+            enabled: false
+        },        title: {
+            text: 'Distribuíção de ativos por setores'
         },
         tooltip: {
             pointFormatter: function () {
@@ -74,12 +76,13 @@ function GraficoDeSetoresHighcharts() {
         },
         plotOptions: {
             pie: {
+                size: '80%',
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
                     useHTML: true,
-                    distance: '50%',
+                    distance: '60%',
                     formatter: function () {
                         let point = this.point;
                         let value = formatCurrency(this.y);
