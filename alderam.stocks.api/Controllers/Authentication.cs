@@ -36,7 +36,7 @@ namespace alderam.stocks.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(LoginViewModel loginViewModel)
         {
-            if (loginViewModel.UserKey == "Colt")
+            if (loginViewModel.UserKey == "Colt" ||loginViewModel.UserKey == "Invest")
             {
                 await _stockService.CarregarCotacoes();
                 return Ok();
