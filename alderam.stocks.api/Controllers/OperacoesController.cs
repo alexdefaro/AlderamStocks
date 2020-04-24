@@ -53,7 +53,7 @@ namespace alderam.stocks.api.Controllers
                 ValorAtual = (r.Quantitidade * r.Ativo.PrecoAtual),
                 Rentabilidade = ((r.Quantitidade * r.Ativo.PrecoAtual) - r.ValorDaOperacao)
             })
-                .OrderBy(o => o.DataDaOperacao);
+                .OrderBy(o => o.codigoDoAtivo);
 
             return Ok(result);
         }
