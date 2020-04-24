@@ -1,6 +1,9 @@
 ﻿import axios from "axios";
- 
-const Api = axios.create({ baseURL: "https://localhost:44330/api/" })
-//const Api = axios.create({ baseURL: "https://alderamstocksapi.azurewebsites.net/api/" })
+
+let  Api = axios.create({ baseURL: "https://localhost:44330/api/" })
+
+if (process.env.NODE_ENV == 'production') {
+    Api = axios.create({ baseURL: "https://alderamstocksapi.azurewebsites.net/api/" })
+}
 
 export default Api;
