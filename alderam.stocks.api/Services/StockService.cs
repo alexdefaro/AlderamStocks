@@ -59,7 +59,6 @@ namespace alderam.stocks.api.Services
 
         Task CarregarCotacoes();
         Task<ResumoDTO> RecuperarResumoDaCarteira();
-        //Task<IEnumerable<GraficoDeSetoresDTO>> RecuperarDadosDoGraficoDeSetores();
         Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
 
         // Operacoes
@@ -151,6 +150,7 @@ namespace alderam.stocks.api.Services
         {
             var resumo = new ResumoDTO();
 
+            resumo.DataDaUltimaAtualizacao = DateTime.Now;
             resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
             resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
@@ -163,7 +163,6 @@ namespace alderam.stocks.api.Services
             return resumo;
         }
 
-        //public async Task<IEnumerable<GraficoDeSetoresDTO>> RecuperarDadosDoGraficoDeSetores()
         public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores()
         {
             var registros = await _databaseContext.Operacoes

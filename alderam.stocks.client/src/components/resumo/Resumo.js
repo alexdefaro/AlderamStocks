@@ -4,15 +4,24 @@ import Api from "../../services/Api";
 
 function Resumo() {
     const [resumo, setResumo] = useState({});
+    const [dataDaUltimaAtualizacao, setDataDaUltimaAtualizacao] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await Api.get('/resumos');
+
+            setDataDaUltimaAtualizacao(new Date(response.data.dataDaUltimaAtualizacao));
             setResumo(response.data);
         }
 
         fetchData();
     }, []);
+
+    var options = {
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: 'numeric', minute: 'numeric', second: 'numeric',
+        hour12: false
+    };
 
     function formatCurrency(value) {
         if (value == null)
@@ -24,8 +33,11 @@ function Resumo() {
 
     return (
         <div className="xl:col-span-3">
-            <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-2 gap-1 pb-0 ">
+            <div className="bg-gray-100 border border-gray-800 rounded shadow p-2 mb-3 text-center">
+                <h3 className="font-bold text-2xl text-gray-800">Data da última atualização {new Intl.DateTimeFormat('pt-BR', options).format(dataDaUltimaAtualizacao)}</h3>
+            </div>
 
+            <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-2 gap-1 pb-0 ">
                 <div className="bg-gray-100 border border-gray-800 rounded shadow p-2">
                     <div className="flex flex-row items-center">
                         <div className="flex-shrink pr-4">

@@ -7,7 +7,7 @@ function Carteira() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/operacoes');
+            const response = await Api.get('/carteira');
             setOperacoes(response.data);
         }
 
@@ -32,7 +32,7 @@ function Carteira() {
                                     <th className="xl:px-4 py-1 text-left">Codigo</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-left">Nome</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Quantidade</th>
-                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Compra</th>
+                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Médio</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Operação</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
                                     <th className="px-4 py-1 text-right">Valor Atual</th>
@@ -46,7 +46,7 @@ function Carteira() {
                                             <td className="border xl:px-4 py-1 text-left">{operacao.codigoDoAtivo}</td>
                                             <td className="border px-4 py-1 hidden xl:table-cell text-left">{operacao.nomeDoAtivo}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{operacao.quantitidade}</td>
-                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoDeCompra)}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoMedioCompra)}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.valorDaOperacao)}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoAtual)}</td>
                                             <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorAtual)}</td>
