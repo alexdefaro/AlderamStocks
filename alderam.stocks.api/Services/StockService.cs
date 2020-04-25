@@ -89,7 +89,7 @@ namespace alderam.stocks.api.Services
 
         decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes);
         decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes);
-        decimal CalcularEmolumentos(IEnumerable<Operacao> operacoes);
+        decimal CalcularEmolumentos(bool operacaoEmLeilao, IEnumerable<Operacao> operacoes);
         decimal CalcularISS(decimal valorDaCorretagem);
     }
 
@@ -350,7 +350,7 @@ namespace alderam.stocks.api.Services
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
 
-            boleta.Emolumentos = CalcularEmolumentos(boleta.Operacoes);
+            boleta.Emolumentos = CalcularEmolumentos(boleta.OperacaoEmLeilao, boleta.Operacoes);
             boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
@@ -394,7 +394,7 @@ namespace alderam.stocks.api.Services
 
             _mapper.Map(boletaRequest, boleta);
 
-            boleta.Emolumentos = CalcularEmolumentos(boleta.Operacoes);
+            boleta.Emolumentos = CalcularEmolumentos(boleta.OperacaoEmLeilao, boleta.Operacoes);
             boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
@@ -444,10 +444,11 @@ namespace alderam.stocks.api.Services
             return Truncate((decimal)result);
         } // =(F5*0.0275)/100
 
-        public decimal CalcularEmolumentos(IEnumerable<Operacao> operacoes)
+        public decimal CalcularEmolumentos(bool operacaoEmLeilao, IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
-            var result = ((valorDaOperacao * 0.003248m) / 100);
+            decimal taxaDeEmolumentos = (operacaoEmLeilao == true) ? 0.0070m : 0.003248m;
+            var result = ((valorDaOperacao * taxaDeEmolumentos) / 100);
             return Truncate((decimal)result);
         } // = ((F5*0.003248)/100) 
 

@@ -22,7 +22,7 @@ function Boletas() {
 
     return (
         boletas.map(boleta => (
-            <Boleta boleta={boleta} />
+            <Boleta key={boleta.id} boleta={boleta} />
         ))
     )
 }

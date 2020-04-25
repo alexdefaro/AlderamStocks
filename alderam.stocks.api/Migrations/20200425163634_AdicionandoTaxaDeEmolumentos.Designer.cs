@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using alderam.stocks.api.Database;
 
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200425163634_AdicionandoTaxaDeEmolumentos")]
+    partial class AdicionandoTaxaDeEmolumentos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,10 +114,10 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<bool>("OperacaoEmLeilao")
-                        .HasColumnType("bit");
-
                     b.Property<decimal>("TaxaDaCoretagem")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxaDaEmolumentos")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TaxaDeLiquidacao")

@@ -19,6 +19,8 @@ namespace alderam.stocks.api.Models.DTOs
         [DataDaBoletaValidation]
         public DateTime DataDaOperacao { get; set; }
 
+        public bool OperacaoEmLeilao { get; set; } 
+
         public decimal ValorDaOperacao { get; set; }
 
         public decimal ValorDaCompra { get; set; }
