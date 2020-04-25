@@ -150,7 +150,7 @@ namespace alderam.stocks.api.Services
         {
             var resumo = new ResumoDTO();
 
-            resumo.DataDaUltimaAtualizacao = DateTime.Now;
+            resumo.DataDaUltimaAtualizacao = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
             resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
             resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);

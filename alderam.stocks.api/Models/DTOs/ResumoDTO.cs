@@ -9,7 +9,7 @@ namespace alderam.stocks.api.Models.DTOs
 {
     public class ResumoDTO
     {
-        public DateTime DataDaUltimaAtualizacao { get; set; }
+        public string DataDaUltimaAtualizacao { get; set; }
         public decimal ValorTotalInvestido { get; set; }
         public decimal ValorAtualDaCarteiral { get; set; }
         public decimal SaldoAtualDaCarteiral { get; set; }

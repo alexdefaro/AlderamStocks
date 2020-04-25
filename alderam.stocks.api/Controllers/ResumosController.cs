@@ -34,7 +34,7 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        //[ResponseCache(Duration = 240)]
+        [ResponseCache(Duration = 240)]
         public async Task<ActionResult<ResumoDTO>> Get()
         {                
             try

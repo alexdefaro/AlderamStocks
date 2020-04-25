@@ -10,6 +10,8 @@ import GraficoDeSetoresHighcharts from '../../components/graficos/setores/Grafic
 import Api from "../../services/Api";
 import Toast from "../../services/Toast";
 
+document.title = 'Alderam.Stocks/Dashboard'; 
+
 function Dashboard() {
     async function handleRefreshClick(e) {
         e.preventDefault();

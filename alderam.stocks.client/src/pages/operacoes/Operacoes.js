@@ -3,7 +3,10 @@
 import Header from '../../components/header/Header';
 import Boletas from '../../components/boletas/Boletas';
 
+document.title = 'Alderam.Stocks/Operacoes'; 
+
 function Operacoes() {
+
     return (
         <div id="Dashboard">
             <Header />
