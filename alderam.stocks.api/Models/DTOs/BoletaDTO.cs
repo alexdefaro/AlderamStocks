@@ -23,6 +23,8 @@ namespace alderam.stocks.api.Models.DTOs
 
         public decimal ValorDaCompra { get; set; }
 
+        public decimal TaxaDaCoretagem { get; set; } = 10;
+
         [MaxLength(500)]
         public string Observacoes { get; set; }
 

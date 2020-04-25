@@ -87,7 +87,7 @@ namespace alderam.stocks.api.Services
         Task<Boleta> IncluirBoleta(BoletaDTO boletaRequest);
         Task<Boleta> AtualizarBoleta(BoletaDTO boletaRequest);
 
-        decimal CalcularCorretagem(IEnumerable<Operacao> operacoes);
+        decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes);
         decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes);
         decimal CalcularEmolumentos(IEnumerable<Operacao> operacoes);
         decimal CalcularISS(decimal valorDaCorretagem);
@@ -316,7 +316,9 @@ namespace alderam.stocks.api.Services
             var boletas = _databaseContext.Boletas
                 .Include(i => i.Operacoes)
                     .ThenInclude(i => i.Ativo)
-                .OrderByDescending(o => o.DataDaOperacao);
+                .OrderByDescending(o => o.DataDaOperacao)
+                    .ThenByDescending(o => o.Numero)
+                        .ThenByDescending(o => o.Id);
 
             if (id != null)
             {
@@ -349,7 +351,7 @@ namespace alderam.stocks.api.Services
             var boleta = _mapper.Map<Boleta>(boletaRequest);
 
             boleta.Emolumentos = CalcularEmolumentos(boleta.Operacoes);
-            boleta.Corretagem = CalcularCorretagem(boleta.Operacoes);
+            boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
@@ -393,7 +395,7 @@ namespace alderam.stocks.api.Services
             _mapper.Map(boletaRequest, boleta);
 
             boleta.Emolumentos = CalcularEmolumentos(boleta.Operacoes);
-            boleta.Corretagem = CalcularCorretagem(boleta.Operacoes);
+            boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
@@ -428,12 +430,12 @@ namespace alderam.stocks.api.Services
             return ativo;
         }
 
-        public decimal CalcularCorretagem(IEnumerable<Operacao> operacoes)
+        public decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
-            var result = (10 + (valorDaOperacao * 0.003m)) + 10;
+            var result = (10 + (valorDaOperacao * 0.003m)) + taxaDaCoretagem;
             return Truncate((decimal)result);
-        } // = (10+((F5)*0.003))+10
+        } // = (10+((F5)*0.003))+F6
 
         public decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes)
         {
