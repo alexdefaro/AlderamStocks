@@ -316,7 +316,7 @@ namespace alderam.stocks.api.Services
             var boletas = _databaseContext.Boletas
                 .Include(i => i.Operacoes)
                     .ThenInclude(i => i.Ativo)
-                .OrderBy(o => o.DataDaOperacao);
+                .OrderByDescending(o => o.DataDaOperacao);
 
             if (id != null)
             {
