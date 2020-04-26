@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 import Header from '../../components/header/Header';
 import Resumo from '../../components/resumo/Resumo';
@@ -10,9 +10,13 @@ import GraficoDeSetoresHighcharts from '../../components/graficos/setores/Grafic
 import Api from "../../services/Api";
 import Toast from "../../services/Toast";
 
-document.title = 'Alderam.Stocks/Dashboard'; 
+
 
 function Dashboard() {
+    useEffect(() => {
+        document.title = 'Alderam.Stocks/Dashboard'; 
+    });
+
     async function handleRefreshClick(e) {
         e.preventDefault();
         try {

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 import Header from '../../components/header/Header';
 import Boletas from '../../components/boletas/Boletas';
@@ -6,6 +6,9 @@ import Boletas from '../../components/boletas/Boletas';
 document.title = 'Alderam.Stocks/Operacoes'; 
 
 function Operacoes() {
+    useEffect(() => {
+        document.title = 'Alderam.Stocks/Operacoes'; 
+    });
 
     return (
         <div id="Dashboard">
