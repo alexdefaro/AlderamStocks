@@ -33,7 +33,7 @@ function Carteira() {
                                     <th className="px-4 py-1 hidden xl:table-cell text-left">Nome</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Quantidade</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Médio</th>
-                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Operação</th>
+                                    <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Médio</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
                                     <th className="px-4 py-1 text-right">Valor Atual</th>
                                     <th className="px-4 py-1 text-right">Rentabilidade</th>
