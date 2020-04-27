@@ -1,4 +1,4 @@
-﻿import React, { Component, useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 
@@ -9,6 +9,10 @@ function Main() {
     const [buttonText, setbuttonText] = useState('Entrar');
 
     const history = useHistory();
+
+    useEffect(() => {
+        document.title = 'Alderam.Stocks/Logon';
+    });
 
     async function handleLogon(e) {
         e.preventDefault();

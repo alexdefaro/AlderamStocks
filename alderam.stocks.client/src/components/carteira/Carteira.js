@@ -48,7 +48,10 @@ function Carteira() {
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{operacao.quantitidade}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoMedioCompra)}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.valorDaOperacao)}</td>
-                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoAtual)}</td>
+                                            <td className="border px-4 py-1 text-right hidden xl:table-cell">
+                                                {formatCurrency(operacao.precoAtual)}
+                                                <i className={"fas ml-2 " + ((operacao.precoAtual > operacao.precoAnterior) ? "fa-caret-down text-red-500" : "fa-caret-up text-green-500")}></i>
+                                            </td>
                                             <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorAtual)}</td>
                                             <td className={"border px-4 py-1 text-right " + (operacao.rentabilidade < 0 ? "text-red-500" : "text-green-500")}>{formatCurrency(operacao.rentabilidade)}</td>
                                         </tr>

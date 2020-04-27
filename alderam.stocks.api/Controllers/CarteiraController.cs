@@ -40,12 +40,13 @@ namespace alderam.stocks.api.Controllers
             var operacoes = await _stockService.RecuperarOperacoes();
 
             var result = operacoes
-            .GroupBy(g => (g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.PrecoAtual))
+            .GroupBy(g => (g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior))
             .Select(r => new
             {
                 CodigoDoAtivo = r.Key.Codigo,
                 NomeDoAtivo = r.Key.Nome,
-                PrecoAtual = r.Key.PrecoAtual,
+                r.Key.PrecoAtual,
+                r.Key.PrecoAnterior,
                 Quantitidade = r.Sum(s => s.Quantitidade),
                 PrecoMedioCompra = (r.Sum(s => s.ValorDaOperacao)/r.Sum(s => s.Quantitidade)),
                 PrecoDeCompra = r.Sum(s => s.PrecoDeCompra),

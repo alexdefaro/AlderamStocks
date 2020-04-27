@@ -14,14 +14,16 @@ import Toast from "../../services/Toast";
 
 function Dashboard() {
     useEffect(() => {
-        document.title = 'Alderam.Stocks/Dashboard'; 
+        document.title = 'Alderam.Stocks/Dashboard';
     });
 
     async function handleRefreshClick(e) {
         e.preventDefault();
         try {
-            Toast.success('Aguarde atualizando resitros...')
+            Toast.success('Aguarde atualizando resitros...', { autoClose: false })
+
             await Api.post('/Ativos');
+
             window.location.reload(false);
         } catch (e) {
             Toast.error('Erro ao atualizar registros.')
@@ -36,10 +38,10 @@ function Dashboard() {
                 <div className="w-full  px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
 
                     <h3 className="p-3 text-3xl">
-                        <a href="#" onClick={handleRefreshClick} title= "Clique aqui para atualizar os dados da página">
-                            <i className="fa fa-sync mr-3"/>
+                        <a href="#" onClick={handleRefreshClick} title="Clique aqui para atualizar os dados da página">
+                            <i className="fa fa-sync mr-3" />
                         </a>
-                        Dashboard 
+                        Dashboard
                     </h3>
 
                     <div className="w-full mt-2 p-1">
