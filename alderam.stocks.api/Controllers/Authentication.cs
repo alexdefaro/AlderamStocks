@@ -38,7 +38,7 @@ namespace alderam.stocks.api.Controllers
         {
             if (loginViewModel.UserKey == "Colt" ||loginViewModel.UserKey == "Invest")
             {
-                await _stockService.CarregarCotacoes();
+                await _stockService.CarregarCotacoesHG();
                 return Ok();
             }
 

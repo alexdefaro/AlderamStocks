@@ -13,6 +13,42 @@ using Newtonsoft.Json;
 
 namespace alderam.stocks.api.Services
 {
+    public class ResultadoDaAPIHG
+    {
+        [JsonProperty("results")]
+        public Dictionary<string, CotacaoHG> Results { get; set; }
+    }
+
+    public class CotacaoHG
+    {
+        [JsonProperty("price")]
+        public decimal Price { get; set; }
+    }
+
+
+//{
+//    "results": {
+//            "price":16.45
+//        }
+//    }
+//}
+
+//{
+//    "by":"symbol",
+//    "valid_key":true,
+//    "results": {
+//        "PETR4": {
+//            "symbol":"PETR4","name":"Petróleo Brasileiro S.A. - Petrobras","region":"Brazil/Sao Paolo","currency":"BRL",
+//            "market_time":{"open":"10:00","close":"17:30","timezone":-3},
+//             "market_cap":215503.0,
+//            "price":16.45,
+//            "change_percent":3.13,"updated_at":"2020-04-27 20:47:31"
+//        }
+//    },
+//    "execution_time":0.01,
+//    "from_cache":false
+//}
+
     public class ResultadoDaAPI
     {
         [JsonProperty("Global Quote")]
@@ -57,6 +93,7 @@ namespace alderam.stocks.api.Services
     public interface IStockService
     {
 
+        Task CarregarCotacoesHG();
         Task CarregarCotacoes();
         Task<ResumoDTO> RecuperarResumoDaCarteira();
         Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
@@ -109,6 +146,28 @@ namespace alderam.stocks.api.Services
         {
             var result = Math.Truncate(100 * value) / 100;
             return result;
+        }
+
+        public async Task CarregarCotacoesHG()
+        {
+            var ativos = await _databaseContext.Ativos.ToListAsync();
+            var client = new HttpClient();
+
+            foreach (var ativo in ativos)
+            {
+                var url = $"https://api.hgbrasil.com/finance/stock_price?key=58a1af63&symbol={ativo.Codigo}";                    
+                var response = await client.GetAsync(url);
+                var content = await response.Content.ReadAsStringAsync();
+                var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPIHG>(content, new JsonSerializerSettings() {   });
+
+                if (resultadoDaAPI.Results != null)
+                {
+                    ativo.PrecoAnterior = ativo.PrecoAtual;
+                    ativo.PrecoAtual = resultadoDaAPI.Results[ativo.Codigo].Price;
+                    ativo.DataDaUltimaCotacao = DateTime.Now;
+                }
+            }
+
         }
 
         public async Task CarregarCotacoes()

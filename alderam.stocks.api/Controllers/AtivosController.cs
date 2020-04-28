@@ -69,7 +69,7 @@ namespace alderam.stocks.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Refresh()
         {
-            await _stockService.CarregarCotacoes();
+            await _stockService.CarregarCotacoesHG();
             return Ok();
         }
     }
