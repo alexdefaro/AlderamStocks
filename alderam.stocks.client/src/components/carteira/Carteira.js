@@ -43,7 +43,9 @@ function Carteira() {
                                 {
                                     operacoes.map(operacao => (
                                         <tr key={operacao.codigoDoAtivo} >
-                                            <td className="border xl:px-4 py-1 text-left">{operacao.codigoDoAtivo}</td>
+                                            <td className="border xl:px-4 py-1 text-left">
+                                                <a href={"https://br.tradingview.com/chart/?symbol=BMFBOVESPA:" + operacao.codigoDoAtivo} target="new">{operacao.codigoDoAtivo}</a>
+                                            </td>
                                             <td className="border px-4 py-1 hidden xl:table-cell text-left">{operacao.nomeDoAtivo}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{operacao.quantitidade}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoMedioCompra)}</td>

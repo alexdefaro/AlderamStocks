@@ -39,8 +39,8 @@ function Main() {
                 <form className="bg-gray-100 border shadow-md rounded px-8 pt-6 pb-8 mb-2" onSubmit={handleLogon}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-4">Chave do usuário</label>
-                        <input type="text" placeholder="Chave do usuário" value={userKey} onChange={e => setUserKey(e.target.value)} type="password"
-                            className="shadow appearance-none rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
+                        <input type="text" placeholder="Chave do usuário" value={userKey} onChange={e => setUserKey(e.target.value)} type="password" autoFocus
+                               className="shadow appearance-none rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
 
                     </div>
                     <div className="flex items-center justify-between">

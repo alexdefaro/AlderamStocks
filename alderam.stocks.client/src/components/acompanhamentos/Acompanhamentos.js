@@ -141,7 +141,9 @@ function Acompanhamentos() {
                             {
                                 ativos.map(ativo => (
                                     <tr key={ativo.id} >
-                                        <td className="border px-2 py-1 text-left">{ativo.codigoDoAtivo}</td>
+                                        <td className="border px-2 py-1 text-left">
+                                            <a href={"https://br.tradingview.com/chart/?symbol=BMFBOVESPA:" + ativo.codigoDoAtivo} target="new">{ativo.codigoDoAtivo}</a>
+                                        </td>
 
                                         <td className="border text-right">
                                             {formatCurrency(ativo.precoAtual)}
