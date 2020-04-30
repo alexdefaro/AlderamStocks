@@ -8,7 +8,7 @@ document.title = 'Alderam.Stocks/Operacoes';
 function Operacoes() {
     useEffect(() => {
         document.title = 'Alderam.Stocks/Operacoes'; 
-    });
+    }, []);
 
     return (
         <div id="Dashboard">

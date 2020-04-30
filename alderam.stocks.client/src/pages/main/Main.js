@@ -11,8 +11,9 @@ function Main() {
     const history = useHistory();
 
     useEffect(() => {
+        localStorage.setItem('AUTH_TOKEN', '');
         document.title = 'Alderam.Stocks/Logon';
-    });
+    },[]);
 
     async function handleLogon(e) {
         e.preventDefault();

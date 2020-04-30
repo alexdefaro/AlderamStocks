@@ -15,7 +15,7 @@ import Toast from "../../services/Toast";
 function Dashboard() {
     useEffect(() => {
         document.title = 'Alderam.Stocks/Dashboard';
-    });
+    }, []);
 
     async function handleRefreshClick(e) {
         e.preventDefault();
