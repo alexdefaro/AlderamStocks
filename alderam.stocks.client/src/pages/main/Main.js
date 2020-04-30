@@ -11,7 +11,6 @@ function Main() {
     const history = useHistory();
 
     useEffect(() => {
-        localStorage.setItem('AUTH_TOKEN', '');
         document.title = 'Alderam.Stocks/Logon';
     },[]);
 
@@ -27,7 +26,7 @@ function Main() {
             history.push('/dashboard');
 
         } catch (error) {
-            localStorage.setItem('AUTH_TOKEN', '');
+            localStorage.clear();
             setbuttonText('Entrar'); 
 
             alert('Error ao efetuar login.');
