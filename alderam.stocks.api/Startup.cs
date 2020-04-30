@@ -12,6 +12,9 @@ using alderam.stocks.api.Services;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace alderam.stocks.api
 {
@@ -54,7 +57,8 @@ namespace alderam.stocks.api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IStockService, StockService>();
+            services.AddScoped<IStockService, StockService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
@@ -69,6 +73,29 @@ namespace alderam.stocks.api
             services.AddControllers().AddJsonOptions(options =>
                 options.JsonSerializerOptions.PropertyNamingPolicy = null
             );
+
+
+            var jwtPrivateKey = Encoding.ASCII.GetBytes(Configuration["Secrets:jwt_private_key"]);
+
+            services.AddAuthentication(a =>
+                {
+                    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+            )
+            .AddJwtBearer(a =>
+                {
+                    a.RequireHttpsMetadata = false;
+                    a.SaveToken = true;
+                    a.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(jwtPrivateKey),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                }
+            );;
         }
 
         public void Configure(IApplicationBuilder app)
@@ -84,6 +111,7 @@ namespace alderam.stocks.api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

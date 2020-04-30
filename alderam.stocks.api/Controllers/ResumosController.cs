@@ -13,11 +13,13 @@ using AutoMapper;
 using alderam.stocks.api.Services;
 using alderam.stocks.api.Models.DTOs;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace alderam.stocks.api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ResumosController : ControllerBase
     {
         private readonly IStockService _stockService;

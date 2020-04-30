@@ -20,13 +20,13 @@ function Main() {
         try {
             setbuttonText(' Aguarde atualizando... '); 
 
-            await Api.post('authentication', { userKey });
+            let authenticationResponse = await Api.post('authentication', { userKey });
+            localStorage.setItem('AUTH_TOKEN', authenticationResponse.data.token);
 
-            localStorage.setItem('authenticated', true);
             history.push('/dashboard');
 
         } catch (error) {
-            localStorage.setItem('authenticated', false);
+            localStorage.setItem('AUTH_TOKEN', '');
             setbuttonText('Entrar'); 
 
             alert('Error ao efetuar login.');

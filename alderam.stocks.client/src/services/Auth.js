@@ -1,5 +1,7 @@
 ﻿export const isAuthenticated = () => {
+    const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN') ?? '';
 
-    var authenticated = localStorage.getItem('authenticated');
-    return authenticated == 'true';
+    return (AUTH_TOKEN != '');
 }
+
+//npm install jwt_decode
