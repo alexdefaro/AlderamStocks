@@ -41,7 +41,7 @@ function Dashboard() {
             <div className="container w-full mx-auto pt-20 mt-10 xl:mt-0 ">
                 <div className="w-full  px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
 
-                    <h3 className="p-3 text-3xl">
+                    <h3 className="p-1 text-3xl">
                         <a href="#" onClick={handleRefreshClick} title="Clique aqui para atualizar os dados da página">
                             <i className="fa fa-sync mr-3" />
                         </a>

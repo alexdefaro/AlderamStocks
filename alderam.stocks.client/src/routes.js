@@ -1,9 +1,9 @@
 ﻿import React, { Component } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { authenticationService } from './services/Auth';
 
 import Main from "./pages/main/Main";
 
-import { isAuthenticated } from './services/Auth';
 import Dashboard from "./pages/dashboard/Dashboard";
 import Operacoes from "./pages/operacoes/Operacoes";
 
@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            isAuthenticated()
+            authenticationService.isAuthenticated()
                 ? (<Component {...props} />)
                 : (<Redirect to={{ pathname: "/", state: { from: props.location } }} />)
         }
