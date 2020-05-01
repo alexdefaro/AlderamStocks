@@ -7,8 +7,7 @@ import './styles.css'
 const App = () => {
     useEffect(() => {
         document.title = 'Alderam.Stocks';
-        sessionStorage.clear();
-    }, []);    
+     }, []);    
 
     return (
         <div className="App">
