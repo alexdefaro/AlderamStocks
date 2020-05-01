@@ -21,12 +21,12 @@ function Main() {
             setbuttonText(' Aguarde atualizando... '); 
 
             let authenticationResponse = await Api.post('authentication', { userKey });
-            localStorage.setItem('AUTH_TOKEN', authenticationResponse.data.token);
+            sessionStorage.setItem('AUTH_TOKEN', authenticationResponse.data.token);
 
             history.push('/dashboard');
 
         } catch (error) {
-            localStorage.clear();
+            sessionStorage.clear();
             setbuttonText('Entrar'); 
 
             alert('Error ao efetuar login.');

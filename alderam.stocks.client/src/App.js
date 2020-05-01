@@ -7,7 +7,7 @@ import './styles.css'
 const App = () => {
     useEffect(() => {
         document.title = 'Alderam.Stocks';
-        localStorage.clear();
+        sessionStorage.clear();
     }, []);    
 
     return (
