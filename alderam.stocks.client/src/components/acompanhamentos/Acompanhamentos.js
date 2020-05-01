@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
-import Api from "../../services/Api";
+import ApiService from "../../services/Api";
 import Toast from "../../services/Toast";
 
 Modal.setAppElement('#root');
@@ -34,11 +34,7 @@ function Acompanhamentos() {
     }, []);
 
     const fetchData = async () => {
-         const response = await Api.get('/acompanhamentos', {
-            headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-            }
-        });
+        const response = await ApiService.get('/acompanhamentos');
 
         setAtivos(response.data);
     }
@@ -60,7 +56,7 @@ function Acompanhamentos() {
     async function handleRemoveClick(e, id) {
         e.preventDefault();
         try {
-            await Api.delete('/acompanhamentos/' + id);
+            await ApiService.remove('/acompanhamentos/' + id);
             fetchData();
 
             Toast.success('Ativo removido.')
@@ -88,18 +84,10 @@ function Acompanhamentos() {
             }
 
             if (data.id > 0) {
-                await Api.put('/acompanhamentos/' + data.id, data, {
-                    headers: {
-                        Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                    }
-                });
+                await ApiService.put('/acompanhamentos/' + data.id, data);
             }
             else { 
-                await Api.post('/acompanhamentos', data, {
-                    headers: {
-                        Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                    }
-                });
+                await ApiService.post('/acompanhamentos', data);
             }
 
             fetchData();

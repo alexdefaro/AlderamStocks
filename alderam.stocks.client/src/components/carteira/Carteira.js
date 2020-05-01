@@ -1,17 +1,13 @@
 ﻿import React, { useState, useEffect } from 'react';
 
-import Api from "../../services/Api";
+import ApiService from "../../services/Api";
 
 function Carteira() {
     const [operacoes, setOperacoes] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/carteira', {
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                }
-            });
+            const response = await ApiService.get('/carteira');
 
             setOperacoes(response.data);
         }

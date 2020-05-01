@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 
-import Api from "../../services/Api";
+import ApiService from "../../services/Api";
 import Boleta from "../boletas/Boleta";
 
 function Boletas() {
@@ -8,11 +8,7 @@ function Boletas() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/boletas', {
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                }
-            });
+            const response = await ApiService.get('/boletas');
             setBoletas(response.data);
         }
 

@@ -7,7 +7,7 @@ import Carteira from '../../components/carteira/Carteira';
 import GraficoDeSetoresGoogle from '../../components/graficos/setores/GraficoDeSetoresGoogle';
 import GraficoDeSetoresHighcharts from '../../components/graficos/setores/GraficoDeSetoresHighcharts';
 
-import Api from "../../services/Api";
+import ApiService from "../../services/Api";
 import Toast from "../../services/Toast";
 
 
@@ -22,11 +22,7 @@ function Dashboard() {
         try {
             Toast.success('Aguarde atualizando resitros...', { autoClose: false })
 
-            await Api.post('/ativos', {}, {
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                }
-            });
+            await ApiService.post('/ativos', {});
 
             window.location.reload(false);
         } catch (e) {

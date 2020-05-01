@@ -1,17 +1,13 @@
 ﻿import React, { useState, useEffect } from 'react';
 
-import Api from "../../services/Api";
+import ApiService from "../../services/Api";
 
 function Resumo() {
     const [resumo, setResumo] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/resumos', {
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                }
-            });
+            const response = await ApiService.get('/resumos');
 
             setResumo(response.data);
         }

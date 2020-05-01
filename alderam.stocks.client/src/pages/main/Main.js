@@ -2,7 +2,8 @@
 import { useHistory } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 
-import Api from '../../services/Api';
+//import Api from '../../services/Api';
+import ApiService from '../../services/Api';
 
 function Main() {
     const [userKey, setUserKey] = useState('');
@@ -20,7 +21,7 @@ function Main() {
         try {
             setbuttonText(' Aguarde atualizando... '); 
 
-            let authenticationResponse = await Api.post('authentication', { userKey });
+            let authenticationResponse = await ApiService.post('authentication', { userKey });
             sessionStorage.setItem('AUTH_TOKEN', authenticationResponse.data.token);
 
             history.push('/dashboard');
