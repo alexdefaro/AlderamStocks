@@ -34,7 +34,12 @@ function Acompanhamentos() {
     }, []);
 
     const fetchData = async () => {
-        const response = await Api.get('/acompanhamentos');
+         const response = await Api.get('/acompanhamentos', {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+            }
+        });
+
         setAtivos(response.data);
     }
 
@@ -83,10 +88,18 @@ function Acompanhamentos() {
             }
 
             if (data.id > 0) {
-                await Api.put('/acompanhamentos/' + data.id, data);
+                await Api.put('/acompanhamentos/' + data.id, data, {
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                    }
+                });
             }
-            else {
-                await Api.post('/acompanhamentos', data);
+            else { 
+                await Api.post('/acompanhamentos', data, {
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                    }
+                });
             }
 
             fetchData();

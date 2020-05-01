@@ -8,7 +8,11 @@ function Boletas() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/boletas');
+            const response = await Api.get('/boletas', {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                }
+            });
             setBoletas(response.data);
         }
 

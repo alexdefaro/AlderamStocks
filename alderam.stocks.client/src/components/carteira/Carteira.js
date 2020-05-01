@@ -7,7 +7,12 @@ function Carteira() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/carteira');
+            const response = await Api.get('/carteira', {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                }
+            });
+
             setOperacoes(response.data);
         }
 

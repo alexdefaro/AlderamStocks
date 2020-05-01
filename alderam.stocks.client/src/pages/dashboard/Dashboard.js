@@ -22,7 +22,11 @@ function Dashboard() {
         try {
             Toast.success('Aguarde atualizando resitros...', { autoClose: false })
 
-            await Api.post('/Ativos');
+            await Api.post('/ativos', {}, {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                }
+            });
 
             window.location.reload(false);
         } catch (e) {

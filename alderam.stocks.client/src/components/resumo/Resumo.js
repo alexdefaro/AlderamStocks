@@ -7,7 +7,11 @@ function Resumo() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/resumos');
+            const response = await Api.get('/resumos', {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                }
+            });
 
             setResumo(response.data);
         }

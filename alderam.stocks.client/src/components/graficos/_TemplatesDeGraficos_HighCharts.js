@@ -14,7 +14,11 @@ function TemplateGrafico_HighCharts() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/graficodesetores');
+            const response = await Api.get('/graficodesetores', {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
+                }
+            });
 
             let dadosDoGraficoFormatados = response.data.labels.map(
                 function (item, index) {
