@@ -68,9 +68,8 @@ namespace alderam.stocks.api.Services
 
     public interface IStockService
     {
-
         Task CarregarCotacoesHG();
-        Task CarregarCotacoesAV(string codigoDoAtivo);
+        Task CarregarCotacoesAV(string codigoDoAtivo = null);
         Task<ResumoDTO> RecuperarResumoDaCarteira();
         Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
 
@@ -157,7 +156,7 @@ namespace alderam.stocks.api.Services
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task CarregarCotacoesAV(string codigoDoAtivo)
+        public async Task CarregarCotacoesAV(string codigoDoAtivo = null)
         {
             var ativos = await _databaseContext.Ativos.ToListAsync();
             var client = new HttpClient();
