@@ -70,7 +70,7 @@ namespace alderam.stocks.api.Services
     {
 
         Task CarregarCotacoesHG();
-        Task CarregarCotacoes();
+        Task CarregarCotacoesAV(string codigoDoAtivo);
         Task<ResumoDTO> RecuperarResumoDaCarteira();
         Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
 
@@ -138,6 +138,12 @@ namespace alderam.stocks.api.Services
                     var content = await response.Content.ReadAsStringAsync();
                     var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPIHG>(content);
 
+                    if (resultadoDaAPI.Results[ativo.Codigo].Price == 0)
+                    {
+                        await CarregarCotacoesAV(ativo.Codigo);
+                        continue;
+                    }
+
                     if (resultadoDaAPI.Results != null)
                     {
                         ativo.PrecoAnterior = ativo.PrecoAtual;
@@ -151,7 +157,7 @@ namespace alderam.stocks.api.Services
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task CarregarCotacoes()
+        public async Task CarregarCotacoesAV(string codigoDoAtivo)
         {
             var ativos = await _databaseContext.Ativos.ToListAsync();
             var client = new HttpClient();
@@ -159,6 +165,11 @@ namespace alderam.stocks.api.Services
             int contador = 1;
             foreach (var ativo in ativos)
             {
+                if (codigoDoAtivo != null && codigoDoAtivo != ativo.Codigo)
+                {
+                    continue;
+                }
+
                 if (!ativo.DataDaUltimaCotacao.HasValue || ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-5))
                 {
                     var url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ativo.Codigo}.SA&apikey=0GQ6IW3IL3BFJGTJl";

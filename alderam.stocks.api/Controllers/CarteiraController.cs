@@ -58,6 +58,8 @@ namespace alderam.stocks.api.Controllers
             })
             .OrderBy(o => o.CodigoDoAtivo);
 
+            Response.Headers.Add("X-Total-Count", result.Count().ToString());
+
             return Ok(result);
         }
     }
