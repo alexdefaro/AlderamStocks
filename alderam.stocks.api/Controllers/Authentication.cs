@@ -45,7 +45,11 @@ namespace alderam.stocks.api.Controllers
             if (loginViewModel.UserKey == "Colt" || loginViewModel.UserKey == "Invest")
             {
                 var jwtToken = _tokenService.GenerateJWTToken(loginViewModel.UserKey);
-                await _stockService.CarregarCotacoesHG();
+
+                if (DateTime.Now.Hour < 10)
+                    await _stockService.CarregarCotacoesHG();
+                else 
+                    await _stockService.CarregarCotacoesAV();
 
                 return Ok(new { 
                     userKey = loginViewModel.UserKey, 
