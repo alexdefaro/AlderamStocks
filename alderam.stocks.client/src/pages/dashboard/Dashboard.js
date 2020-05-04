@@ -13,6 +13,8 @@ import Toast from "../../services/Toast";
 
 
 function Dashboard() {
+    const [spinClass, setSpinClass] = useState('');
+
     useEffect(() => {
         document.title = 'Alderam.Stocks/Dashboard';
     }, []);
@@ -20,8 +22,7 @@ function Dashboard() {
     async function handleRefreshClick(e) {
         e.preventDefault();
         try {
-            Toast.success('Aguarde atualizando resitros...', { autoClose: false })
-
+            setSpinClass('fa-spin')
             await ApiService.post('/ativos', {});
 
             window.location.reload(false);
@@ -39,7 +40,7 @@ function Dashboard() {
 
                     <h3 className="p-1 text-3xl">
                         <a href="#" onClick={handleRefreshClick} title="Clique aqui para atualizar os dados da página">
-                            <i className="fa fa-sync mr-3" />
+                            <i className={"fa fa-sync mr-3 " + spinClass} />
                         </a>
                         Dashboard
                     </h3>
