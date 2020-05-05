@@ -71,10 +71,7 @@ namespace alderam.stocks.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Refresh()
         {
-            if (DateTime.Now.Hour < 10)
-                await _stockService.CarregarCotacoesHG();
-            else 
-                await _stockService.CarregarCotacoesAV();
+            await _stockService.CarregarCotacoes();
 
             return Ok();
         }

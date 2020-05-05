@@ -46,10 +46,7 @@ namespace alderam.stocks.api.Controllers
             {
                 var jwtToken = _tokenService.GenerateJWTToken(loginViewModel.UserKey);
 
-                if (DateTime.Now.Hour < 10)
-                    await _stockService.CarregarCotacoesHG();
-                else 
-                    await _stockService.CarregarCotacoesAV();
+                await _stockService.CarregarCotacoes();
 
                 return Ok(new { 
                     userKey = loginViewModel.UserKey, 

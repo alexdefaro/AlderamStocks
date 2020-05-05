@@ -68,8 +68,8 @@ namespace alderam.stocks.api.Services
 
     public interface IStockService
     {
-        Task CarregarCotacoesHG();
-        Task CarregarCotacoesAV(string codigoDoAtivo = null);
+        Task CarregarCotacoes();
+
         Task<ResumoDTO> RecuperarResumoDaCarteira();
         Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
 
@@ -110,20 +110,7 @@ namespace alderam.stocks.api.Services
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public StockService(IMapper mapper,
-                            DatabaseContext databaseContext)
-        {
-            _mapper = mapper;
-            _databaseContext = databaseContext;
-        }
-
-        private decimal Truncate(decimal value)
-        {
-            var result = Math.Truncate(100 * value) / 100;
-            return result;
-        }
-
-        public async Task CarregarCotacoesHG()
+        private async Task CarregarCotacoesHG()
         {
             var ativos = await _databaseContext.Ativos.ToListAsync();
             var client = new HttpClient();
@@ -132,7 +119,7 @@ namespace alderam.stocks.api.Services
             {
                 if (!ativo.DataDaUltimaCotacao.HasValue || ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-2))
                 {
-                    var url = $"https://api.hgbrasil.com/finance/stock_price?key=58a1af63&symbol={ativo.Codigo}";                    
+                    var url = $"https://api.hgbrasil.com/finance/stock_price?key=58a1af63&symbol={ativo.Codigo}";
                     var response = await client.GetAsync(url);
                     var content = await response.Content.ReadAsStringAsync();
                     var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPIHG>(content);
@@ -156,7 +143,7 @@ namespace alderam.stocks.api.Services
             await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task CarregarCotacoesAV(string codigoDoAtivo = null)
+        private async Task CarregarCotacoesAV(string codigoDoAtivo = null)
         {
             var ativos = await _databaseContext.Ativos.ToListAsync();
             var client = new HttpClient();
@@ -195,6 +182,26 @@ namespace alderam.stocks.api.Services
             await _databaseContext.SaveChangesAsync();
         }
 
+        public StockService(IMapper mapper,
+                            DatabaseContext databaseContext)
+        {
+            _mapper = mapper;
+            _databaseContext = databaseContext;
+        }
+
+        private decimal Truncate(decimal value)
+        {
+            var result = Math.Truncate(100 * value) / 100;
+            return result;
+        }
+
+        public async Task CarregarCotacoes()
+        {
+            if (DateTime.Now.Hour < 22)
+                await CarregarCotacoesHG();
+            else 
+                await CarregarCotacoesAV();
+        }
 
         public async Task<ResumoDTO> RecuperarResumoDaCarteira()
         {
