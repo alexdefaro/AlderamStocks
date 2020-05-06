@@ -11,14 +11,13 @@ import ApiService from "../../services/Api";
 import Toast from "../../services/Toast";
 import Spinner from '../../components/spinner/Spinner';
 
-
-
 function Dashboard() {
-    const [spinnerVisibilityClass, setspinnerVisibilityClass] = useState('hidden');
+    const [spinnerVisibilityClass, setspinnerVisibilityClass] = useState('visible');
 
     useEffect(() => {
         document.title = 'Alderam.Stocks/Dashboard';
-    }, []);
+        setTimeout(() => setspinnerVisibilityClass('hidden'), 1000)
+    }, []); 
 
     async function handleRefreshClick(e) {
         e.preventDefault();
@@ -65,6 +64,6 @@ function Dashboard() {
             </div>
         </div>
     );
-}
+} 
 
 export default Dashboard; 
