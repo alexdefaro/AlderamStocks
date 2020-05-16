@@ -36,27 +36,27 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 240)]
         public async Task<ActionResult> Get()
         {
             var operacoes = await _stockService.RecuperarOperacoes();
 
             var result = operacoes
-            .GroupBy(g => (g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior))
-            .Select(r => new
-            {
-                CodigoDoAtivo = r.Key.Codigo,
-                NomeDoAtivo = r.Key.Nome,
-                r.Key.PrecoAtual,
-                r.Key.PrecoAnterior,
-                Quantitidade = r.Sum(s => s.Quantitidade),
-                PrecoMedioCompra = (r.Sum(s => s.ValorDaOperacao)/r.Sum(s => s.Quantitidade)),
-                PrecoDeCompra = r.Sum(s => s.PrecoDeCompra),
-                ValorDaOperacao = r.Sum(s => s.ValorDaOperacao),
-                ValorAtual = r.Sum(s => s.Quantitidade) * r.Key.PrecoAtual,
-                Rentabilidade = r.Sum(s => ((s.Quantitidade * s.Ativo.PrecoAtual) - s.ValorDaOperacao)) 
-            })
-            .OrderBy(o => o.CodigoDoAtivo);
+                .GroupBy(g => (g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior))
+                .Select(r => new
+                {
+                    CodigoDoAtivo = r.Key.Codigo,
+                    NomeDoAtivo = r.Key.Nome,
+                    r.Key.PrecoAtual,
+                    r.Key.PrecoAnterior,
+                    Quantitidade = r.Sum(s => s.Quantitidade),
+                    PrecoMedioCompra = (r.Sum(s => s.ValorDaOperacao)/r.Sum(s => s.Quantitidade)),
+                    PrecoDeCompra = r.Sum(s => s.PrecoDeCompra),
+                    ValorDaOperacao = r.Sum(s => s.ValorDaOperacao),
+                    ValorAtual = r.Sum(s => s.Quantitidade) * r.Key.PrecoAtual,
+                    Rentabilidade = r.Sum(s => ((s.Quantitidade * s.Ativo.PrecoAtual) - s.ValorDaOperacao)),
+                    Comprar = r.Key.PrecoAtual.HasValue && (r.Key.PrecoAtual.Value < (_databaseContext.Acompanhamentos.Include(i => i.Ativo).SingleOrDefault(f => f.Ativo.Id == r.Key.Id)?.PrecoDeCompra ?? r.Key.PrecoAtual.Value)) 
+                })
+                .OrderBy(o => o.CodigoDoAtivo);
 
             Response.Headers.Add("X-Total-Count", result.Count().ToString());
 

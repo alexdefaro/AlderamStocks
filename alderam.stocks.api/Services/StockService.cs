@@ -251,7 +251,6 @@ namespace alderam.stocks.api.Services
             return registros;
         }
 
-
         // Ativos 
         public async Task<IEnumerable<Ativo>> RecuperarAtivos(int? id = null)
         {

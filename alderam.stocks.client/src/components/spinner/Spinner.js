@@ -4,7 +4,7 @@ function Spinner(visibilityValue) {
     const visibilityValued = visibilityValue.visibilityValue;
     return (
         <div className="spinner" style={{ visibility: visibilityValued }}>
-            <svg style={{ margin: "auto", background: "none", display: "block", "shape-rendering": "auto" }} width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <svg style={{ margin: "auto", background: "none", display: "block", "shaperendering": "auto" }} width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                 <g>
                     <circle cx="88.8096" cy="50" r="4" fill="#f0ad4e">
                         <animate attributeName="cx" repeatCount="indefinite" dur="1s" values="95;35" keyTimes="0;1" begin="-0.67s"></animate>

@@ -36,7 +36,6 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 240)]
         public async Task<ActionResult> Get()
         {
             var Acompanhamentos = await _stockService.RecuperarAcompanhamentos();
@@ -48,7 +47,7 @@ namespace alderam.stocks.api.Controllers
                 r.Ativo.PrecoAtual,
                 r.Ativo.PrecoAnterior,
                 r.PrecoDeCompra,
-                comprar = r.Ativo.PrecoAtual.HasValue && (r.Ativo.PrecoAtual.Value <= (r.PrecoDeCompra + 0.5m ))
+                comprar = r.Ativo.PrecoAtual.HasValue && (r.Ativo.PrecoAtual.Value <= r.PrecoDeCompra)
             })
             .OrderBy(o => o.codigoDoAtivo);
 
