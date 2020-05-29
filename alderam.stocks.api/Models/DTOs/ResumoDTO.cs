@@ -14,5 +14,8 @@ namespace alderam.stocks.api.Models.DTOs
         public decimal ValorAtualDaCarteiral { get; set; }
         public decimal SaldoAtualDaCarteiral { get; set; }
         public decimal LiquidezAtualDaCarteiral { get; set; }
+        public decimal SaldoAtualDaCarteiralEmPercentual { get; set; }
+        public decimal LiquidezAtualDaCarteiralEmPercentual { get; set; }
+
     }
 }

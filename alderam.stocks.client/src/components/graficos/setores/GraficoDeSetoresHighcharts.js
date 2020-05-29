@@ -39,20 +39,6 @@ function GraficoDeSetoresHighcharts() {
         fetchData();
     }, []);
 
-    const gradientColors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-        return {
-            radialGradient: {
-                cx: 0.5,
-                cy: 0.3,
-                r: 0.7
-            },
-            stops: [
-                [0, color],
-                [1, Highcharts.color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
-
     const chartOptions = {
         chart: {
             plotBackgroundColor: null,
@@ -87,7 +73,6 @@ function GraficoDeSetoresHighcharts() {
                     enabled: true,
                     useHTML: true,
                     formatter: function () {
-                        let point = this.point;
                         let value = formatCurrency(this.y);
                         return this.key
                             + '<br> '

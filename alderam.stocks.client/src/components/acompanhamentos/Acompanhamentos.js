@@ -127,6 +127,7 @@ function Acompanhamentos() {
                                 </div>
                             </div>
                         </form>
+
                     </Modal>
 
                     <table className="table-auto w-full">

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React from 'react';
 
 function Spinner(visibilityValue) {
     const visibilityValued = visibilityValue.visibilityValue;

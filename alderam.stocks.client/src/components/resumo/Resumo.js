@@ -23,6 +23,14 @@ function Resumo() {
         return result;
     }
 
+    function formatPercent(value) {
+        if (value == null)
+            return 0;
+
+        let result = value.toFixed(2) + '%';
+        return result;
+    }
+
     return (
         <div className="xl:col-span-3">
             <div className="bg-gray-100 border border-gray-800 rounded shadow p-2 mb-3 text-center">
@@ -62,7 +70,7 @@ function Resumo() {
                             <div className="rounded p-3 bg-yellow-600"><i className="fas fa-piggy-bank fa-3x fa-fw fa-inverse"></i></div>
                         </div>
                         <div className="flex-1 text-right md:text-center">
-                            <h5 className="font-bold uppercase text-blue-800 text-right">Saldo</h5>
+                            <h5 className="font-bold uppercase text-blue-800 text-right">Saldo ({formatPercent(resumo.saldoAtualDaCarteiralEmPercentual)})</h5>
                             <h3 className={"font-bold text-2xl xl:text-4xl text-right " + ((resumo.saldoAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
                                 {formatCurrency(resumo.saldoAtualDaCarteiral)}
                             </h3>
@@ -76,7 +84,7 @@ function Resumo() {
                             <div className="rounded p-3 bg-blue-600"><i className="fas fa-coins fa-3x fa-fw fa-inverse"></i></div>
                         </div>
                         <div className="flex-1 text-right md:text-center">
-                            <h5 className="font-bold uppercase text-blue-800 text-right">Saldo Liquido</h5>
+                            <h5 className="font-bold uppercase text-blue-800 text-right">Saldo Liquido ({formatPercent(resumo.liquidezAtualDaCarteiralEmPercentual)})</h5> 
                             <h3 className={"font-bold text-2xl xl:text-4xl text-right " + ((resumo.liquidezAtualDaCarteiral < 0) ? "text-red-500" : "text-green-500")}>
                                 {formatCurrency(resumo.liquidezAtualDaCarteiral)}
                             </h3>

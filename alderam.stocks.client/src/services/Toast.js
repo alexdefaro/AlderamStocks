@@ -1,5 +1,4 @@
-﻿import React from 'react';
-import { toast } from 'react-toastify'
+﻿import { toast } from 'react-toastify'
 
 toast.configure({
     autoClose: 1500,

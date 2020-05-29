@@ -4,7 +4,6 @@ import Header from '../../components/header/Header';
 import Resumo from '../../components/resumo/Resumo';
 import Acompanhamentos from '../../components/acompanhamentos/Acompanhamentos';
 import Carteira from '../../components/carteira/Carteira';
-import GraficoDeSetoresGoogle from '../../components/graficos/setores/GraficoDeSetoresGoogle';
 import GraficoDeSetoresHighcharts from '../../components/graficos/setores/GraficoDeSetoresHighcharts';
 
 import ApiService from "../../services/Api";

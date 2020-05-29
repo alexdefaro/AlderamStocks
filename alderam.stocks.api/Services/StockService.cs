@@ -217,6 +217,9 @@ namespace alderam.stocks.api.Services
                 .Where(r => r > 0)
                 .SumAsync();
 
+            resumo.SaldoAtualDaCarteiralEmPercentual = ((resumo.SaldoAtualDaCarteiral / resumo.ValorTotalInvestido) * 100);
+            resumo.LiquidezAtualDaCarteiralEmPercentual = ((resumo.LiquidezAtualDaCarteiral / resumo.ValorTotalInvestido) * 100);
+
             return resumo;
         }
 
