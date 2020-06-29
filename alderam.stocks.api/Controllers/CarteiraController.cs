@@ -41,11 +41,12 @@ namespace alderam.stocks.api.Controllers
             var operacoes = await _stockService.RecuperarOperacoes();
 
             var result = operacoes
-                .GroupBy(g => (g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior))
+                .GroupBy(g => new { g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, NomeDoSetor = g.Ativo.Setor.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior })
                 .Select(r => new
                 {
                     CodigoDoAtivo = r.Key.Codigo,
                     NomeDoAtivo = r.Key.Nome,
+                    NomeDoSetor = r.Key.NomeDoSetor,
                     r.Key.PrecoAtual,
                     r.Key.PrecoAnterior,
                     Quantitidade = r.Sum(s => s.Quantitidade),
@@ -56,7 +57,8 @@ namespace alderam.stocks.api.Controllers
                     Rentabilidade = r.Sum(s => ((s.Quantitidade * s.Ativo.PrecoAtual) - s.ValorDaOperacao)),
                     Comprar = r.Key.PrecoAtual.HasValue && (r.Key.PrecoAtual.Value < (_databaseContext.Acompanhamentos.Include(i => i.Ativo).SingleOrDefault(f => f.Ativo.Id == r.Key.Id)?.PrecoDeCompra ?? r.Key.PrecoAtual.Value)) 
                 })
-                .OrderBy(o => o.CodigoDoAtivo);
+                .OrderBy(o => o.NomeDoSetor)
+                    .ThenBy(o => o.CodigoDoAtivo);
 
             Response.Headers.Add("X-Total-Count", result.Count().ToString());
 

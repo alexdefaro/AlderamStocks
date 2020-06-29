@@ -45,6 +45,10 @@
     <Compile Remove="Migrations\20200414122244_blala.Designer.cs" />
     <Compile Remove="Migrations\20200414130514_InicializacaodoBandoDeDados.cs" />
     <Compile Remove="Migrations\20200414130514_InicializacaodoBandoDeDados.Designer.cs" />
+    <Compile Remove="Migrations\20200626123303_AdicionandoCampoTipoDeInvestimento.cs" />
+    <Compile Remove="Migrations\20200626123303_AdicionandoCampoTipoDeInvestimento.Designer.cs" />
+    <Compile Remove="Migrations\20200626123801_AdicionandoCampoTipoDeInvestimento.cs" />
+    <Compile Remove="Migrations\20200626123801_AdicionandoCampoTipoDeInvestimento.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

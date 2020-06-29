@@ -1,8 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace alderam.stocks.api.Models
 {
+    public enum TipoDeInvestimento
+    {
+        [Description("Ação")]
+        Acao = 1,
+
+        [Description("Fundo Imobiliário")]
+        FundoImobiliario = 2
+    }
+
     public class Ativo
     {
         [Key]
@@ -26,5 +36,7 @@ namespace alderam.stocks.api.Models
         public decimal? PrecoAtual { get; set; }
 
         public Setor Setor { get; set; }
+
+        public TipoDeInvestimento? TipoDeInvestimento { get; set; }
     }
 }

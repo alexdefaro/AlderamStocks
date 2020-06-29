@@ -259,7 +259,7 @@ namespace alderam.stocks.api.Services
         {
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Boleta)
-                .Include(i => i.Ativo)
+                .Include(i => i.Ativo.Setor)
                 .OrderBy(o => o.DataDaOperacao)
                 .ToListAsync();
 

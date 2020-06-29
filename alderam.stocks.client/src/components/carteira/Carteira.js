@@ -37,7 +37,8 @@ function Carteira() {
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Valor Médio</th>
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
                                     <th className="px-4 py-1 text-right">Valor Atual</th>
-                                    <th className="px-4 py-1 text-right">Rentabilidade</th>
+                                    <th className="px-4 py-1 text-right">Rentabilidade</th> 
+                                    <th className="xl:px-4 py-1 text-left">Setor</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +48,7 @@ function Carteira() {
                                             <td className="border xl:px-4 py-1 text-left">
                                                 <a href={"https://br.tradingview.com/chart/?symbol=BMFBOVESPA:" + operacao.codigoDoAtivo} target="new">{operacao.codigoDoAtivo}</a>
                                             </td>
-                                            <td className="border px-4 py-1 hidden xl:table-cell text-left">{operacao.nomeDoAtivo}</td>
+                                            <td className="border px-4 py-1 hidden xl:table-cell text-left">{operacao.nomeDoAtivo.slice(0, 20) + "..."}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{operacao.quantitidade}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.precoMedioCompra)}</td>
                                             <td className="border px-4 py-1 text-right hidden xl:table-cell">{formatCurrency(operacao.valorDaOperacao)}</td>
@@ -58,6 +59,7 @@ function Carteira() {
                                             </td>
                                             <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorAtual)}</td>
                                             <td className={"border px-4 py-1 text-right " + (operacao.rentabilidade < 0 ? "text-red-500" : "text-green-500")}>{formatCurrency(operacao.rentabilidade)}</td>
+                                            <td className="border px-4 py-1 xl:table-cell text-left">{operacao.nomeDoSetor.slice(0, 20) + "..."}</td>
                                         </tr>
                                     ))
                                 }
