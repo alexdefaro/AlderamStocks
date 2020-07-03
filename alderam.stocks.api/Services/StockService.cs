@@ -238,10 +238,9 @@ namespace alderam.stocks.api.Services
         public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores()
         {
             var registros = await _databaseContext.Operacoes
-                .Include(i => i.Ativo.Setor)
-                .GroupBy(g => g.Ativo.Setor.Nome)
+                .Include(i => i.Ativo.Subsetor)
+                .GroupBy(g => g.Ativo.Subsetor.Nome)
                 .Select(g => new { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao) })
-                //.Select(g => new GraficoDeSetoresDTO() { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao ) })
                 .OrderBy(o => o.Labels)
                 .ToListAsync();
 
@@ -259,7 +258,7 @@ namespace alderam.stocks.api.Services
         {
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Boleta)
-                .Include(i => i.Ativo.Setor)
+                .Include(i => i.Ativo.Subsetor)
                 .OrderBy(o => o.DataDaOperacao)
                 .ToListAsync();
 

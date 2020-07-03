@@ -38,7 +38,7 @@ function Carteira() {
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
                                     <th className="px-4 py-1 text-right">Valor Atual</th>
                                     <th className="px-4 py-1 text-right">Rentabilidade</th> 
-                                    <th className="xl:px-4 py-1 text-left">Setor</th>
+                                    <th className="px-4 py-1 text-left">Setor</th>
                                 </tr>
                             </thead>
                             <tbody>

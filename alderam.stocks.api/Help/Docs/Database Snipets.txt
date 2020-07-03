@@ -51,3 +51,6 @@
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('SERV_TEC', 'Serviços de Tecnologia');");
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('TRANSP', 'Transportes');"); 
             migrationBuilder.Sql("insert into Setores (Codigo, Nome) values ('SERV_PUBL', 'Serviços Públicos');"); 
+
+
+

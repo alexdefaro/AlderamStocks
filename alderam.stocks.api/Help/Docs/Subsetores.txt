@@ -1,0 +1,78 @@
+﻿select * from Setores
+select * from Subsetores
+
+--insert into Subsetores (SetorId, Nome) values (34, 'Água e Saneamento')
+--insert into Subsetores (SetorId, Nome) values (34, 'Energia Elétrica')
+--insert into Subsetores (SetorId, Nome) values (34, 'Gás')
+
+
+--insert into Subsetores (SetorId, Nome) values (33, 'Computadores e Equipamentos')
+--insert into Subsetores (SetorId, Nome) values (33, 'Programas e Serviços')
+
+--insert into Subsetores (SetorId, Nome) values (32, 'Comércio e Distribuição')
+--insert into Subsetores (SetorId, Nome) values (32, 'Equipamentos')
+--insert into Subsetores (SetorId, Nome) values (32, 'Medicamentos e Outros Produtos')
+--insert into Subsetores (SetorId, Nome) values (32, 'Serv.Méd.Hospit..Análises e Diagnósticos')
+
+--insert into Subsetores (SetorId, Nome) values (31, 'Petróleo. Gás e Biocombustíveis')
+
+--insert into Subsetores (SetorId, Nome) values (30, 'Outros')
+
+--insert into Subsetores (SetorId, Nome) values (29, 'Embalagens')
+--insert into Subsetores (SetorId, Nome) values (29, 'Madeira e Papel')
+--insert into Subsetores (SetorId, Nome) values (29, 'Materiais Diversos')
+--insert into Subsetores (SetorId, Nome) values (29, 'Mineração')
+--insert into Subsetores (SetorId, Nome) values (29, 'Químicos')
+--insert into Subsetores (SetorId, Nome) values (29, 'Siderurgia e Metalurgia')
+
+--insert into Subsetores (SetorId, Nome) values (28, 'Exploração de Imóveis')
+--insert into Subsetores (SetorId, Nome) values (28, 'Holdings Diversificadas')
+--insert into Subsetores (SetorId, Nome) values (28, 'Intermediários Financeiros')
+--insert into Subsetores (SetorId, Nome) values (28, 'Previdência e Seguros')
+--insert into Subsetores (SetorId, Nome) values (28, 'Securitizadoras de Recebíveis')
+--insert into Subsetores (SetorId, Nome) values (28, 'Serviços Financeiros Diversos')
+
+
+
+--insert into Subsetores (SetorId, Nome) values (27, 'Agropecuária')
+--insert into Subsetores (SetorId, Nome) values (27, 'Alimentos Processados')
+--insert into Subsetores (SetorId, Nome) values (27, 'Bebidas')
+--insert into Subsetores (SetorId, Nome) values (27, 'Comércio e Distribuição')
+--insert into Subsetores (SetorId, Nome) values (27, 'Produtos de Uso Pessoal e de Limpeza')
+
+
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'AUTO_MOTO', 'Automóveis e Motocicletas')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'COMÉRCIO', 'Comércio')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'CONST_CIVIL', 'Construção Civil')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'DIVERSOS', 'Diversos')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'HOTEIS_REST', 'Hoteis e Restaurantes')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'VEST_CALÇADO', 'Tecidos. Vestuário e Calçados')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'UTIL_DOM', 'Utilidades Domésticas')
+--insert into Subsetores (SetorId, Codigo, Nome) values (26, 'VIAGEM_LAZER', 'Viagens e Lazer')
+
+
+--insert into Subsetores (SetorId, Codigo, Nome) values (25, 'MÍDIA', 'Mídia')
+--insert into Subsetores (SetorId, Codigo, Nome) values (25, 'TELECOM', 'Telecomunicações')
+--insert into Subsetores (SetorId, Codigo, Nome) values (25, 'TELEFONIA', 'Telefonia Fixa')
+
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'COMERCIO', 'Comércio')
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'CONST_ENERG', 'Construção e Engenharia')
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'MAQNS_EQUIP', 'Máquinas e Equipamentos')
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'MAT_TRANSP', 'Material de Transporte')
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'SERVIÇOS', 'Serviços')
+--insert into Subsetores (SetorId, Codigo, Nome) values (24, 'TRANSPORTE', 'Transporte')
+
+
+
+update Ativos set SubsetorId = 1 where Id in (9,20)
+update Ativos set SubsetorId = 31 where Id in (10)
+update Ativos set SubsetorId = 39 where Id in (11)
+update Ativos set SubsetorId = 3  where Id in (12)
+update Ativos set SubsetorId = 12  where Id in (13,31)
+update Ativos set SubsetorId = 6  where Id in (14)
+update Ativos set SubsetorId = 30  where Id in (19,24)
+update Ativos set SubsetorId = 49  where Id in (30,16)
+update Ativos set SubsetorId = 41  where Id in (15)
+update Ativos set SubsetorId = 38  where Id in (27)
+
+

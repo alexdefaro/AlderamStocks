@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using alderam.stocks.api.Database;
 
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200703180426_CriacaoDaTabelaDeSubsetores")]
+    partial class CriacaoDaTabelaDeSubsetores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace alderam.stocks.api.Migrations
                     b.Property<decimal?>("PrecoAtual")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("SubsetorId")
+                    b.Property<int?>("SetorId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TipoDeInvestimento")
@@ -79,7 +81,7 @@ namespace alderam.stocks.api.Migrations
                     b.HasIndex("Codigo")
                         .IsUnique();
 
-                    b.HasIndex("SubsetorId");
+                    b.HasIndex("SetorId");
 
                     b.ToTable("Ativos");
                 });
@@ -179,6 +181,11 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -195,6 +202,11 @@ namespace alderam.stocks.api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -222,9 +234,9 @@ namespace alderam.stocks.api.Migrations
 
             modelBuilder.Entity("alderam.stocks.api.Models.Ativo", b =>
                 {
-                    b.HasOne("alderam.stocks.api.Models.Subsetor", "Subsetor")
+                    b.HasOne("alderam.stocks.api.Models.Setor", "Setor")
                         .WithMany()
-                        .HasForeignKey("SubsetorId");
+                        .HasForeignKey("SetorId");
                 });
 
             modelBuilder.Entity("alderam.stocks.api.Models.Operacao", b =>

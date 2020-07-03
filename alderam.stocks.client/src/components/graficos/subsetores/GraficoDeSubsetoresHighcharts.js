@@ -9,7 +9,7 @@ import Api from "../../../services/Api";
 
 Drilldown(Highcharts);
 
-function GraficoDeSetoresHighcharts() {
+function GraficoDeSubsetoresHighcharts() {
     const [dadosDoGrafico, setDadosDoGrafico] = useState({});
 
     function formatCurrency(value) {
@@ -51,7 +51,7 @@ function GraficoDeSetoresHighcharts() {
             enabled: false
         },
         title: {
-            text: 'Distribuíção de ativos por setores'
+            text: 'Distribuíção de ativos por subsetores'
         },
         tooltip: {
             pointFormatter: function () {
@@ -104,4 +104,4 @@ function GraficoDeSetoresHighcharts() {
     )
 }
 
-export default GraficoDeSetoresHighcharts;
+export default GraficoDeSubsetoresHighcharts;

@@ -35,7 +35,7 @@ namespace alderam.stocks.api.Models
 
         public decimal? PrecoAtual { get; set; }
 
-        public Setor Setor { get; set; }
+        public Subsetor Subsetor { get; set; }
 
         public TipoDeInvestimento? TipoDeInvestimento { get; set; }
     }

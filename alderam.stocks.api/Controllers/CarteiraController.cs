@@ -41,7 +41,7 @@ namespace alderam.stocks.api.Controllers
             var operacoes = await _stockService.RecuperarOperacoes();
 
             var result = operacoes
-                .GroupBy(g => new { g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, NomeDoSetor = g.Ativo.Setor.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior })
+                .GroupBy(g => new { g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, NomeDoSetor = g.Ativo.Subsetor.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior })
                 .Select(r => new
                 {
                     CodigoDoAtivo = r.Key.Codigo,

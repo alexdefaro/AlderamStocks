@@ -9,6 +9,7 @@ namespace alderam.stocks.api.Database
         {
         }
 
+        public DbSet<Subsetor> Subsetores { get; set; }
         public DbSet<Setor> Setores { get; set; }
         public DbSet<Ativo> Ativos { get; set; }
         public DbSet<Operacao> Operacoes { get; set; }

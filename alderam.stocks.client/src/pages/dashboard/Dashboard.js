@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import Resumo from '../../components/resumo/Resumo';
 import Acompanhamentos from '../../components/acompanhamentos/Acompanhamentos';
 import Carteira from '../../components/carteira/Carteira';
-import GraficoDeSetoresHighcharts from '../../components/graficos/setores/GraficoDeSetoresHighcharts';
+import GraficoDeSubsetoresHighcharts from '../../components/graficos/subsetores/GraficoDeSubsetoresHighcharts';
 
 import ApiService from "../../services/Api";
 import Toast from "../../services/Toast";
@@ -57,7 +57,7 @@ function Dashboard() {
 
                     <h3 className="p-3 text-3xl">Graficos</h3>
                     <div className="">
-                        <GraficoDeSetoresHighcharts />
+                        <GraficoDeSubsetoresHighcharts />
                     </div>
                 </div>
             </div>
