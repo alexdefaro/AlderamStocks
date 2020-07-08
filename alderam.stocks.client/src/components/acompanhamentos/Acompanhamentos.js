@@ -136,7 +136,7 @@ function Acompanhamentos() {
                                 <th className="px-2 py-1 text-left">Ativo</th>
                                 <th className="px-2 py-1 text-right">Atual</th>
                                 <th className="px-2 py-1 text-right">Compra</th>
-                                <th className="w-20 xl:w-auto px-1 py-1 text-center"><a href="#" onClick={() => setModalIsOpen(true)} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
+                                <th className="w-20 xl:w-auto px-1 py-1 text-center"><a href="#/" onClick={() => setModalIsOpen(true)} ><i className="fas fa-search-plus mr-1" title="Adicionar ativo a lista" /></a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,8 +157,8 @@ function Acompanhamentos() {
                                         </td>
 
                                         <td className="border text-center">
-                                            <a href="#" onClick={(e) => handleEditClick(e, ativo)}><i className=" far fa-edit mr-1" title="Alterar este ativo" /></a>
-                                            <a href="#" onClick={(e) => handleRemoveClick(e, ativo.id)}><i className="far fa-trash-alt" title="Remover ativo da lista" /></a>
+                                            <a href="#/" onClick={(e) => handleEditClick(e, ativo)}><i className=" far fa-edit mr-1" title="Alterar este ativo" /></a>
+                                            <a href="#/" onClick={(e) => handleRemoveClick(e, ativo.id)}><i className="far fa-trash-alt" title="Remover ativo da lista" /></a>
                                         </td>
                                     </tr>
                                 ))

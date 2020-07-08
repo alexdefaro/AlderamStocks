@@ -15,11 +15,6 @@ function Boletas() {
         fetchData();
     }, []);
 
-    function formatCurrency(value) {
-        let result = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        return result.replace('R$', '');
-    }
-
     return (
         boletas.map(boleta => (
             <Boleta key={boleta.id} boleta={boleta} />

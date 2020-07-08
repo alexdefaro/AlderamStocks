@@ -49,6 +49,12 @@
     <Compile Remove="Migrations\20200626123303_AdicionandoCampoTipoDeInvestimento.Designer.cs" />
     <Compile Remove="Migrations\20200626123801_AdicionandoCampoTipoDeInvestimento.cs" />
     <Compile Remove="Migrations\20200626123801_AdicionandoCampoTipoDeInvestimento.Designer.cs" />
+    <Compile Remove="Migrations\20200708125949_AdicionandoColunaTipoDeOperacao.cs" />
+    <Compile Remove="Migrations\20200708125949_AdicionandoColunaTipoDeOperacao.Designer.cs" />
+    <Compile Remove="Migrations\20200708130221_AdicionandoColunaTipoDeOperacao.cs" />
+    <Compile Remove="Migrations\20200708130221_AdicionandoColunaTipoDeOperacao.Designer.cs" />
+    <Compile Remove="Migrations\20200708143202_AdicionandoNovaColunaTipoDeOperacao.cs" />
+    <Compile Remove="Migrations\20200708143202_AdicionandoNovaColunaTipoDeOperacao.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

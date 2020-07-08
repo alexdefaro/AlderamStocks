@@ -1,12 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace alderam.stocks.api.Models
 {
+    public enum TipoDeOperacao
+    {
+        [Description("Compra")]
+        Compra = 'C',
+
+        [Description("Venda")]
+        Venda = 'V'
+    }
+
     public class Operacao
     {
         [Key]
         public int Id { get; set; }
+
+        public TipoDeOperacao? TipoDeOperacao { get; set; }
 
         [Required]
         public Boleta Boleta { get; set; }

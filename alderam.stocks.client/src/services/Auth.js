@@ -5,7 +5,7 @@
 
 function isAuthenticated() {
     const AUTH_TOKEN = sessionStorage.getItem('AUTH_TOKEN') ?? '';
-    return (AUTH_TOKEN != '');
+    return (AUTH_TOKEN !== '');
 }  
 
 function logout() {
