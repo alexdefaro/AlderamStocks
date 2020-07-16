@@ -18,6 +18,9 @@ namespace alderam.stocks.api.Models.DTOs
         [Required(ErrorMessage = "Nome do ativo é obrigatório.")]
         public string nomeDoAtivo { get; set; }
 
+        [Required(ErrorMessage = "Tipo de investimento.")]
+        public int tipoDeInvestimento { get; set; }
+
         [IgnoreDataMember]
         public Ativo Ativo { get; set; }
         
@@ -26,13 +29,16 @@ namespace alderam.stocks.api.Models.DTOs
         [DataDaOperacaoValidation]
         public DateTime DataDaOperacao { get; set; }
 
+        [Required(ErrorMessage = "Data da operacao é obrigatória.")]
+        public string Tipo { get; set; }
+
         [Required(ErrorMessage = "Quantitidade é obrigatória")]
         [Range(1, 10000, ErrorMessage = "Quantitidade deve estar entre 1 e 1000.")]
         public int Quantitidade { get; set; }
 
-        [Required(ErrorMessage = "Preco de compra é obrigatório")]
+        [Required(ErrorMessage = "Preco unitário é obrigatório")]
         [Range(1, 10000, ErrorMessage = "Preco de compra deve estar entre 1.00 e 100000.00.")]
-        public decimal PrecoDeCompra { get; set; }
+        public decimal PrecoUnitario { get; set; }
         
         public decimal ValorDaOperacao { get; set; }
 

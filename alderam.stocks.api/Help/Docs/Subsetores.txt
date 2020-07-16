@@ -1,6 +1,13 @@
 ﻿select * from Setores
 select * from Subsetores
 
+
+--insert into Setores values ('Híbrido')
+
+--insert into Subsetores (Nome, SetorId) values ('Misto', 35)
+--insert into Subsetores (Nome, SetorId) values ('Papéis', 35)
+--insert into Subsetores (Nome, SetorId) values ('Fundo de Fundoa', 35)
+
 --insert into Subsetores (SetorId, Nome) values (34, 'Água e Saneamento')
 --insert into Subsetores (SetorId, Nome) values (34, 'Energia Elétrica')
 --insert into Subsetores (SetorId, Nome) values (34, 'Gás')
@@ -33,7 +40,6 @@ select * from Subsetores
 --insert into Subsetores (SetorId, Nome) values (28, 'Serviços Financeiros Diversos')
 
 
-
 --insert into Subsetores (SetorId, Nome) values (27, 'Agropecuária')
 --insert into Subsetores (SetorId, Nome) values (27, 'Alimentos Processados')
 --insert into Subsetores (SetorId, Nome) values (27, 'Bebidas')
@@ -41,26 +47,26 @@ select * from Subsetores
 --insert into Subsetores (SetorId, Nome) values (27, 'Produtos de Uso Pessoal e de Limpeza')
 
 
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'AUTO_MOTO', 'Automóveis e Motocicletas')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'COMÉRCIO', 'Comércio')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'CONST_CIVIL', 'Construção Civil')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'DIVERSOS', 'Diversos')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'HOTEIS_REST', 'Hoteis e Restaurantes')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'VEST_CALÇADO', 'Tecidos. Vestuário e Calçados')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'UTIL_DOM', 'Utilidades Domésticas')
---insert into Subsetores (SetorId, Codigo, Nome) values (26, 'VIAGEM_LAZER', 'Viagens e Lazer')
+--insert into Subsetores (SetorId, Nome) values (26, 'Automóveis e Motocicletas')
+--insert into Subsetores (SetorId, Nome) values (26, 'Comércio')
+--insert into Subsetores (SetorId, Nome) values (26, 'Construção Civil')
+--insert into Subsetores (SetorId, Nome) values (26, 'Diversos')
+--insert into Subsetores (SetorId, Nome) values (26, 'Hoteis e Restaurantes')
+--insert into Subsetores (SetorId, Nome) values (26, 'Tecidos. Vestuário e Calçados')
+--insert into Subsetores (SetorId, Nome) values (26, 'Utilidades Domésticas')
+--insert into Subsetores (SetorId, Nome) values (26, 'Viagens e Lazer')
 
 
---insert into Subsetores (SetorId, Codigo, Nome) values (25, 'MÍDIA', 'Mídia')
---insert into Subsetores (SetorId, Codigo, Nome) values (25, 'TELECOM', 'Telecomunicações')
---insert into Subsetores (SetorId, Codigo, Nome) values (25, 'TELEFONIA', 'Telefonia Fixa')
+--insert into Subsetores (SetorId, Nome) values (25, 'Mídia')
+--insert into Subsetores (SetorId, Nome) values (25, 'Telecomunicações')
+--insert into Subsetores (SetorId, Nome) values (25, 'Telefonia Fixa')
 
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'COMERCIO', 'Comércio')
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'CONST_ENERG', 'Construção e Engenharia')
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'MAQNS_EQUIP', 'Máquinas e Equipamentos')
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'MAT_TRANSP', 'Material de Transporte')
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'SERVIÇOS', 'Serviços')
---insert into Subsetores (SetorId, Codigo, Nome) values (24, 'TRANSPORTE', 'Transporte')
+--insert into Subsetores (SetorId, Nome) values (24, 'Comércio')
+--insert into Subsetores (SetorId, Nome) values (24, 'Construção e Engenharia')
+--insert into Subsetores (SetorId, Nome) values (24, 'Máquinas e Equipamentos')
+--insert into Subsetores (SetorId, Nome) values (24, 'Material de Transporte')
+--insert into Subsetores (SetorId, Nome) values (24, 'Serviços')
+--insert into Subsetores (SetorId, Nome) values (24, 'Transporte')
 
 
 

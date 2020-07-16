@@ -51,7 +51,7 @@ namespace alderam.stocks.api.Controllers
                     r.Key.PrecoAnterior,
                     Quantitidade = r.Sum(s => s.Quantitidade),
                     PrecoMedioCompra = (r.Sum(s => s.ValorDaOperacao)/r.Sum(s => s.Quantitidade)),
-                    PrecoDeCompra = r.Sum(s => s.PrecoDeCompra),
+                    PrecoUnitario = r.Sum(s => s.PrecoUnitario),
                     ValorDaOperacao = r.Sum(s => s.ValorDaOperacao),
                     ValorAtual = r.Sum(s => s.Quantitidade) * r.Key.PrecoAtual,
                     Rentabilidade = r.Sum(s => ((s.Quantitidade * s.Ativo.PrecoAtual) - s.ValorDaOperacao)),

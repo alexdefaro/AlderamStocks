@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace alderam.stocks.api.Models
 {
-    public enum TipoDeInvestimento
+    public enum TiposDeInvestimento
     {
         [Description("Ação")]
         Acao = 1,
@@ -37,6 +37,6 @@ namespace alderam.stocks.api.Models
 
         public Subsetor Subsetor { get; set; }
 
-        public TipoDeInvestimento? TipoDeInvestimento { get; set; }
+        public TiposDeInvestimento? TipoDeInvestimento { get; set; }
     }
 }

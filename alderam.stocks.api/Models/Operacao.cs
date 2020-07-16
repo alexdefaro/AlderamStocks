@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace alderam.stocks.api.Models
 {
-    public enum TipoDeOperacao
+    public enum TiposDeOperacao
     {
         [Description("Compra")]
         Compra = 'C',
@@ -18,7 +18,7 @@ namespace alderam.stocks.api.Models
         [Key]
         public int Id { get; set; }
 
-        public TipoDeOperacao? TipoDeOperacao { get; set; }
+        public TiposDeOperacao? TipoDeOperacao { get; set; } = TiposDeOperacao.Compra;
 
         [Required]
         public Boleta Boleta { get; set; }
@@ -33,7 +33,7 @@ namespace alderam.stocks.api.Models
         public int Quantitidade { get; set; }
 
         [Required]
-        public decimal PrecoDeCompra { get; set; }
+        public decimal PrecoUnitario { get; set; }
 
         [Required]
         public DateTime DataDeCriacao { get; set; }

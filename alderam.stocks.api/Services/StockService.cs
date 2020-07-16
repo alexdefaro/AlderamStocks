@@ -333,7 +333,7 @@ namespace alderam.stocks.api.Services
 
         public async Task<Acompanhamento> IncluirAcompanhamento(AcompanhamentoDTO requestDTO)
         {
-            requestDTO.Ativo = await SalvarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo);
+            requestDTO.Ativo = await SalvarAtivo(requestDTO.CodigoDoAtivo, requestDTO.nomeDoAtivo, 1);
 
             var registro = _mapper.Map<Acompanhamento>(requestDTO);
 
@@ -410,10 +410,10 @@ namespace alderam.stocks.api.Services
             decimal valorTotalDaOperacao = 0;
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
+                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo, operacao.tipoDeInvestimento);
                 operacao.DataDeCriacao = DateTime.Now;
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
-                operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoDeCompra);
+                operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoUnitario);
 
                 valorTotalDaOperacao += operacao.ValorDaOperacao;
             }
@@ -458,7 +458,7 @@ namespace alderam.stocks.api.Services
 
             foreach (var operacao in boletaRequest.Operacoes)
             {
-                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo);
+                operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo, operacao.tipoDeInvestimento);
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
             }
 
@@ -476,7 +476,7 @@ namespace alderam.stocks.api.Services
             return boleta;
         }
 
-        public async Task<Ativo> SalvarAtivo(string codigo, string nome)
+        public async Task<Ativo> SalvarAtivo(string codigo, string nome, int tipoDeInvestimento = 1)
         {
             var ativo = _databaseContext.Ativos.SingleOrDefault(r => r.Codigo == codigo);
 
@@ -486,7 +486,8 @@ namespace alderam.stocks.api.Services
                 {
                     Codigo = codigo,
                     Nome = nome,
-                    DataDeCriacao = DateTime.Now
+                    DataDeCriacao = DateTime.Now,
+                    TipoDeInvestimento = (TiposDeInvestimento)tipoDeInvestimento
                 };
 
                 _databaseContext.Ativos.Add(ativo);
@@ -495,6 +496,7 @@ namespace alderam.stocks.api.Services
             else
             {
                 ativo.Nome = nome;
+                ativo.TipoDeInvestimento = (TiposDeInvestimento)tipoDeInvestimento;
             }
 
             return ativo;
@@ -502,21 +504,28 @@ namespace alderam.stocks.api.Services
 
         public decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes)
         {
-            var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
+            var valorDaOperacao = operacoes.Where(r => r.Ativo.TipoDeInvestimento == TiposDeInvestimento.Acao).Sum(o => (o.PrecoUnitario * o.Quantitidade));
+            
+            if (valorDaOperacao == 0)
+            {
+                return 0;
+            }
+
             var result = (10 + (valorDaOperacao * 0.003m)) + taxaDaCoretagem;
+
             return Truncate((decimal)result);
         } // = (10+((F5)*0.003))+F6
 
         public decimal CalcularTaxaDeLiquidacao(IEnumerable<Operacao> operacoes)
         {
-            var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
+            var valorDaOperacao = operacoes.Sum(o => (o.PrecoUnitario * o.Quantitidade));
             var result = (valorDaOperacao * 0.0275m) / 100;
             return Truncate((decimal)result);
         } // =(F5*0.0275)/100
 
         public decimal CalcularEmolumentos(bool operacaoEmLeilao, IEnumerable<Operacao> operacoes)
         {
-            var valorDaOperacao = operacoes.Sum(o => (o.PrecoDeCompra * o.Quantitidade));
+            var valorDaOperacao = operacoes.Sum(o => (o.PrecoUnitario * o.Quantitidade));
             decimal taxaDeEmolumentos = (operacaoEmLeilao == true) ? 0.0070m : 0.003248m;
             var result = ((valorDaOperacao * taxaDeEmolumentos) / 100);
             return Truncate((decimal)result);

@@ -27,7 +27,7 @@ namespace alderam.stocks.api.Database
             modelBuilder.Entity<Operacao>()
                 .Property(p => p.TipoDeOperacao)
                 .HasMaxLength(1)
-                .HasConversion<char>(p => (char)p, p => (TipoDeOperacao)(int)p); 
+                .HasConversion<char>(p => (char)p, p => (TiposDeOperacao)(int)p); 
         }
     }
 }

@@ -27,8 +27,8 @@ namespace alderam.stocks.api.Controllers
         private readonly IMapper _mapper;
 
         public OperacoesController(IMapper mapper,
-                                 IStockService stockService,
-                                 DatabaseContext databaseContext)
+                                   IStockService stockService,
+                                   DatabaseContext databaseContext)
         {
             _mapper = mapper;
             _stockService = stockService;
@@ -47,7 +47,7 @@ namespace alderam.stocks.api.Controllers
                 codigoDoAtivo = r.Ativo.Codigo,
                 nomeDoAtivo = r.Ativo.Nome,
                 r.Quantitidade,
-                r.PrecoDeCompra,
+                r.PrecoUnitario,
                 r.ValorDaOperacao,
 
                 PrecoAtual = r.Ativo.PrecoAtual,
