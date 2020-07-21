@@ -14,14 +14,13 @@ export const ApiService = {
 };
 export default ApiService; 
 
-async function get(enpoint) {
+async function get(enpoint, params, data) {
     let headers = {
         headers: {
             Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
         }
     }
-
-    return await Api.get(enpoint, headers);
+    return await Api.get(enpoint, headers, params, data);
 }
 
 async function post(enpoint, data) {

@@ -27,7 +27,7 @@ namespace alderam.stocks.api.Controllers
         private readonly IMapper _mapper;
 
         public GraficoDeSetoresController(IMapper mapper,
-                                          IStockService stockService, 
+                                          IStockService stockService,
                                           DatabaseContext databaseContext)
         {
             _mapper = mapper;
@@ -36,10 +36,10 @@ namespace alderam.stocks.api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GraficoDeSetoresDTO>> Get()
+        public async Task<ActionResult<GraficoDeSetoresDTO>> Get(TiposDeInvestimento tipoDeInvestimento = TiposDeInvestimento.Acao)
         {
-            var dadosDosSetores = await _stockService.RecuperarDadosDoGraficoDeSetores();
+            GraficoDeSetoresDTO dadosDosSetores = await _stockService.RecuperarDadosDoGraficoDeSetores(tipoDeInvestimento);
             return dadosDosSetores;
-        } 
+        }
     }
 }

@@ -12,6 +12,8 @@ import Spinner from '../../components/spinner/Spinner';
 
 function Dashboard() {
     const [spinnerVisibilityClass, setspinnerVisibilityClass] = useState('visible');
+    const tipoDeInvestimentoAcao = 1;
+    const tipoDeInvestimentoFundoImobiliario   = 2;
 
     useEffect(() => {
         document.title = 'Alderam.Stocks/Dashboard';
@@ -56,8 +58,13 @@ function Dashboard() {
                     <Carteira />
 
                     <h3 className="p-3 text-3xl">Graficos</h3>
+
                     <div className="">
-                        <GraficoDeSubsetoresHighcharts />
+                        <GraficoDeSubsetoresHighcharts tipoDeInvestimento={tipoDeInvestimentoAcao} />
+                    </div>
+
+                    <div className="">
+                        <GraficoDeSubsetoresHighcharts tipoDeInvestimento={tipoDeInvestimentoFundoImobiliario} />
                     </div>
                 </div>
             </div>

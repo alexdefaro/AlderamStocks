@@ -9,8 +9,9 @@ import Api from "../../../services/Api";
 
 Drilldown(Highcharts);
 
-function GraficoDeSubsetoresHighcharts() {
+function GraficoDeSubsetoresHighcharts(props) {
     const [dadosDoGrafico, setDadosDoGrafico] = useState({});
+    const tipoDeInvestimento = props.tipoDeInvestimento;
 
     function formatCurrency(value) {
         let result = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -19,10 +20,7 @@ function GraficoDeSubsetoresHighcharts() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/graficodesetores', {
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-                }
+            const response = await Api.get('/graficodesetores?tipoDeInvestimento=' +tipoDeInvestimento, {
             });
 
             let dadosDoGraficoFormatados = response.data.labels.map(
@@ -51,7 +49,7 @@ function GraficoDeSubsetoresHighcharts() {
             enabled: false
         },
         title: {
-            text: 'Distribuíção de ativos por subsetores'
+            text: 'Distribuíção de ativos por subsetores (' + ((tipoDeInvestimento == 1) ? 'Açoes' : 'Fundos Imobiliários') +')'
         },
         tooltip: {
             pointFormatter: function () {

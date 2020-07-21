@@ -4,11 +4,11 @@ import ApiService from "../../services/Api";
 
 function Carteira() {
     const [operacoes, setOperacoes] = useState([]);
+    var tipoDeInvestimento = 0;
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await ApiService.get('/carteira');
-
             setOperacoes(response.data);
         }
 
@@ -37,21 +37,25 @@ function Carteira() {
                                     <th className="px-4 py-1 hidden xl:table-cell text-right">Preço Atual</th>
                                     <th className="px-4 py-1 text-right">Valor Atual</th>
                                     <th className="px-4 py-1 text-right">Rentabilidade</th>
-                                    <th className="px-4 py-1 text-left">Setor</th>
-                                </tr>
-                                <tr>
-                                    <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">Ações</th>
+                                    <th className="px-4 py-1 text-left">Subsetor</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     operacoes.map((operacao) => {
+                                        var printSubTitle = false; 
+
+                                        if (tipoDeInvestimento != operacao.tipoDeInvestimento) {
+                                            tipoDeInvestimento = operacao.tipoDeInvestimento;
+                                            printSubTitle = true;
+                                        }
+
                                         return (
-                                            <React.Fragment key={operacao.codigoDoAtivo}> 
+                                            <React.Fragment key={operacao.codigoDoAtivo}>
                                                 {
-                                                    (operacao.tipoDeInvestimento == 2) &&
+                                                    (printSubTitle) &&
                                                         <tr>
-                                                            <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">Fundos Imobiliários</th>
+                                                            <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">{((operacao.tipoDeInvestimento) == 1 ? "Ações" : "Fundos Imobiliários")}</th>
                                                         </tr>
                                                 }
 
@@ -74,7 +78,8 @@ function Carteira() {
                                                 </tr>
                                             </React.Fragment>
                                         )
-                                    })
+                                    }
+                                    )
                                 }
                             </tbody>
                         </table>

@@ -71,7 +71,7 @@ namespace alderam.stocks.api.Services
         Task CarregarCotacoes();
 
         Task<ResumoDTO> RecuperarResumoDaCarteira();
-        Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores();
+        Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores(TiposDeInvestimento tipoDeInvestimento);
 
         // Operacoes
         Task<IEnumerable<Operacao>> RecuperarOperacoes();
@@ -235,10 +235,11 @@ namespace alderam.stocks.api.Services
             return resumo;
         }
 
-        public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores()
+        public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores(TiposDeInvestimento tipoDeInvestimento = TiposDeInvestimento.Acao)
         {
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Ativo.Subsetor)
+                .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento)
                 .GroupBy(g => g.Ativo.Subsetor.Nome)
                 .Select(g => new { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao) })
                 .OrderBy(o => o.Labels)
