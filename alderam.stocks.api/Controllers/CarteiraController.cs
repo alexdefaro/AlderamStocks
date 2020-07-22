@@ -42,6 +42,7 @@ namespace alderam.stocks.api.Controllers
 
             var result = operacoes
                 .GroupBy(g => new { g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.TipoDeInvestimento, NomeDoSetor = g.Ativo.Subsetor.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior })
+                .Where(r => r.Sum(s => s.Quantitidade) > 0)
                 .Select(r => new
                 {
                     CodigoDoAtivo = r.Key.Codigo,
@@ -56,7 +57,8 @@ namespace alderam.stocks.api.Controllers
                     ValorDaOperacao = r.Sum(s => s.ValorDaOperacao),
                     ValorAtual = r.Sum(s => s.Quantitidade) * r.Key.PrecoAtual,
                     Rentabilidade = r.Sum(s => ((s.Quantitidade * s.Ativo.PrecoAtual) - s.ValorDaOperacao)),
-                    Comprar = r.Key.PrecoAtual.HasValue && (r.Key.PrecoAtual.Value < (_databaseContext.Acompanhamentos.Include(i => i.Ativo).SingleOrDefault(f => f.Ativo.Id == r.Key.Id)?.PrecoDeCompra ?? r.Key.PrecoAtual.Value)) 
+                    Comprar = r.Key.PrecoAtual.HasValue && 
+                        (r.Key.PrecoAtual.Value < (_databaseContext.Acompanhamentos.Include(i => i.Ativo).SingleOrDefault(f => f.Ativo.Id == r.Key.Id)?.PrecoDeCompra ?? r.Key.PrecoAtual.Value)) 
                 })
                 .OrderBy(o => o.TipoDeInvestimento)
                     .ThenBy(o => o.NomeDoSetor)

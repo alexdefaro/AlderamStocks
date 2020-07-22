@@ -199,7 +199,7 @@ namespace alderam.stocks.api.Services
         {
             if (DateTime.Now.Hour < 22)
                 await CarregarCotacoesHG();
-            else 
+            else
                 await CarregarCotacoesAV();
         }
 
@@ -208,23 +208,16 @@ namespace alderam.stocks.api.Services
             var resumo = new ResumoDTO();
 
             resumo.DataDaUltimaAtualizacao = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
-            
+
             resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
             resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
-            
+
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
 
-            //resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
-            //    .GroupBy(g => g.Ativo.Id)
-            //    .Select(o => new { Valor = o.Sum(s => (s.Quantitidade * s.Ativo.PrecoAtual.Value) - s.ValorDaOperacao) } )
-            //    .Select(r => r.Valor)
-            //    .Where(r => r > 0)
-            //    .SumAsync();
-            
             resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
                 .Include(i => i.Ativo)
-                .GroupBy(g => new { Id = g.Ativo.Id, PrecoAtual = g.Ativo.PrecoAtual.Value } )
-                .Select(o => new { Valor = o.Sum(s => (s.Quantitidade * o.Key.PrecoAtual) - s.ValorDaOperacao) } )
+                .GroupBy(g => new { Id = g.Ativo.Id, PrecoAtual = g.Ativo.PrecoAtual.Value })
+                .Select(o => new { Valor = o.Sum(s => (s.Quantitidade * o.Key.PrecoAtual) - s.ValorDaOperacao) })
                 .Select(r => r.Valor)
                 .Where(r => r > 0)
                 .SumAsync();
@@ -416,7 +409,9 @@ namespace alderam.stocks.api.Services
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
                 operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoUnitario);
 
-                valorTotalDaOperacao += operacao.ValorDaOperacao;
+                valorTotalDaOperacao += (TiposDeOperacao)Char.Parse(operacao.TipoDeOperacao) == TiposDeOperacao.Compra ?
+                    operacao.ValorDaOperacao :
+                    -operacao.ValorDaOperacao;
             }
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
@@ -426,8 +421,8 @@ namespace alderam.stocks.api.Services
             boleta.ISS = CalcularISS(boleta.Corretagem);
             boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
-            boleta.ValorDaCompra = valorTotalDaOperacao;
-            boleta.ValorDaOperacao = valorTotalDaOperacao + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao;
+            boleta.ValorDaCompra = Math.Abs(valorTotalDaOperacao);
+            boleta.ValorDaOperacao = Math.Abs(valorTotalDaOperacao + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao);
 
             boleta.DataDaOperacao = boletaRequest.DataDaOperacao;
             boleta.DataDeCriacao = DateTime.Now;
@@ -506,7 +501,7 @@ namespace alderam.stocks.api.Services
         public decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes)
         {
             var valorDaOperacao = operacoes.Where(r => r.Ativo.TipoDeInvestimento == TiposDeInvestimento.Acao).Sum(o => (o.PrecoUnitario * o.Quantitidade));
-            
+
             if (valorDaOperacao == 0)
             {
                 return 0;

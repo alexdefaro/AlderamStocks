@@ -60,7 +60,7 @@ export default function Boleta({ boleta }) {
                     <div className="xl:col-span-1">
                         <div className="bg-blue-100 text-black grid grid-cols-1 gap-1  px-3 py-3 mb-0 mt-0 h-full border-0 border-l rounded-b xl:rounded-r ">
                             <div className="text-right font-medium ">
-                                <span className="float-left inline-block font-semibold mx-1">Total Compra: </span>
+                                <span className="float-left inline-block font-semibold mx-1">Total: </span>
                                 {formatCurrency(boleta.valorDaCompra)}
                                 </div>
                             <div className="text-right font-medium">

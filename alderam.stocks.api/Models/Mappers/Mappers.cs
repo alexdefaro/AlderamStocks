@@ -12,7 +12,8 @@ namespace alderam.stocks.api.Models.Mappers
             CreateMap<BoletaDTO, Boleta>(); 
 
             CreateMap<Operacao, OperacaoDTO>(); 
-            CreateMap<OperacaoDTO, Operacao>(); 
+            CreateMap<OperacaoDTO, Operacao>()
+                .ForMember(m => m.TipoDeOperacao, cd => cd.MapFrom(mf => mf.TipoDeOperacao == "C" ? TiposDeOperacao.Compra: TiposDeOperacao.Venda)); 
 
             CreateMap<Ativo, AtivoDTO>(); 
             CreateMap<AtivoDTO, Ativo>(); 
@@ -22,4 +23,4 @@ namespace alderam.stocks.api.Models.Mappers
 
         }
     }
-}
+} 

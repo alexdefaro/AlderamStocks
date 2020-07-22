@@ -29,8 +29,8 @@ namespace alderam.stocks.api.Models.DTOs
         [DataDaOperacaoValidation]
         public DateTime DataDaOperacao { get; set; }
 
-        [Required(ErrorMessage = "Data da operacao é obrigatória.")]
-        public string Tipo { get; set; }
+        [Required(ErrorMessage = "tipo da operacao é obrigatória.")]
+        public string TipoDeOperacao { get; set; }
 
         [Required(ErrorMessage = "Quantitidade é obrigatória")]
         [Range(1, 10000, ErrorMessage = "Quantitidade deve estar entre 1 e 1000.")]
