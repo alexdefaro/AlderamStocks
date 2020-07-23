@@ -42,7 +42,7 @@ export default function Boleta({ boleta }) {
                                     </div>
                                     <div className="text-right xl:col-span-1">
                                         <span className="float-left block sm:block xl:hidden font-semibold">Quantidade </span>
-                                        {formatCurrency(operacao.quantitidade)}
+                                        {operacao.quantitidade}
                                     </div>
                                     <div className="text-right xl:col-span-1">
                                         <span className="float-left block sm:block xl:hidden font-semibold">Preço de Compra</span>

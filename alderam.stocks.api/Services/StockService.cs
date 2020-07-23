@@ -233,10 +233,14 @@ namespace alderam.stocks.api.Services
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Ativo.Subsetor)
                 .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento)
-                .GroupBy(g => g.Ativo.Subsetor.Nome)
-                .Select(g => new { Labels = g.Key, Values = g.Sum(r => r.ValorDaOperacao) })
+                .GroupBy(g => new { g.Ativo.Subsetor.Nome, g.Ativo.PrecoAtual })
+                .Select(g => new { Labels = g.Key.Nome, Values = (g.Sum(r => r.Quantitidade) * g.Key.PrecoAtual.Value) })
                 .OrderBy(o => o.Labels)
                 .ToListAsync();
+
+                //.GroupBy(g => new { g.Ativo.Subsetor.Nome, g.Ativo.PrecoAtual })
+                //.Select(g => new { Labels = g.Key.Nome, Values = g.Sum(r => r.Quantitidade * r.Ativo.PrecoAtual) })
+
 
             var result = new GraficoDeSetoresDTO()
             {
@@ -407,11 +411,14 @@ namespace alderam.stocks.api.Services
                 operacao.Ativo = await SalvarAtivo(operacao.CodigoDoAtivo, operacao.nomeDoAtivo, operacao.tipoDeInvestimento);
                 operacao.DataDeCriacao = DateTime.Now;
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
+
+                operacao.Quantitidade = (TiposDeOperacao)Char.Parse(operacao.TipoDeOperacao) == TiposDeOperacao.Compra ?
+                    operacao.Quantitidade :
+                    -operacao.Quantitidade;
+
                 operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoUnitario);
 
-                valorTotalDaOperacao += (TiposDeOperacao)Char.Parse(operacao.TipoDeOperacao) == TiposDeOperacao.Compra ?
-                    operacao.ValorDaOperacao :
-                    -operacao.ValorDaOperacao;
+                valorTotalDaOperacao += operacao.ValorDaOperacao;
             }
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
