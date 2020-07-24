@@ -209,14 +209,15 @@ namespace alderam.stocks.api.Services
 
             resumo.DataDaUltimaAtualizacao = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
 
+            resumo.ValorTotalInvestido = await _databaseContext.Boletas.Where(r => r.Corretagem > 0).SumAsync(s => s.ValorDaOperacao);
             resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
-            resumo.ValorTotalInvestido = await _databaseContext.Boletas.SumAsync(s => s.ValorDaOperacao);
 
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
 
             resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
                 .Include(i => i.Ativo)
                 .GroupBy(g => new { Id = g.Ativo.Id, PrecoAtual = g.Ativo.PrecoAtual.Value })
+                .Where(r => r.Sum(s => s.Quantitidade) > 0)
                 .Select(o => new { Valor = o.Sum(s => (s.Quantitidade * o.Key.PrecoAtual) - s.ValorDaOperacao) })
                 .Select(r => r.Valor)
                 .Where(r => r > 0)
