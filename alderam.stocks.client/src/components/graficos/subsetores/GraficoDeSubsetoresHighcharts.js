@@ -20,7 +20,7 @@ function GraficoDeSubsetoresHighcharts(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await Api.get('/graficodesetores?tipoDeInvestimento=' +tipoDeInvestimento, {
+            const response = await Api.get('/graficodesetores?tipoDeInvestimento=' + tipoDeInvestimento, {
             });
 
             let dadosDoGraficoFormatados = response.data.labels.map(
@@ -35,7 +35,7 @@ function GraficoDeSubsetoresHighcharts(props) {
         }
 
         fetchData();
-    }, []);
+    }, [tipoDeInvestimento]);
 
     const chartOptions = {
         chart: {
@@ -49,7 +49,7 @@ function GraficoDeSubsetoresHighcharts(props) {
             enabled: false
         },
         title: {
-            text: 'Distribuíção de ativos por subsetores (' + ((tipoDeInvestimento == 1) ? 'Açoes' : 'Fundos Imobiliários') +')'
+            text: 'Distribuíção de ativos por subsetores (' + ((tipoDeInvestimento === 1) ? 'Açoes' : 'Fundos Imobiliários') +')'
         },
         tooltip: {
             pointFormatter: function () {

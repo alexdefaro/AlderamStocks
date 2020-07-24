@@ -45,7 +45,7 @@ function Carteira() {
                                     operacoes.map((operacao) => {
                                         var printSubTitle = false; 
 
-                                        if (tipoDeInvestimento != operacao.tipoDeInvestimento) {
+                                        if (tipoDeInvestimento !== operacao.tipoDeInvestimento) {
                                             tipoDeInvestimento = operacao.tipoDeInvestimento;
                                             printSubTitle = true;
                                         }
@@ -55,7 +55,7 @@ function Carteira() {
                                                 {
                                                     (printSubTitle) &&
                                                         <tr>
-                                                            <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">{((operacao.tipoDeInvestimento) == 1 ? "Ações" : "Fundos Imobiliários")}</th>
+                                                            <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">{((operacao.tipoDeInvestimento) === 1 ? "Ações" : "Fundos Imobiliários")}</th>
                                                         </tr>
                                                 }
 

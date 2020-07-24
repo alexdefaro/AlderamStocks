@@ -231,14 +231,6 @@ namespace alderam.stocks.api.Services
 
         public async Task<GraficoDeSetoresDTO> RecuperarDadosDoGraficoDeSetores(TiposDeInvestimento tipoDeInvestimento = TiposDeInvestimento.Acao)
         {
-            //var registros = await _databaseContext.Operacoes
-            //    .Include(i => i.Ativo.Subsetor)
-            //    .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento)
-            //    .GroupBy(g => new { g.Ativo.Subsetor.Nome, PrecoAtual = _databaseContext.Ativos.Single(f => f.Id == g.Id).PrecoAtual.Value })
-            //    .Select(g => new { Labels = g.Key.Nome, Values = (g.Sum(r => r.Quantitidade * g.Key.PrecoAtual)) })
-            //    .OrderBy(o => o.Labels)
-            //    .ToListAsync();
-
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Ativo.Subsetor)
                 .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento)
