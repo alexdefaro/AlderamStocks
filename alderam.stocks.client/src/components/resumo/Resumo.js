@@ -16,7 +16,7 @@ function Resumo() {
     }, []);
 
     function formatCurrency(value) {
-        if (value === null)
+        if (!value)
             return 0;
 
         let result = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -24,7 +24,7 @@ function Resumo() {
     }
 
     function formatPercent(value) {
-        if (value === null)
+        if (!value)
             return 0;
 
         let result = value.toFixed(2) + '%';
