@@ -55,7 +55,7 @@ function Carteira() {
                                                 {
                                                     (printSubTitle) &&
                                                         <tr>
-                                                            <th colSpan="9" className="px-4 py-1 hidden xl:table-cell text-left">{((operacao.tipoDeInvestimento) === 1 ? "Ações" : "Fundos Imobiliários")}</th>
+                                                            <th colSpan="9" className="px-4 py-1 xl:table-cell text-left">{((operacao.tipoDeInvestimento) === 1 ? "Ações" : "Fundos Imobiliários")}</th>
                                                         </tr>
                                                 }
 
@@ -74,7 +74,7 @@ function Carteira() {
                                                     </td>
                                                     <td className="border px-4 py-1 text-right">{formatCurrency(operacao.valorAtual)}</td>
                                                     <td className={"border px-4 py-1 text-right " + (operacao.rentabilidade < 0 ? "text-red-500" : "text-green-500")}>{formatCurrency(operacao.rentabilidade)}</td>
-                                                    <td className="border px-4 py-1 xl:table-cell text-left">{operacao.nomeDoSetor.slice(0, 20) + "..."}</td>
+                                                    <td className="border px-4 py-1 text-left">{operacao.nomeDoSetor.slice(0, 20) + "..."}</td>
                                                 </tr>
                                             </React.Fragment>
                                         )
