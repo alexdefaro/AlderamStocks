@@ -506,7 +506,7 @@ namespace alderam.stocks.api.Services
 
         public decimal CalcularCorretagem(decimal taxaDaCoretagem, IEnumerable<Operacao> operacoes)
         {
-            /* Old calculation rule = (10+((F5)*0.003))+F6 */ 
+            /* Old calculation rule = (10+((F5)*0.003))+F6 */
             // var valorDaOperacao = operacoes.Where(r => r.Ativo.TipoDeInvestimento == TiposDeInvestimento.Acao).Sum(o => (o.PrecoUnitario * o.Quantitidade));
 
             // if (valorDaOperacao == 0)
@@ -516,11 +516,8 @@ namespace alderam.stocks.api.Services
 
             // var result = (10 + (Math.Abs(valorDaOperacao) * 0.003m)) + taxaDaCoretagem;
 
-            /* New calculation rule = (Number od operations * 4.70) */ 
-             var result = operacoes.Count() * taxaDaCoretagem
-
-            if (valorDaOperacao < 0)
-                result = -result;
+            /* New calculation rule = (Number od operations * 4.70) */
+            var result = operacoes.Count() * taxaDaCoretagem;
 
             return Truncate((decimal)result);
         }
