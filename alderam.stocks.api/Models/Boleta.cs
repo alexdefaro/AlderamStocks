@@ -26,6 +26,8 @@ namespace alderam.stocks.api.Models
 
         public decimal ISS { get; set; }
 
+        public decimal? IRRF { get; set; } = 0;  
+
         [Required]
         public DateTime DataDeCriacao { get; set; }
 

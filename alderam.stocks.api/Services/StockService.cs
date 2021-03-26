@@ -422,10 +422,10 @@ namespace alderam.stocks.api.Services
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
 
-            boleta.Emolumentos = CalcularEmolumentos(boleta.OperacaoEmLeilao, boleta.Operacoes);
-            boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
-            boleta.ISS = CalcularISS(boleta.Corretagem);
-            boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
+            //boleta.Emolumentos = CalcularEmolumentos(boleta.OperacaoEmLeilao, boleta.Operacoes);
+            //boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
+            //boleta.ISS = CalcularISS(boleta.Corretagem);
+            //boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
             boleta.ValorDaCompra = Math.Abs(valorTotalDaOperacao);
             boleta.ValorDaOperacao = Math.Abs(Math.Abs(valorTotalDaOperacao) + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao);

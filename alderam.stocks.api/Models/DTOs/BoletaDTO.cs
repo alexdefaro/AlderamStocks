@@ -27,7 +27,15 @@ namespace alderam.stocks.api.Models.DTOs
 
         public decimal ValorDaCompra { get; set; }
 
-        public decimal TaxaDaCoretagem { get; set; } = 10;
+        public decimal TaxaDeLiquidacao { get; set; }
+
+        public decimal Emolumentos { get; set; }
+
+        public decimal Corretagem { get; set; }
+
+        public decimal ISS { get; set; }
+
+        public decimal? IRRF { get; set; }
 
         [MaxLength(500)]
         public string Observacoes { get; set; }

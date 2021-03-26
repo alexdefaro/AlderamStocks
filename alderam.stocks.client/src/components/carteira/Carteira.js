@@ -87,8 +87,6 @@ function Carteira() {
                 </div>
             </div>
         </React.Fragment>
-
-
     )
 }
 

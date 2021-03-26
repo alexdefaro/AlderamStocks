@@ -79,6 +79,10 @@ export default function Boleta({ boleta }) {
                                 <span className="float-left inline-block font-semibold mx-1">ISS: </span>
                                 {formatCurrency(boleta.iss)}
                             </div>
+                            <div className="text-right font-medium" style={{ display: (boleta.irrf == null) ? 'none' : 'block'}}>
+                                <span className="float-left inline-block font-semibold mx-1">IRRF: </span>
+                                {formatCurrency(boleta.irrf ?? 0)}
+                            </div>
                             <div className="text-right font-medium">
                                 <span className="float-left inline-block font-semibold mx-1">Total Operação: </span>
                                 {formatCurrency(boleta.valorDaOperacao)}
