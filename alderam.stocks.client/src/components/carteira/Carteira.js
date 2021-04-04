@@ -3,17 +3,30 @@
 import ApiService from "../../services/Api";
 
 function Carteira() {
+    const [dataLimite, setDataLimite] = useState(new Date());
     const [operacoes, setOperacoes] = useState([]);
+
     var tipoDeInvestimento = 0;
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await ApiService.get('/carteira');
-            setOperacoes(response.data);
-        }
-
-        fetchData();
+        fetchData(dataLimite);
     }, []);
+
+    useEffect(() => {
+        fetchData(dataLimite);
+    }, [dataLimite]);
+
+    async function fetchData(dataLimite) {
+        let params = {
+            dataLimite: dataLimite
+        }
+        const response = await ApiService.get('/carteira', params);
+        setOperacoes(response.data);
+    }
+
+    function handleDataLimiteChange(e) {
+        setDataLimite(new Date(e.target.value));
+    }
 
     function formatCurrency(value) {
         let result = Math.abs(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -21,9 +34,13 @@ function Carteira() {
     }
 
     return (
-        <React.Fragment>
-            <h3 className="p-3 text-3xl">Carteira</h3>
-            <div className=" w-full mt-2 p-1">
+        <React.Fragment> 
+            <div className="inline-flex">
+                <h3 className="flex-1 p-3 text-3xl">Carteira</h3>
+                <input id="InputDataLimite" type="date" className="flex-1" value={dataLimite.toISOString().split('T')[0]} onChange={handleDataLimiteChange} ></input>
+            </div>
+
+            <div className="w-full mt-2 p-1">
                 <div className="bg-gray-100 border border-gray-800 rounded shadow p-0">
                     <div className="flex flex-row items-center p-1">
                         <table className="table-auto w-full">

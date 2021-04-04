@@ -14,13 +14,16 @@ export const ApiService = {
 };
 export default ApiService; 
 
-async function get(enpoint, params, data) {
-    let headers = {
+async function get(enpoint, params) {
+    let config = {
         headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN')
-        }
+            Authorization: 'Bearer ' + sessionStorage.getItem('AUTH_TOKEN'),
+            'Content-Type': 'application/json;charset=UTF-8' 
+        },
+        params: params
     }
-    return await Api.get(enpoint, headers, params, data);
+
+    return await Api.get(enpoint, config);
 }
 
 async function post(enpoint, data) {

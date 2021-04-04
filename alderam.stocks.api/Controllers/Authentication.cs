@@ -46,7 +46,7 @@ namespace alderam.stocks.api.Controllers
             {
                 var jwtToken = _tokenService.GenerateJWTToken(loginViewModel.UserKey);
 
-                await _stockService.CarregarCotacoes();
+                //await _stockService.CarregarCotacoes();
 
                 return Ok(new { 
                     userKey = loginViewModel.UserKey, 

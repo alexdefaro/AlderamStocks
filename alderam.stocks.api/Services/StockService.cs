@@ -427,8 +427,8 @@ namespace alderam.stocks.api.Services
             //boleta.ISS = CalcularISS(boleta.Corretagem);
             //boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
-            boleta.ValorDaCompra = Math.Abs(valorTotalDaOperacao);
-            boleta.ValorDaOperacao = Math.Abs(Math.Abs(valorTotalDaOperacao) + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao);
+            boleta.ValorDaCompra = valorTotalDaOperacao;
+            boleta.ValorDaOperacao = valorTotalDaOperacao + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao;
 
             boleta.DataDaOperacao = boletaRequest.DataDaOperacao;
             boleta.DataDeCriacao = DateTime.Now;
