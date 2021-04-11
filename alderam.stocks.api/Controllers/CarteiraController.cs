@@ -43,7 +43,7 @@ namespace alderam.stocks.api.Controllers
             var result = operacoes
                 .Where(r => r.DataDaOperacao <= dataLimite)
                 .GroupBy(g => new { g.Ativo.Id, g.Ativo.Codigo, g.Ativo.Nome, g.Ativo.TipoDeInvestimento, NomeDoSetor = g.Ativo.Subsetor.Nome, g.Ativo.PrecoAtual, g.Ativo.PrecoAnterior })
-                //.Where(r => r.Sum(s => s.Quantitidade) > 0)
+                .Where(r => r.Sum(s => s.Quantitidade) > 0)
                 .Select(r => new
                 {
                     CodigoDoAtivo = r.Key.Codigo,
