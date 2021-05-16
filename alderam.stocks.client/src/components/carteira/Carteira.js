@@ -10,10 +10,6 @@ function Carteira() {
 
     useEffect(() => {
         fetchData(dataLimite);
-    }, []);
-
-    useEffect(() => {
-        fetchData(dataLimite);
     }, [dataLimite]);
 
     async function fetchData(dataLimite) {
@@ -24,7 +20,7 @@ function Carteira() {
         setOperacoes(response.data);
     }
 
-    function handleDataLimiteChange(e) {
+    async function handleDataLimiteChange(e) {
         setDataLimite(new Date(e.target.value));
     }
 
@@ -35,9 +31,15 @@ function Carteira() {
 
     return (
         <React.Fragment> 
-            <div className="inline-flex">
-                <h3 className="flex-1 p-3 text-3xl">Carteira</h3>
-                <input id="InputDataLimite" type="date" className="flex-1" value={dataLimite.toISOString().split('T')[0]} onChange={handleDataLimiteChange} ></input>
+            <div className="w-full">
+                <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-5 gap-2  pb-0">
+                    <div className="xl:col-span-4">                        
+                        <h3 className="pt-3 pl-3 text-3xl">Carteira</h3>
+                    </div>
+                    <div className="xl:col-span-1 text-right">                        
+                        <input id="InputDataLimite" type="date" className="pt-6 pr-3" value={dataLimite.toISOString().split('T')[0]} onChange={handleDataLimiteChange} ></input>
+                    </div>
+                </div>                
             </div>
 
             <div className="w-full mt-2 p-1">
