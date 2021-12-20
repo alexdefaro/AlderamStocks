@@ -30,7 +30,7 @@ function Carteira() {
     }
 
     return (
-        <React.Fragment> 
+        <section id="section-carteira">
             <div className="w-full">
                 <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-5 gap-2  pb-0">
                     <div className="xl:col-span-4">                        
@@ -105,7 +105,7 @@ function Carteira() {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </section>
     )
 }
 

@@ -32,7 +32,7 @@ function Resumo() {
     }
 
     return (
-        <div className="xl:col-span-3">
+        <section id="section-resumos" className="xl:col-span-3">
             <div className="bg-gray-100 border border-gray-800 rounded shadow p-2 mb-3 text-center">
                 <h3 className="font-bold text-2xl text-gray-800">Data da última atualização {resumo.dataDaUltimaAtualizacao}</h3>
             </div>
@@ -93,7 +93,7 @@ function Resumo() {
                 </div>
 
             </div>
-        </div>
+        </section>
     )
 }
 

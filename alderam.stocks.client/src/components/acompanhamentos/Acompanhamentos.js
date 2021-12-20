@@ -101,8 +101,8 @@ function Acompanhamentos() {
     }
 
     return (
-        <div className="xl:col-span-2">
-            <div className="bg-gray-100 border border-gray-800 rounded shadow p-0">
+        <section id="section-acompanhamentos" className="xl:col-span-2">
+            <div className="bg-gray-100 border border-gray-800 rounded shadow p-0 h-full">
                 <div className="flex flex-row items-center p-1">
                     <Modal
                         isOpen={modalIsOpen}
@@ -167,7 +167,7 @@ function Acompanhamentos() {
                     </table>
                 </div>
             </div>
-        </div >
+        </section>
     )
 }
 

@@ -48,12 +48,12 @@ function Dashboard() {
 
                     <Spinner visibilityValue={spinnerVisibilityClass} />
 
-                    <div className="w-full mt-2 p-1">
+                    <section id="section-topo" className="w-full mt-2 p-1">
                         <div className="grid grid-cols-1 grid-cols-1 xl:grid-cols-5 gap-2  pb-0  ">
                             <Resumo />
                             <Acompanhamentos />
                         </div>
-                    </div>
+                    </section>
 
                     <Carteira />
 
