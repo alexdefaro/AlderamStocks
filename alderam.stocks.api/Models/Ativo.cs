@@ -38,5 +38,7 @@ namespace alderam.stocks.api.Models
         public Subsetor Subsetor { get; set; }
 
         public TiposDeInvestimento? TipoDeInvestimento { get; set; }
+
+        public char Listar { get; set; } = 'S';
     }
 }

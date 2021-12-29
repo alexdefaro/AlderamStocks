@@ -112,7 +112,7 @@ namespace alderam.stocks.api.Services
 
         private async Task CarregarCotacoesHG()
         {
-            var ativos = await _databaseContext.Ativos.ToListAsync();
+            var ativos = await _databaseContext.Ativos.Where(r => r.Listar == 'S').OrderBy(o => o.Nome).ToListAsync();
             var client = new HttpClient();
 
             foreach (var ativo in ativos)
@@ -145,7 +145,7 @@ namespace alderam.stocks.api.Services
 
         private async Task CarregarCotacoesAV(string codigoDoAtivo = null)
         {
-            var ativos = await _databaseContext.Ativos.ToListAsync();
+            var ativos = await _databaseContext.Ativos.Where(r => r.Listar == 'S').OrderBy(o => o.Nome).ToListAsync();
             var client = new HttpClient();
 
             int contador = 1;
