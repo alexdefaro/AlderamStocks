@@ -411,9 +411,9 @@ namespace alderam.stocks.api.Services
                 operacao.DataDeCriacao = DateTime.Now;
                 operacao.DataDaOperacao = operacao.DataDaOperacao;
 
-                operacao.Quantitidade = (TiposDeOperacao)Char.Parse(operacao.TipoDeOperacao) == TiposDeOperacao.Compra ?
-                    operacao.Quantitidade :
-                    -operacao.Quantitidade;
+                operacao.Quantitidade = (TiposDeOperacao)Char.Parse(operacao.TipoDeOperacao) == TiposDeOperacao.Venda ?
+                    -operacao.Quantitidade :
+                    operacao.Quantitidade;
 
                 operacao.ValorDaOperacao = (operacao.Quantitidade * operacao.PrecoUnitario);
 
@@ -421,11 +421,6 @@ namespace alderam.stocks.api.Services
             }
 
             var boleta = _mapper.Map<Boleta>(boletaRequest);
-
-            //boleta.Emolumentos = CalcularEmolumentos(boleta.OperacaoEmLeilao, boleta.Operacoes);
-            //boleta.Corretagem = CalcularCorretagem(boleta.TaxaDaCoretagem, boleta.Operacoes);
-            //boleta.ISS = CalcularISS(boleta.Corretagem);
-            //boleta.TaxaDeLiquidacao = CalcularTaxaDeLiquidacao(boleta.Operacoes);
 
             boleta.ValorDaCompra = valorTotalDaOperacao;
             boleta.ValorDaOperacao = valorTotalDaOperacao + boleta.Emolumentos + boleta.Corretagem + boleta.ISS + boleta.TaxaDeLiquidacao;

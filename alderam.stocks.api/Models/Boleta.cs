@@ -35,7 +35,7 @@ namespace alderam.stocks.api.Models
 
         public decimal ValorDaCompra { get; set; }
 
-        public decimal TaxaDaCoretagem { get; set; } = 10;
+        public decimal TaxaDaCoretagem { get; set; }  
 
         [MaxLength(500)]
         public string Observacoes { get; set; }

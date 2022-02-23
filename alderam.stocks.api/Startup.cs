@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging.Console;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System;
 
 namespace alderam.stocks.api
 {
@@ -95,7 +97,33 @@ namespace alderam.stocks.api
                         ValidateAudience = false
                     };
                 }
-            );;
+            );
+
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Alderam.Stocks.v1",
+                    Description = "Web API for Alderam.Stocks",
+                    TermsOfService = new Uri("https://alderam.stocks.termsofservice.com"),
+                    
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Developers contact",
+                        Email = string.Empty,
+                        Url = new Uri("https://alderam.stocks.developers.com"),
+                    },
+
+                    License = new OpenApiLicense
+                    {
+                        Name = "License page",
+                        Url = new Uri("https://alderam.stocks.license.com"),
+                    }
+                });
+            });
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -103,6 +131,8 @@ namespace alderam.stocks.api
             if (_webHostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseCors();

@@ -10,7 +10,10 @@ namespace alderam.stocks.api.Models
         Compra = 'C',
 
         [Description("Venda")]
-        Venda = 'V'
+        Venda = 'V',
+
+        [Description("Bonificação")]
+        Bonificacao = 'B'
     }
 
     public class Operacao

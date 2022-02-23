@@ -30,7 +30,7 @@ export default function Boleta({ boleta }) {
                                 <div key={operacao.id} className="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-7 gap-2 px-3 py-3 my-3 border sm:py-3 sm:my-3 sm:border rounded xl:border-0 xl:py-0 xl:my-0  ">
                                     <div className="text-right sm:text-right xl:text-left xl:col-span-1">
                                         <span className="float-left block sm:block xl:hidden font-semibold">Tipo</span>
-                                        {operacao.tipoDeOperacao === 67 ? "Compra" : "Venda" }
+                                        {operacao.tipoDeOperacao === 67 ? "Compra" : operacao.tipoDeOperacao === 66 ? "Bonificação" : "Venda" }
                                     </div>
                                     <div className="text-right sm:text-right xl:text-left xl:col-span-1">
                                         <span className="float-left block sm:block xl:hidden font-semibold">Codigo do Ativo</span>

@@ -13,7 +13,7 @@ namespace alderam.stocks.api.Models.Mappers
 
             CreateMap<Operacao, OperacaoDTO>(); 
             CreateMap<OperacaoDTO, Operacao>()
-                .ForMember(m => m.TipoDeOperacao, cd => cd.MapFrom(mf => mf.TipoDeOperacao == "C" ? TiposDeOperacao.Compra: TiposDeOperacao.Venda)); 
+                .ForMember(m => m.TipoDeOperacao, cd => cd.MapFrom(mf => mf.TipoDeOperacao == "C" ? TiposDeOperacao.Compra: mf.TipoDeOperacao == "B" ? TiposDeOperacao.Bonificacao : TiposDeOperacao.Venda)); 
 
             CreateMap<Ativo, AtivoDTO>(); 
             CreateMap<AtivoDTO, Ativo>(); 
