@@ -197,9 +197,9 @@ namespace alderam.stocks.api.Services
 
         public async Task CarregarCotacoes()
         {
-            if (DateTime.Now.Hour < 22)
-                await CarregarCotacoesHG();
-            else
+            //if (DateTime.Now.Hour < 22)
+            //    await CarregarCotacoesHG();
+            //else
                 await CarregarCotacoesAV();
         }
 
@@ -210,12 +210,13 @@ namespace alderam.stocks.api.Services
             resumo.DataDaUltimaAtualizacao = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
 
             resumo.ValorTotalInvestido = await _databaseContext.Boletas.Where(r => r.Corretagem > 0).SumAsync(s => s.ValorDaOperacao);
-            resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
+            resumo.ValorAtualDaCarteiral = await _databaseContext.Operacoes.Include(i => i.Ativo).Where(r => r.Ativo.Listar == 'S').SumAsync(o => o.Quantitidade * o.Ativo.PrecoAtual.Value);
 
             resumo.SaldoAtualDaCarteiral = (resumo.ValorAtualDaCarteiral - resumo.ValorTotalInvestido);
 
             resumo.LiquidezAtualDaCarteiral = await _databaseContext.Operacoes
                 .Include(i => i.Ativo)
+                .Where(r => r.Ativo.Listar == 'S')
                 .GroupBy(g => new { Id = g.Ativo.Id, PrecoAtual = g.Ativo.PrecoAtual.Value })
                 .Where(r => r.Sum(s => s.Quantitidade) > 0)
                 .Select(o => new { Valor = o.Sum(s => (s.Quantitidade * o.Key.PrecoAtual) - s.ValorDaOperacao) })
@@ -233,11 +234,11 @@ namespace alderam.stocks.api.Services
         {
             var registros = await _databaseContext.Operacoes
                 .Include(i => i.Ativo.Subsetor)
-                .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento)
+                .Where(r => r.Ativo.TipoDeInvestimento == tipoDeInvestimento && r.Ativo.Listar == 'S')
                 .Select(r => new { NomeDoSubsetor = r.Ativo.Subsetor.Nome, Quantitidade = (r.Quantitidade), Valor = (r.Quantitidade * r.Ativo.PrecoAtual.Value) })
                 .GroupBy(g => new { g.NomeDoSubsetor })
                 .Select(g => new { Labels = g.Key.NomeDoSubsetor, Quantitidades = g.Sum(r => r.Quantitidade), Values = g.Sum(r => r.Valor) })
-                .Where(r => r.Quantitidades > 0)
+                .Where(r => r.Quantitidades > 0 )
                 .OrderBy(o => o.Labels)
                 .ToListAsync();
 

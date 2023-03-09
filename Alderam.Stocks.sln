@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "alderam.stocks.api", "alderam.stocks.api\alderam.stocks.api.csproj", "{826D59C3-B64F-4C3F-AFAF-B2A63F593563}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "alderam.stocks.client", "alderam.stocks.client\", "{5D9AAE3A-5FD1-43B0-9D46-28B21BA6E5C2}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_62920"
 		Debug.AspNetCompiler.PhysicalPath = "alderam.stocks.client\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62920\"

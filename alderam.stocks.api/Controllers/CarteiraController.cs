@@ -38,7 +38,11 @@ namespace alderam.stocks.api.Controllers
         [HttpGet]
         public async Task<ActionResult> Get(DateTime? dataLimite)
         { 
-            var operacoes = await _stockService.RecuperarOperacoes();
+            var operacoes = await _databaseContext.Operacoes
+                .Include(i => i.Ativo.Subsetor)
+                .Where(r => r.Ativo.Listar == 'S')
+                .OrderBy(o => o.DataDaOperacao)
+                .ToListAsync();
 
             var result = operacoes
                 .Where(r => r.DataDaOperacao <= dataLimite)
@@ -62,7 +66,6 @@ namespace alderam.stocks.api.Controllers
                         (r.Key.PrecoAtual.Value < (_databaseContext.Acompanhamentos.Include(i => i.Ativo).SingleOrDefault(f => f.Ativo.Id == r.Key.Id)?.PrecoDeCompra ?? r.Key.PrecoAtual.Value)) 
                 })
                 .OrderBy(o => o.TipoDeInvestimento)
-                    //.ThenBy(o => o.NomeDoSetor)
                     .ThenBy(o => o.CodigoDoAtivo);
 
             Response.Headers.Add("X-Total-Count", result.Count().ToString());
