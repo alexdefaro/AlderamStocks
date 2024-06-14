@@ -55,6 +55,8 @@
     <Compile Remove="Migrations\20200708130221_AdicionandoColunaTipoDeOperacao.Designer.cs" />
     <Compile Remove="Migrations\20200708143202_AdicionandoNovaColunaTipoDeOperacao.cs" />
     <Compile Remove="Migrations\20200708143202_AdicionandoNovaColunaTipoDeOperacao.Designer.cs" />
+    <Compile Remove="Migrations\20230717203711_InicializacaodoBandoDeDados.cs" />
+    <Compile Remove="Migrations\20230717203711_InicializacaodoBandoDeDados.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

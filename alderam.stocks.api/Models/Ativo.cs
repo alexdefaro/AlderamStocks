@@ -10,7 +10,10 @@ namespace alderam.stocks.api.Models
         Acao = 1,
 
         [Description("Fundo Imobiliário")]
-        FundoImobiliario = 2
+        FundoImobiliario = 2,
+
+        [Description("Indice")]
+        Indice = 3
     }
 
     public class Ativo

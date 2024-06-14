@@ -1,0 +1,76 @@
+﻿SET IDENTITY_INSERT dbo.Setores ON;
+
+insert into Setores (Id, Nome) values (1,  'Bens Industriais');
+insert into Setores (Id, Nome) values (2,  'Comunicações');
+insert into Setores (Id, Nome) values (3,  'Consumo Cíclico');
+insert into Setores (Id, Nome) values (4,  'Consumo não Cíclico');
+insert into Setores (Id, Nome) values (5,  'Financeiro');
+insert into Setores (Id, Nome) values (6,  'Materiais Básicos');
+insert into Setores (Id, Nome) values (7,  'Outros');
+insert into Setores (Id, Nome) values (8,  'Petróleo. Gás e Biocombustíveis');
+insert into Setores (Id, Nome) values (9,  'Saúde');
+insert into Setores (Id, Nome) values (10, 'Tecnologia da Informação');
+insert into Setores (Id, Nome) values (11, 'Utilidade Pública');
+insert into Setores (Id, Nome) values (12, 'Híbrido');
+insert into Setores (Id, Nome) values (13, 'Lajes Corporativas');
+
+SET IDENTITY_INSERT DBO.Setores OFF
+
+
+
+SET IDENTITY_INSERT dbo.Subsetores ON;
+
+
+insert into Subsetores (Id, Nome, SetorId) values (1,'Comércio',7);
+insert into Subsetores (Id, Nome, SetorId) values (2,'Construção e Engenharia',7);
+insert into Subsetores (Id, Nome, SetorId) values (3,'Máquinas e Equipamentos',7);
+insert into Subsetores (Id, Nome, SetorId) values (4,'Material de Transporte',7);
+insert into Subsetores (Id, Nome, SetorId) values (5,'Serviços',7);
+insert into Subsetores (Id, Nome, SetorId) values (6,'Transporte',7);
+insert into Subsetores (Id, Nome, SetorId) values (7,'Mídia',7);
+insert into Subsetores (Id, Nome, SetorId) values (8,'Telecomunicações',7);
+insert into Subsetores (Id, Nome, SetorId) values (9,'Telefonia Fixa',7);
+insert into Subsetores (Id, Nome, SetorId) values (10,'Automóveis e Motocicletas',7);
+insert into Subsetores (Id, Nome, SetorId) values (11,'Comércio',7);
+insert into Subsetores (Id, Nome, SetorId) values (12,'Construção Civil',7);
+insert into Subsetores (Id, Nome, SetorId) values (13,'Diversos',7);
+insert into Subsetores (Id, Nome, SetorId) values (14,'Hoteis e Restaurantes',7);
+insert into Subsetores (Id, Nome, SetorId) values (15,'Tecidos. Vestuário e Calçados',7);
+insert into Subsetores (Id, Nome, SetorId) values (16,'Utilidades Domésticas',7);
+insert into Subsetores (Id, Nome, SetorId) values (17,'Viagens e Lazer',7);
+insert into Subsetores (Id, Nome, SetorId) values (23,'Agropecuária',7);
+insert into Subsetores (Id, Nome, SetorId) values (24,'Alimentos Processados',7);
+insert into Subsetores (Id, Nome, SetorId) values (25,'Bebidas',7);
+insert into Subsetores (Id, Nome, SetorId) values (26,'Comércio e Distribuição',7);
+insert into Subsetores (Id, Nome, SetorId) values (27,'Produtos de Uso Pessoal e de Limpeza',7);
+insert into Subsetores (Id, Nome, SetorId) values (28,'Exploração de Imóveis',7);
+insert into Subsetores (Id, Nome, SetorId) values (29,'Holdings Diversificadas',7);
+insert into Subsetores (Id, Nome, SetorId) values (30,'Intermediários Financeiros',7);
+insert into Subsetores (Id, Nome, SetorId) values (31,'Previdência e Seguros',7);
+insert into Subsetores (Id, Nome, SetorId) values (32,'Securitizadoras de Recebíveis',7);
+insert into Subsetores (Id, Nome, SetorId) values (33,'Serviços Financeiros Diversos',7);
+insert into Subsetores (Id, Nome, SetorId) values (34,'Embalagens',7);
+insert into Subsetores (Id, Nome, SetorId) values (35,'Madeira e Papel',7);
+insert into Subsetores (Id, Nome, SetorId) values (36,'Materiais Diversos',7);
+insert into Subsetores (Id, Nome, SetorId) values (37,'Mineração',7);
+insert into Subsetores (Id, Nome, SetorId) values (38,'Químicos',7);
+insert into Subsetores (Id, Nome, SetorId) values (39,'Siderurgia e Metalurgia',7);
+insert into Subsetores (Id, Nome, SetorId) values (40,'Outros',7);
+insert into Subsetores (Id, Nome, SetorId) values (41,'Petróleo. Gás e Biocombustíveis',7);
+insert into Subsetores (Id, Nome, SetorId) values (42,'Comércio e Distribuição',7);
+insert into Subsetores (Id, Nome, SetorId) values (43,'Equipamentos',7);
+insert into Subsetores (Id, Nome, SetorId) values (44,'Medicamentos e Outros Produtos',7);
+insert into Subsetores (Id, Nome, SetorId) values (45,'Serv.Méd.Hospit..Análises e Diagnósticos',7);
+insert into Subsetores (Id, Nome, SetorId) values (46,'Computadores e Equipamentos',7);
+insert into Subsetores (Id, Nome, SetorId) values (47,'Programas e Serviços',7);
+insert into Subsetores (Id, Nome, SetorId) values (48,'Água e Saneamento',7);
+insert into Subsetores (Id, Nome, SetorId) values (49,'Energia Elétrica',7);
+insert into Subsetores (Id, Nome, SetorId) values (50,'Gás',7);
+insert into Subsetores (Id, Nome, SetorId) values (51,'Misto',7);
+insert into Subsetores (Id, Nome, SetorId) values (52,'Papéis',7);
+insert into Subsetores (Id, Nome, SetorId) values (53,'Fundo de Fundos',7);
+insert into Subsetores (Id, Nome, SetorId) values (54,'Certificados de Recebíveis Imobiliários',7);
+insert into Subsetores (Id, Nome, SetorId) values (55,'Lajes Corporativas - Escritórios',7);
+
+
+SET IDENTITY_INSERT dbo.Subsetores OFF;

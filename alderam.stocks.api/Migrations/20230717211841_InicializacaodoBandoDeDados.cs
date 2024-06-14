@@ -15,13 +15,16 @@ namespace alderam.stocks.api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<string>(maxLength: 30, nullable: false),
                     DataDaOperacao = table.Column<DateTime>(nullable: false),
+                    OperacaoEmLeilao = table.Column<bool>(nullable: false),
                     TaxaDeLiquidacao = table.Column<decimal>(nullable: false),
                     Emolumentos = table.Column<decimal>(nullable: false),
                     Corretagem = table.Column<decimal>(nullable: false),
                     ISS = table.Column<decimal>(nullable: false),
+                    IRRF = table.Column<decimal>(nullable: true),
                     DataDeCriacao = table.Column<DateTime>(nullable: false),
                     ValorDaOperacao = table.Column<decimal>(nullable: false),
                     ValorDaCompra = table.Column<decimal>(nullable: false),
+                    TaxaDaCoretagem = table.Column<decimal>(nullable: false),
                     Observacoes = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
@@ -35,12 +38,31 @@ namespace alderam.stocks.api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(maxLength: 20, nullable: false),
                     Nome = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Setores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subsetores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(maxLength: 100, nullable: false),
+                    SetorId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subsetores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subsetores_Setores_SetorId",
+                        column: x => x.SetorId,
+                        principalTable: "Setores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,15 +74,20 @@ namespace alderam.stocks.api.Migrations
                     Codigo = table.Column<string>(maxLength: 10, nullable: false),
                     Nome = table.Column<string>(maxLength: 100, nullable: false),
                     DataDeCriacao = table.Column<DateTime>(nullable: false),
-                    SetorId = table.Column<int>(nullable: true)
+                    DataDaUltimaCotacao = table.Column<DateTime>(nullable: true),
+                    PrecoAnterior = table.Column<decimal>(nullable: true),
+                    PrecoAtual = table.Column<decimal>(nullable: true),
+                    SubsetorId = table.Column<int>(nullable: true),
+                    TipoDeInvestimento = table.Column<int>(nullable: true),
+                    Listar = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ativos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ativos_Setores_SetorId",
-                        column: x => x.SetorId,
-                        principalTable: "Setores",
+                        name: "FK_Ativos_Subsetores_SubsetorId",
+                        column: x => x.SubsetorId,
+                        principalTable: "Subsetores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -72,8 +99,7 @@ namespace alderam.stocks.api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AtivoId = table.Column<int>(nullable: false),
-                    PrecoAtual = table.Column<double>(nullable: false),
-                    PrecoDeCompra = table.Column<double>(nullable: false)
+                    PrecoDeCompra = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,11 +118,12 @@ namespace alderam.stocks.api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoDeOperacao = table.Column<string>(maxLength: 1, nullable: true),
                     BoletaId = table.Column<int>(nullable: false),
                     AtivoId = table.Column<int>(nullable: false),
                     DataDaOperacao = table.Column<DateTime>(nullable: false),
                     Quantitidade = table.Column<int>(nullable: false),
-                    PrecoDeCompra = table.Column<decimal>(nullable: false),
+                    PrecoUnitario = table.Column<decimal>(nullable: false),
                     DataDeCriacao = table.Column<DateTime>(nullable: false),
                     ValorDaOperacao = table.Column<decimal>(nullable: false)
                 },
@@ -129,9 +156,9 @@ namespace alderam.stocks.api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ativos_SetorId",
+                name: "IX_Ativos_SubsetorId",
                 table: "Ativos",
-                column: "SetorId");
+                column: "SubsetorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Operacoes_AtivoId",
@@ -142,6 +169,11 @@ namespace alderam.stocks.api.Migrations
                 name: "IX_Operacoes_BoletaId",
                 table: "Operacoes",
                 column: "BoletaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subsetores_SetorId",
+                table: "Subsetores",
+                column: "SetorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -157,6 +189,9 @@ namespace alderam.stocks.api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Boletas");
+
+            migrationBuilder.DropTable(
+                name: "Subsetores");
 
             migrationBuilder.DropTable(
                 name: "Setores");

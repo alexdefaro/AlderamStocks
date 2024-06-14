@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
 );
 
-const Routes = () => (
+const RoutingConfiguration = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Main}></Route>
@@ -28,4 +28,4 @@ const Routes = () => (
         </Switch>
     </BrowserRouter>
 ) 
-export default Routes;
+export default RoutingConfiguration;

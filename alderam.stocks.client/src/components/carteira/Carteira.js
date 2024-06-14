@@ -69,12 +69,13 @@ function Carteira() {
                                             printSubTitle = true;
                                         }
 
+                                        var tableSubtitle = ((operacao.tipoDeInvestimento) === 1 ? "Ações" : (operacao.tipoDeInvestimento) === 2 ? "Fundos Imobiliários/Agro" : "Indices");
                                         return (
                                             <React.Fragment key={operacao.codigoDoAtivo}>
                                                 {
                                                     (printSubTitle) &&
                                                         <tr>
-                                                            <th colSpan="9" className="px-4 py-1 xl:table-cell text-left">{((operacao.tipoDeInvestimento) === 1 ? "Ações" : "Fundos Imobiliários")}</th>
+                                                            <th colSpan="9" className="px-4 py-1 xl:table-cell text-left">{tableSubtitle}</th>
                                                         </tr>
                                                 }
 

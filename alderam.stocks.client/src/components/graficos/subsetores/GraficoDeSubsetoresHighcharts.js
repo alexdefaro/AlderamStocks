@@ -49,7 +49,7 @@ function GraficoDeSubsetoresHighcharts(props) {
             enabled: false
         },
         title: {
-            text: 'Distribuíção de ativos por subsetores (' + ((tipoDeInvestimento === 1) ? 'Açoes' : 'Fundos Imobiliários') +')'
+            text: 'Distribuíção de ativos por subsetores (' + ((tipoDeInvestimento === 1) ? 'Açoes' : 'Fundos Imobiliários/Agro') +')'
         },
         tooltip: {
             pointFormatter: function () {

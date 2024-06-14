@@ -10,8 +10,8 @@ using alderam.stocks.api.Database;
 namespace alderam.stocks.api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20200703183453_MudandoSetorDoAtivoParaSubsetor")]
-    partial class MudandoSetorDoAtivoParaSubsetor
+    [Migration("20230717211841_InicializacaodoBandoDeDados")]
+    partial class InicializacaodoBandoDeDados
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,10 @@ namespace alderam.stocks.api.Migrations
                     b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Listar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -103,6 +107,9 @@ namespace alderam.stocks.api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Emolumentos")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("IRRF")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("ISS")
@@ -156,11 +163,15 @@ namespace alderam.stocks.api.Migrations
                     b.Property<DateTime>("DataDeCriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("PrecoDeCompra")
+                    b.Property<decimal>("PrecoUnitario")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantitidade")
                         .HasColumnType("int");
+
+                    b.Property<string>("TipoDeOperacao")
+                        .HasColumnType("nvarchar(1)")
+                        .HasMaxLength(1);
 
                     b.Property<decimal>("ValorDaOperacao")
                         .HasColumnType("decimal(18,2)");
