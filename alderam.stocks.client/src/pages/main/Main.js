@@ -47,7 +47,7 @@ function Main() {
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="bg-gray-100 border shadow-md rounded px-8 pt-6 pb-8 mb-2">
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-4">Chave do usuário</label>
+                            <label className="block text-gray-700 text-sm font-bold mb-4">Informe a chave do usuário</label>
                             <Field name="userKey" placeholder="Chave do usuário" type="password" autoFocus
                                 className="shadow appearance-none rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" />
                             <ErrorMessage name="userKey" />
