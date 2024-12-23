@@ -21,7 +21,7 @@ namespace alderam.stocks.api.Controllers
     [Route("api/[controller]")]
     [Authorize]
     public class AcompanhamentosController : ControllerBase
-    {
+    { 
         private readonly IStockService _stockService;
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
