@@ -68,7 +68,7 @@ namespace alderam.stocks.api.Controllers
                 .OrderBy(o => o.TipoDeInvestimento)
                     .ThenBy(o => o.CodigoDoAtivo);
 
-            Response.Headers.Add("X-Total-Count", result.Count().ToString());
+            Response.Headers.Append("X-Total-Count", result.Count().ToString());
 
             return Ok(result);
         }
