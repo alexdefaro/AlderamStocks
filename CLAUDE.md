@@ -10,11 +10,11 @@ Alderam.Stocks is a personal Brazilian stock market portfolio tracker. It lets a
 
 | Layer | Technology |
 |---|---|
-| Backend | ASP.NET Core 3.1 Web API (C#) |
-| ORM | Entity Framework Core 3.1 |
+| Backend | ASP.NET Core 10 Web API (C#) |
+| ORM | Entity Framework Core 10 |
 | Database | SQL Server (Azure SQL) |
 | Auth | JWT Bearer (symmetric key, 2-hour expiry) |
-| Mapping | AutoMapper 9 |
+| Mapping | AutoMapper 13 |
 | Frontend | React 16.13, React Router v5 |
 | HTTP client | Axios 0.19 |
 | Forms | Formik 2 + Yup validation |
