@@ -15,10 +15,11 @@ Alderam.Stocks is a personal Brazilian stock market portfolio tracker. It lets a
 | Database | SQL Server (Azure SQL) |
 | Auth | JWT Bearer (symmetric key, 2-hour expiry) |
 | Mapping | AutoMapper 13 |
-| Frontend | React 16.13, React Router v5 |
-| HTTP client | Axios 0.19 |
-| Forms | Formik 2 + Yup validation |
-| Charts | Highcharts 8 (sector pie), Chart.js 2.9, React Google Charts 3 |
+| Frontend | Next.js 15 (App Router), React 19 |
+| HTTP client | Axios 1.7 |
+| Forms | Formik 2 + Yup / React Hook Form 7 |
+| Charts | Highcharts 12 (sector pie charts) |
+| Styles | Tailwind CSS 3 (npm) |
 | Hosting | Azure App Service + Azure SQL |
 
 ## Commands
@@ -33,11 +34,11 @@ API runs on `https://localhost:44330` (IIS Express) or `https://localhost:5001`.
 ### Frontend (from `alderam.stocks.client/`)
 ```sh
 npm install
-npm start       # proxies API calls to https://localhost:44330/api/
+npm run dev     # starts on http://localhost:3000
 npm run build
-npm test
+npm start       # production server
 ```
-`BASE_URL` in `services/Api.js` switches automatically between localhost and the Azure URL based on `NODE_ENV`.
+API base URL is set via `NEXT_PUBLIC_API_URL` in `.env.local` (dev) and `.env.production`.
 
 ## Domain Vocabulary
 
@@ -81,20 +82,27 @@ All core names are in Portuguese — critical for reading the code:
 
 **Key config**: `appsettings.json` holds the Azure SQL connection string and JWT secret. `appsettings.Development.json` overrides for local dev. CORS is fully open.
 
-### Frontend (`alderam.stocks.client/src/`)
+### Frontend (`alderam.stocks.client/`)
 
-**Pages:**
-- `pages/main/` — Login form; on success stores JWT in `sessionStorage` and navigates to `/dashboard`
-- `pages/dashboard/` — Hosts Resumo, Carteira, Acompanhamentos, and sector charts; has a "Refresh" button that calls `POST /api/ativos`
-- `pages/operacoes/` — Lists all Boletas with full fee breakdown; supports creating/editing/deleting Boletas and their Operacoes
+App Router — all pages and components are `'use client'` (app is fully authenticated, no SSR required).
 
-**Components:**
+**`app/` (pages):**
+- `page.js` — Login form; stores JWT in `sessionStorage`, navigates to `/dashboard`
+- `dashboard/page.js` — Hosts Resumo, Carteira, Acompanhamentos, and sector charts; "Refresh" button calls `POST /api/ativos`
+- `operacoes/page.js` — Lists all Boletas with full fee breakdown
+- `layout.js` — Root layout: global CSS, Font Awesome CDN, ToastContainer
+
+Auth guard pattern: each private page uses `useEffect` to check `sessionStorage.getItem('AUTH_TOKEN')` and calls `router.replace('/')` if missing.
+
+**`components/`:**
 - `resumo/` — 4 KPI cards: Total Investido, Valor Atual, Saldo Atual (%), Saldo Líquido (%)
 - `carteira/` — Holdings table grouped by TipoDeInvestimento; each ticker links to TradingView; supports date filtering
-- `graficos/GraficoDeSubsetoresHighcharts` — Dual pie charts (Ações + FIIs) using Highcharts
-- `acompanhamentos/` — Watchlist with bell icon when current price ≤ target buy price
-- `boletas/` — Trade receipt modal form with Formik
+- `graficos/subsetores/GraficoDeSubsetoresHighcharts` — Pie charts (Ações + FIIs) using Highcharts 12; loaded via `next/dynamic` with `ssr: false`
+- `acompanhamentos/` — Watchlist with bell icon when current price ≤ target buy price; uses react-modal
+- `boletas/` — Trade receipt list and detail with fee breakdown
+- `header/` — Nav bar with Next.js `<Link>` and logout
 
-**Services:**
-- `services/Api.js` — Axios instance; reads JWT from `sessionStorage` and injects `Authorization: Bearer` header on every request
-- `services/Auth.js` — `isAuthenticated()` check used by private route wrapper in `routes.js`
+**`services/`:**
+- `Api.js` — Axios instance using `NEXT_PUBLIC_API_URL`; injects `Authorization: Bearer` from `sessionStorage`
+- `Auth.js` — `isAuthenticated()` / `logout()` using `sessionStorage`
+- `Toast.js` — Re-exports `toast` from react-toastify
