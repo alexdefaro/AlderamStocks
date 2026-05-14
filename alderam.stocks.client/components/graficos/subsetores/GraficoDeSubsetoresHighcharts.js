@@ -3,10 +3,7 @@
 import { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import DrilldownModule from 'highcharts/modules/drilldown';
 import ApiService from '@/services/Api';
-
-DrilldownModule(Highcharts);
 
 export default function GraficoDeSubsetoresHighcharts({ tipoDeInvestimento }) {
   const [chartData, setChartData] = useState([]);

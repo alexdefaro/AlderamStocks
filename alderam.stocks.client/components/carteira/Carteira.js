@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import ApiService from '@/services/Api';
 
 export default function Carteira() {
@@ -76,13 +76,13 @@ export default function Carteira() {
                       : 'Indices';
 
                   return (
-                    <>
+                    <Fragment key={operacao.codigoDoAtivo}>
                       {printSubTitle && (
-                        <tr key={`header-${operacao.tipoDeInvestimento}`}>
+                        <tr>
                           <th colSpan="9" className="px-4 py-1 text-left">{subtitle}</th>
                         </tr>
                       )}
-                      <tr key={operacao.codigoDoAtivo}>
+                      <tr>
                         <td className="border xl:px-4 py-1 text-left">
                           <a href={`https://br.tradingview.com/chart/?symbol=BMFBOVESPA:${operacao.codigoDoAtivo}`} target="new">
                             {operacao.codigoDoAtivo}
@@ -105,7 +105,7 @@ export default function Carteira() {
                         </td>
                         <td className="border px-4 py-1 text-left">{operacao.nomeDoSetor.slice(0, 20) + '...'}</td>
                       </tr>
-                    </>
+                    </Fragment>
                   );
                 })}
               </tbody>
