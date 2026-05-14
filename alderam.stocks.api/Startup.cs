@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 
 using alderam.stocks.api.Database;
+using alderam.stocks.api.Models.Mappers;
 using alderam.stocks.api.Services;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
@@ -57,7 +58,7 @@ namespace alderam.stocks.api
                 options.EnableSensitiveDataLogging(_webHostEnvironment.IsDevelopment());
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(cfg => cfg.AddProfile<Mappers>());
 
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<ITokenService, TokenService>();
