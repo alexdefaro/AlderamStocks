@@ -267,6 +267,12 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Claude Code AI assistant (installed skills and local settings)
+.agents/
+.claude/settings.local.json
+.claude/skills/
+skills-lock.json
+
 # Visual Studio 6 build log
 *.plg
 
