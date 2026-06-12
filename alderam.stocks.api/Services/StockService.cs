@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using Newtonsoft.Json;
 
@@ -109,6 +110,7 @@ namespace alderam.stocks.api.Services
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         private async Task CarregarCotacoesHG()
         {
@@ -119,7 +121,8 @@ namespace alderam.stocks.api.Services
             {
                 if (!ativo.DataDaUltimaCotacao.HasValue || ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-2))
                 {
-                    var url = $"https://api.hgbrasil.com/finance/stock_price?key=58a1af63&symbol={ativo.Codigo}";
+                    var hgKey = _configuration["StockApis:HgBrasilKey"];
+                    var url = $"https://api.hgbrasil.com/finance/stock_price?key={hgKey}&symbol={ativo.Codigo}";
                     var response = await client.GetAsync(url);
                     var content = await response.Content.ReadAsStringAsync();
                     var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPIHG>(content);
@@ -158,7 +161,8 @@ namespace alderam.stocks.api.Services
 
                 if (!ativo.DataDaUltimaCotacao.HasValue || ativo.DataDaUltimaCotacao < DateTime.Now.AddMinutes(-5))
                 {
-                    var url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ativo.Codigo}.SA&apikey=0GQ6IW3IL3BFJGTJl";
+                    var avKey = _configuration["StockApis:AlphaVantageKey"];
+                    var url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ativo.Codigo}.SA&apikey={avKey}";
                     var response = await client.GetAsync(url);
                     var resultadoDaAPI = JsonConvert.DeserializeObject<ResultadoDaAPI>(await response.Content.ReadAsStringAsync());
 
@@ -183,10 +187,12 @@ namespace alderam.stocks.api.Services
         }
 
         public StockService(IMapper mapper,
-                            DatabaseContext databaseContext)
+                            DatabaseContext databaseContext,
+                            IConfiguration configuration)
         {
             _mapper = mapper;
             _databaseContext = databaseContext;
+            _configuration = configuration;
         }
 
         private decimal Truncate(decimal value)

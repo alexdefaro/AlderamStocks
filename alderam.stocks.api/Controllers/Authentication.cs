@@ -14,6 +14,7 @@ using alderam.stocks.api.Services;
 using alderam.stocks.api.Models.DTOs;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace alderam.stocks.api.Controllers
 {
@@ -25,16 +26,19 @@ namespace alderam.stocks.api.Controllers
         private readonly IMapper _mapper;
         private readonly IStockService _stockService;
         private readonly ITokenService _tokenService;
+        private readonly IConfiguration _configuration;
 
         public AuthenticationController(IMapper mapper,
                                         IStockService stockService,
                                         DatabaseContext databaseContext,
-                                        ITokenService tokenService)
+                                        ITokenService tokenService,
+                                        IConfiguration configuration)
         {
             _mapper = mapper;
             _stockService = stockService;
             _databaseContext = databaseContext;
             _tokenService = tokenService;
+            _configuration = configuration;
         }
 
 
@@ -42,7 +46,8 @@ namespace alderam.stocks.api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Post(LoginViewModel loginViewModel)
         {
-            if (loginViewModel.UserKey == "Colt" || loginViewModel.UserKey == "Invest")
+            var allowedKeys = _configuration["Auth:AllowedKeys"]?.Split(',') ?? Array.Empty<string>();
+            if (allowedKeys.Contains(loginViewModel.UserKey))
             {
                 var jwtToken = _tokenService.GenerateJWTToken(loginViewModel.UserKey);
 

@@ -273,6 +273,10 @@ node_modules/
 .claude/skills/
 skills-lock.json
 
+# Environment-specific appsettings with real secrets — use Azure App Service config for production
+appsettings.Production.json
+appsettings.Staging.json
+
 # Visual Studio 6 build log
 *.plg
 
